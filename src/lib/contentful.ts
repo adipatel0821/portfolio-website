@@ -1,9 +1,11 @@
 import { createClient } from 'contentful'
 
-const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID!,
-  accessToken: process.env.CONTENTFUL_DELIVERY_TOKEN!,
-})
+function getClient() {
+  return createClient({
+    space: process.env.CONTENTFUL_SPACE_ID!,
+    accessToken: process.env.CONTENTFUL_DELIVERY_TOKEN!,
+  })
+}
 
 export interface BlogPost {
   title: string
@@ -45,7 +47,7 @@ function mapEntry(entry: any): BlogPost {
 }
 
 export async function getAllPosts(): Promise<BlogPost[]> {
-  const response = await client.getEntries({
+  const response = await getClient().getEntries({
     content_type: 'blogPost',
     order: ['-fields.publishedDate' as any], // eslint-disable-line @typescript-eslint/no-explicit-any
     include: 1,
@@ -54,7 +56,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  const response = await client.getEntries({
+  const response = await getClient().getEntries({
     content_type: 'blogPost',
     'fields.slug': slug,
     limit: 1,
