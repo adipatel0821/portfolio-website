@@ -9,7 +9,7 @@ const services = [
   {
     icon: Zap,
     title: 'Machine Learning & AI',
-    desc: 'GANs, LLMs, PyTorch, TensorFlow — from research prototype to production inference on AWS SageMaker & GCP Vertex AI.',
+    desc: 'GANs, LLMs, PyTorch, TensorFlow. From research prototype to production inference on AWS SageMaker and GCP Vertex AI.',
     color: '#00d4ff',
   },
   {

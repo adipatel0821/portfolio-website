@@ -179,7 +179,7 @@ function EmptyState() {
       <p className="section-label mb-3">Coming Soon</p>
       <h2 className="section-heading text-3xl mb-4">No posts published yet.</h2>
       <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-        Check back soon — articles are on the way.
+        Check back soon, articles are on the way.
       </p>
     </div>
   )

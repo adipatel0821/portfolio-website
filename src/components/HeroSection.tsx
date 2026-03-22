@@ -8,7 +8,7 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
-import { ArrowRight, Sparkles, ChevronDown } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import NYCSkyline from './NYCSkyline'
 
 export default function HeroSection() {
@@ -94,36 +94,50 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto pt-24">
-        {/* Available badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.65 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-10"
-          style={{
-            background: 'rgba(0,0,0,0.35)',
-            backdropFilter: 'blur(16px)',
-            border: '1px solid rgba(255,255,255,0.15)',
-          }}
-        >
-          <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse" />
-          <span className="text-xs font-bold text-white/80 tracking-widest uppercase">
-            Open to Opportunities · Hoboken, NJ
-          </span>
-        </motion.div>
+      {/* Top corner labels */}
+      <motion.div
+        className="absolute top-28 left-8 z-10 hidden md:block"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4, duration: 0.8 }}
+      >
+        <span className="text-xs text-white/35 tracking-[0.2em] uppercase">M.S. Computer Science</span>
+      </motion.div>
+      <motion.div
+        className="absolute top-28 right-8 z-10 hidden md:block"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4, duration: 0.8 }}
+      >
+        <span className="text-xs text-white/35 tracking-[0.2em] uppercase">Stevens Institute · Hoboken, NJ</span>
+      </motion.div>
 
-        {/* 3D interactive headline */}
+      {/* Bottom split content — Verta-style */}
+      <div className="absolute bottom-0 left-0 right-0 z-10 px-8 md:px-12 pb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-10">
+
+        {/* Left — headline */}
         <motion.div
           style={{ rotateX, rotateY, perspective: '1100px', transformStyle: 'preserve-3d' }}
+          className="flex-1 max-w-2xl"
         >
+          <motion.div
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.55 }}
+            className="flex items-center gap-2 mb-6"
+          >
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse" />
+            <span className="text-xs font-bold text-white/60 tracking-widest uppercase">
+              Open to Opportunities
+            </span>
+          </motion.div>
+
           <motion.h1
             initial={{ opacity: 0, y: 44 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display font-black text-white leading-[0.93] tracking-tight"
-            style={{ fontSize: 'clamp(3rem, 8.5vw, 7.5rem)' }}
+            className="font-display font-black text-white leading-[0.9] tracking-tight"
+            style={{ fontSize: 'clamp(2.8rem, 7vw, 6.5rem)' }}
           >
             Engineering
             <br />
@@ -139,88 +153,54 @@ export default function HeroSection() {
               Intelligent
             </span>
             <br />
-            Systems
+            Systems.
           </motion.h1>
         </motion.div>
 
-        {/* Animated underline */}
-        <motion.div
-          className="flex justify-center mt-5 mb-8"
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={{ scaleX: 1, opacity: 1 }}
-          transition={{ delay: 1.15, duration: 0.75, ease: 'easeOut' }}
-        >
-          <div
-            className="h-1 w-44 rounded-full"
-            style={{ background: 'linear-gradient(90deg, #00d4ff, #a855f7, #ff6b6b)' }}
-          />
-        </motion.div>
-
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.78, duration: 0.65 }}
-          className="text-base md:text-xl text-white/70 max-w-2xl mx-auto mb-10 font-light leading-relaxed"
-        >
-          M.S. CS at Stevens Institute · Machine Learning &amp; Data Engineering —
-          building production AI systems from{' '}
-          <span style={{ color: '#00d4ff' }} className="font-medium">GAN research</span>{' '}
-          to{' '}
-          <span style={{ color: '#a855f7' }} className="font-medium">cloud-scale deployment</span>.
-        </motion.p>
-
-        {/* CTAs */}
+        {/* Right — description + CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.98, duration: 0.65 }}
-          className="flex items-center justify-center gap-4 flex-wrap"
+          transition={{ delay: 0.75, duration: 0.65 }}
+          className="flex-shrink-0 max-w-sm"
         >
-          <Link href="/projects">
-            <motion.button
-              whileHover={{ scale: 1.06, boxShadow: '0 0 50px rgba(0,212,255,0.4)' }}
-              whileTap={{ scale: 0.97 }}
-              className="liquid-btn flex items-center gap-2.5 px-8 py-4 text-base md:text-lg shadow-2xl"
-            >
-              <Sparkles size={18} />
-              Let&apos;s Build
-              <ArrowRight size={18} />
-            </motion.button>
-          </Link>
+          <p className="text-sm md:text-base text-white/65 leading-relaxed mb-7">
+            Machine Learning and Data Engineering, building production AI systems from
+            {' '}<span style={{ color: '#00d4ff' }} className="font-medium">GAN research</span>{' '}
+            to{' '}
+            <span style={{ color: '#a855f7' }} className="font-medium">cloud-scale deployment</span>.
+          </p>
 
-          <Link href="/about">
-            <motion.button
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              className="flex items-center gap-2 px-8 py-4 rounded-full text-base md:text-lg font-bold text-white transition-all"
-              style={{
-                background: 'rgba(255,255,255,0.08)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-              }}
-            >
-              My Story
-            </motion.button>
-          </Link>
+          <div className="flex items-center gap-3 flex-wrap">
+            <Link href="/projects">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                className="liquid-btn flex items-center gap-2 px-6 py-3 text-sm font-bold"
+              >
+                View Projects
+                <ArrowRight size={16} />
+              </motion.button>
+            </Link>
+
+            <Link href="/about">
+              <motion.button
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white transition-all"
+                style={{
+                  background: 'rgba(255,255,255,0.08)',
+                  backdropFilter: 'blur(16px)',
+                  border: '1px solid rgba(255,255,255,0.18)',
+                }}
+              >
+                About Me
+              </motion.button>
+            </Link>
+          </div>
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-      >
-        <span className="text-[10px] font-bold text-white/35 tracking-[0.25em] uppercase">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 9, 0] }}
-          transition={{ duration: 1.9, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <ChevronDown size={20} className="text-white/35" />
-        </motion.div>
-      </motion.div>
     </section>
   )
 }

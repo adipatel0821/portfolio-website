@@ -32,7 +32,7 @@ const values = [
   {
     num: '03',
     title: 'Users First, Always',
-    desc: 'Technology is a means to an end. The best products make complex things feel effortless — invisible infrastructure, delightful surface.',
+    desc: 'Technology is a means to an end. The best products make complex things feel effortless, with invisible infrastructure and a delightful surface.',
     color: '#10b981',
   },
 ]
@@ -68,24 +68,24 @@ export default function AboutPage() {
                   className="text-lg md:text-xl font-semibold leading-relaxed"
                   style={{ color: 'var(--text-primary)' }}
                 >
-                  I&apos;m Aditya Patel — a Machine Learning &amp; Data Engineer pursuing my M.S. in
+                  I&apos;m Aditya Patel, a Machine Learning and Data Engineer pursuing my M.S. in
                   Computer Science at Stevens Institute of Technology, Hoboken NJ.
                 </p>
                 <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                   I completed my B.Tech in Computer Science &amp; Engineering at VIT Chennai in 2025,
                   where I built a strong foundation in algorithms, systems, and applied AI. Three industry
-                  internships gave me real-world depth — from ETL pipelines at Intellect Design Arena to
+                  internships gave me real-world depth, from ETL pipelines at Intellect Design Arena to
                   IoT systems at Intuz and full-stack web development at Appuno IT Solutions.
                 </p>
                 <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  My core interest is building production-grade AI systems — particularly generative models
+                  My core interest is building production-grade AI systems, particularly generative models
                   and distributed data pipelines. I&apos;ve deployed multimodal GANs on GCP Vertex AI,
                   built the SynMedix AI platform (50K+ synthetic patient records) on AWS SageMaker, and
                   engineered automated ETL workflows using Apache Airflow.
                 </p>
                 <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                   Currently focused on graduate research and seeking ML engineering or data engineering
-                  roles. If you&apos;re building something meaningful with AI or large-scale data — I want to talk.
+                  roles. If you&apos;re building something meaningful with AI or large-scale data, I want to talk.
                 </p>
               </div>
             </ScrollReveal>

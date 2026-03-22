@@ -53,7 +53,7 @@ export default function ContactForm() {
                 Message Received!
               </h3>
               <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                Thanks for reaching out — I&apos;ll reply within 24 hours.
+                Thanks for reaching out. I&apos;ll reply within 24 hours.
               </p>
             </div>
             <motion.button

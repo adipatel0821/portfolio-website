@@ -26,7 +26,7 @@ const stops: Stop[] = [
     year: 'Jul 2022',
     title: 'Web Dev Intern · Appuno IT Solutions',
     description:
-      'Built full-stack features for the investor marketplace platform using ASP.NET MVC and C#. Designed RESTful APIs, implemented role-based access control, and shipped responsive UI — first real taste of production-grade engineering.',
+      'Built full-stack features for the investor marketplace platform using ASP.NET MVC and C#. Designed RESTful APIs, implemented role-based access control, and shipped responsive UI. My first real taste of production-grade engineering.',
     badge: 'A',
     color: '#0039A6',
     type: 'work',
@@ -35,7 +35,7 @@ const stops: Stop[] = [
     year: 'Aug 2023',
     title: 'IoT Engineering Intern · Intuz Solution',
     description:
-      'Engineered SHEMS — a Smart Home Energy Management System using Arduino and Raspberry Pi. Built sensor firmware, local data aggregation, and a real-time monitoring dashboard. Hardware meets software.',
+      'Engineered SHEMS (Smart Home Energy Management System) using Arduino and Raspberry Pi. Built sensor firmware, local data aggregation, and a real-time monitoring dashboard. Hardware meets software.',
     badge: 'I',
     color: '#B933AD',
     type: 'work',
@@ -179,7 +179,7 @@ export default function SubwayTimeline() {
         </h2>
         <div className="accent-line mx-auto" />
         <p className="mt-4 text-sm max-w-sm mx-auto" style={{ color: 'var(--text-secondary)' }}>
-          From Chennai to Hoboken — every stop shaped the engineer I am today.
+          From Chennai to Hoboken, every stop shaped the engineer I am today.
         </p>
       </div>
 

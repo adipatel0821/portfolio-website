@@ -5,7 +5,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 const faqs = [
   {
     q: 'Are you open to internship or full-time roles?',
-    a: "Yes — actively seeking ML Engineering, Data Engineering, or SWE roles. Excited about companies building with AI, large-scale data, or cloud infrastructure.",
+    a: "Yes, actively seeking ML Engineering, Data Engineering, or SWE roles. Excited about companies building with AI, large-scale data, or cloud infrastructure.",
   },
   {
     q: 'What is your availability?',
