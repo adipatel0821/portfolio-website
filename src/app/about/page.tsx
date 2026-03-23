@@ -1,6 +1,6 @@
 import SubwayTimeline from '@/components/SubwayTimeline'
 import ScrollReveal from '@/components/ScrollReveal'
-import BrainParticleCanvas from '@/components/animations/BrainParticleCanvas'
+import FlowFieldCanvas from '@/components/animations/FlowFieldCanvas'
 import { GraduationCap, MapPin, Users, Cpu } from 'lucide-react'
 
 const techStack = [
@@ -52,7 +52,7 @@ const values = [
 export default function AboutPage() {
   return (
     <>
-      <BrainParticleCanvas />
+      <FlowFieldCanvas />
       {/* Header */}
       <div className="pt-36 pb-18 page-section" style={{ background: 'var(--bg-secondary)' }}>
         <div className="container-xl">
