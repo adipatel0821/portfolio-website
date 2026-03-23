@@ -3,39 +3,57 @@
 import { useEffect, useRef } from 'react'
 import { useScrollProgress } from '@/hooks/useScrollProgress'
 
-const A = 1.89
-const DT = 0.0055
-const NUM_P = 150
-const MAX_TRAIL = 40
+/**
+ * N-body orbital gravity simulation — 5 gravitational masses orbit a common
+ * barycentre in non-repeating paths. ~280 particles are continuously pulled
+ * by all 5 masses simultaneously, producing complex, unpredictable orbital
+ * patterns: spiral arms, slingshot trajectories, chaotic transfers.
+ *
+ * Inspired by the gravitational wave / wormhole visuals from Interstellar.
+ */
 
-interface P3 { x: number; y: number; z: number }
-interface Particle { x: number; y: number; z: number; trail: P3[]; hue: number }
+const G = 0.38          // gravitational constant (tuned for visual interest)
+const MAX_SPEED = 7.5   // px/frame speed cap
+const MIN_DIST = 28     // px minimum distance (prevents infinite force)
+const NUM_WELLS = 5
+const NUM_PARTICLES = 280
+const MAX_TRAIL = 22
 
-function stepH(x: number, y: number, z: number): P3 {
-  return {
-    x: x + (-A * x - 4 * y - 4 * z - y * y) * DT,
-    y: y + (-A * y - 4 * z - 4 * x - z * z) * DT,
-    z: z + (-A * z - 4 * x - 4 * y - x * x) * DT,
-  }
+interface Well { cx: number; cy: number; r: number; speed: number; angle: number; mass: number; hue: number }
+interface GravParticle { x: number; y: number; vx: number; vy: number; trail: Array<{ x: number; y: number }>; hue: number; size: number }
+
+function buildWells(w: number, h: number): Well[] {
+  const cx = w * 0.5, cy = h * 0.5
+  return [
+    { cx, cy, r: Math.min(w, h) * 0.26, speed:  0.007, angle: 0,              mass: 300, hue: 195 },
+    { cx, cy, r: Math.min(w, h) * 0.17, speed: -0.011, angle: Math.PI * 0.6,  mass: 220, hue: 280 },
+    { cx, cy, r: Math.min(w, h) * 0.35, speed:  0.005, angle: Math.PI * 1.25, mass: 340, hue: 38  },
+    { cx, cy, r: Math.min(w, h) * 0.11, speed:  0.019, angle: Math.PI * 0.35, mass: 160, hue: 160 },
+    { cx, cy, r: Math.min(w, h) * 0.29, speed: -0.008, angle: Math.PI * 1.8,  mass: 260, hue: 340 },
+  ]
 }
 
-function buildParticles(): Particle[] {
-  let { x, y, z } = { x: 0.1, y: 0.1, z: 0.1 }
-  for (let i = 0; i < 8000; i++) { ({ x, y, z } = stepH(x, y, z)) }
-  const out: Particle[] = []
-  for (let i = 0; i < NUM_P; i++) {
-    for (let j = 0; j < 600; j++) { ({ x, y, z } = stepH(x, y, z)) }
-    out.push({ x, y, z, trail: [], hue: (i / NUM_P) * 300 })
+function spawnNear(wells: Well[], w: number, h: number, idx: number): GravParticle {
+  const wl = wells[idx % wells.length]
+  const wx = wl.cx + Math.cos(wl.angle) * wl.r
+  const wy = wl.cy + Math.sin(wl.angle) * wl.r
+  const a = Math.random() * Math.PI * 2
+  const r = 30 + Math.random() * 90
+  return {
+    x: wx + Math.cos(a) * r, y: wy + Math.sin(a) * r,
+    vx: (Math.random() - 0.5) * 2.5, vy: (Math.random() - 0.5) * 2.5,
+    trail: [],
+    hue: wl.hue + (Math.random() - 0.5) * 40,
+    size: 0.55 + Math.random() * 0.75,
   }
-  return out
 }
 
 export default function AttractorCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const progressRef = useRef(0)
-  const particlesRef = useRef<Particle[]>([])
+  const wellsRef = useRef<Well[]>([])
+  const particlesRef = useRef<GravParticle[]>([])
   const rafRef = useRef<number>()
-  const rotYRef = useRef(0)
   const raw = useScrollProgress()
   progressRef.current = raw
 
@@ -47,12 +65,13 @@ export default function AttractorCanvas() {
     const resize = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
+      wellsRef.current = buildWells(canvas.width, canvas.height)
+      particlesRef.current = Array.from({ length: NUM_PARTICLES }, (_, i) =>
+        spawnNear(wellsRef.current, canvas.width, canvas.height, i)
+      )
     }
     resize()
     window.addEventListener('resize', resize)
-
-    // Run on client only — ~20ms, acceptable
-    particlesRef.current = buildParticles()
 
     const draw = () => {
       const p = progressRef.current
@@ -60,82 +79,114 @@ export default function AttractorCanvas() {
       const h = canvas.height
       const isDark = document.documentElement.getAttribute('data-theme') !== 'light'
 
-      rotYRef.current += 0.0022 + p * 0.003
-
-      // clearRect every frame — no fill accumulation, page content stays visible
       ctx.clearRect(0, 0, w, h)
 
-      const cx = w * 0.5
-      const cy = h * 0.5
-      const scale = Math.min(w, h) * 0.036
+      // Advance well orbital angles
+      const speedBoost = 1 + p * 0.6
+      wellsRef.current.forEach(wl => { wl.angle += wl.speed * speedBoost })
+
+      const wells = wellsRef.current
       const trailLen = Math.round(8 + p * (MAX_TRAIL - 8))
-
-      const rotY = rotYRef.current
-      const tiltX = 0.38
-      const cosY = Math.cos(rotY), sinY = Math.sin(rotY)
-      const cosX = Math.cos(tiltX), sinX = Math.sin(tiltX)
-      const fov = 700
-
-      const proj = (tp: P3) => {
-        const rx = tp.x * cosY + tp.z * sinY
-        const rz0 = -tp.x * sinY + tp.z * cosY
-        const ry = tp.y * cosX - rz0 * sinX
-        const rz = tp.y * sinX + rz0 * cosX
-        const depth = fov / (fov + rz * scale * 0.5 + fov * 0.25)
-        return { sx: cx + rx * scale * depth, sy: cy + ry * scale * depth, depth }
-      }
+      const gMult = 1 + p * 0.8
 
       ctx.save()
       if (isDark) ctx.globalCompositeOperation = 'lighter'
 
-      particlesRef.current.forEach(pt => {
-        const n = stepH(pt.x, pt.y, pt.z)
-        pt.x = n.x; pt.y = n.y; pt.z = n.z
+      // Draw well position glows
+      wells.forEach(wl => {
+        const wx = wl.cx + Math.cos(wl.angle) * wl.r
+        const wy = wl.cy + Math.sin(wl.angle) * wl.r
+        if (isDark) {
+          const g = ctx.createRadialGradient(wx, wy, 0, wx, wy, 40)
+          g.addColorStop(0, `hsla(${wl.hue},90%,70%,0.22)`)
+          g.addColorStop(1, `hsla(${wl.hue},90%,70%,0)`)
+          ctx.fillStyle = g
+          ctx.beginPath()
+          ctx.arc(wx, wy, 40, 0, Math.PI * 2)
+          ctx.fill()
+        }
+        ctx.beginPath()
+        ctx.arc(wx, wy, isDark ? 2.5 : 3.5, 0, Math.PI * 2)
+        ctx.fillStyle = isDark ? `hsla(${wl.hue},100%,85%,0.9)` : `hsla(${wl.hue},80%,25%,0.7)`
+        ctx.fill()
+      })
 
-        pt.trail.unshift({ x: pt.x, y: pt.y, z: pt.z })
+      // Update and draw particles
+      particlesRef.current.forEach((pt, pi) => {
+        let fx = 0, fy = 0
+        let nearestHue = pt.hue, minDist = Infinity
+
+        wells.forEach(wl => {
+          const wx = wl.cx + Math.cos(wl.angle) * wl.r
+          const wy = wl.cy + Math.sin(wl.angle) * wl.r
+          const dx = wx - pt.x, dy = wy - pt.y
+          const dist = Math.max(MIN_DIST, Math.sqrt(dx * dx + dy * dy))
+          const f = (G * gMult * wl.mass) / (dist * dist)
+          fx += (dx / dist) * f
+          fy += (dy / dist) * f
+          if (dist < minDist) { minDist = dist; nearestHue = wl.hue }
+        })
+
+        pt.vx = (pt.vx + fx) * 0.988
+        pt.vy = (pt.vy + fy) * 0.988
+        pt.hue += (nearestHue - pt.hue) * 0.04
+
+        const spd = Math.sqrt(pt.vx * pt.vx + pt.vy * pt.vy)
+        if (spd > MAX_SPEED) { pt.vx *= MAX_SPEED / spd; pt.vy *= MAX_SPEED / spd }
+
+        pt.x += pt.vx
+        pt.y += pt.vy
+
+        // Respawn if escaped
+        if (pt.x < -80 || pt.x > w + 80 || pt.y < -80 || pt.y > h + 80) {
+          const np = spawnNear(wells, w, h, pi)
+          pt.x = np.x; pt.y = np.y; pt.vx = np.vx; pt.vy = np.vy
+          pt.trail = []; pt.hue = np.hue
+          return
+        }
+
+        pt.trail.unshift({ x: pt.x, y: pt.y })
         if (pt.trail.length > trailLen) pt.trail.pop()
         if (pt.trail.length < 2) return
 
-        const head = proj(pt.trail[0])
-        const tail = proj(pt.trail[pt.trail.length - 1])
-        const hL = isDark ? '62%' : '22%'
-        const headA = isDark ? 0.68 : 0.28
-        const hasDist = Math.abs(head.sx - tail.sx) + Math.abs(head.sy - tail.sy) > 0.5
+        const pL = isDark ? '62%' : '22%'
+        const headA = isDark ? 0.65 : 0.22
+        const t0 = pt.trail[0], tN = pt.trail[pt.trail.length - 1]
+        const hasDist = Math.abs(t0.x - tN.x) + Math.abs(t0.y - tN.y) > 0.5
 
-        ctx.lineWidth = head.depth * (isDark ? 1.1 : 0.65)
+        ctx.lineWidth = pt.size * (isDark ? 1.0 : 0.6)
         ctx.lineCap = 'round'
         ctx.lineJoin = 'round'
 
         if (hasDist) {
-          const grad = ctx.createLinearGradient(head.sx, head.sy, tail.sx, tail.sy)
-          grad.addColorStop(0, `hsla(${pt.hue},88%,${hL},${headA})`)
-          grad.addColorStop(1, `hsla(${pt.hue},88%,${hL},0)`)
-          ctx.strokeStyle = grad
+          const g = ctx.createLinearGradient(t0.x, t0.y, tN.x, tN.y)
+          g.addColorStop(0, `hsla(${pt.hue},90%,${pL},${headA})`)
+          g.addColorStop(1, `hsla(${pt.hue},90%,${pL},0)`)
+          ctx.strokeStyle = g
         } else {
-          ctx.strokeStyle = `hsla(${pt.hue},88%,${hL},${headA})`
+          ctx.strokeStyle = `hsla(${pt.hue},90%,${pL},${headA})`
         }
 
         ctx.beginPath()
-        pt.trail.forEach((tp, ti) => {
-          const { sx, sy } = proj(tp)
-          if (ti === 0) ctx.moveTo(sx, sy)
-          else ctx.lineTo(sx, sy)
+        pt.trail.forEach((pos, i) => {
+          if (i === 0) ctx.moveTo(pos.x, pos.y)
+          else ctx.lineTo(pos.x, pos.y)
         })
         ctx.stroke()
 
-        // Head glow + dot
+        // Head glow
         if (isDark) {
-          const g = ctx.createRadialGradient(head.sx, head.sy, 0, head.sx, head.sy, 6 * head.depth)
-          g.addColorStop(0, `hsla(${pt.hue},100%,75%,0.48)`)
-          g.addColorStop(1, `hsla(${pt.hue},100%,75%,0)`)
+          const g = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, pt.size * 7)
+          g.addColorStop(0, `hsla(${pt.hue},100%,72%,0.45)`)
+          g.addColorStop(1, `hsla(${pt.hue},100%,72%,0)`)
           ctx.fillStyle = g
           ctx.beginPath()
-          ctx.arc(head.sx, head.sy, 6 * head.depth, 0, Math.PI * 2)
+          ctx.arc(pt.x, pt.y, pt.size * 7, 0, Math.PI * 2)
           ctx.fill()
         }
         ctx.beginPath()
-        ctx.arc(head.sx, head.sy, Math.max(0.4, 1.5 * head.depth), 0, Math.PI * 2)
-        ctx.fillStyle = `hsla(${pt.hue},100%,${isDark ? '80%' : '18%'},${isDark ? 0.9 : 0.5})`
+        ctx.arc(pt.x, pt.y, Math.max(0.4, pt.size * (isDark ? 1.4 : 0.8)), 0, Math.PI * 2)
+        ctx.fillStyle = `hsla(${pt.hue},95%,${isDark ? '78%' : '18%'},${isDark ? 0.9 : 0.45})`
         ctx.fill()
       })
 
