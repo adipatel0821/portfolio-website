@@ -31,20 +31,20 @@ const interests = [
 const values = [
   {
     num: '01',
-    title: 'Ship Fast, Iterate Faster',
-    desc: 'Perfect is the enemy of shipped. I believe in putting imperfect things into the world, learning from real users, and iterating relentlessly.',
+    title: 'Research that ships',
+    desc: "I've deployed GANs to GCP Vertex AI and built ETL pipelines processing real patient records. The gap between a paper implementation and production code is where most of the real work happens.",
     color: '#00d4ff',
   },
   {
     num: '02',
-    title: 'Depth Over Breadth',
-    desc: 'Going deep on what matters most. Understanding systems at a fundamental level is the only path to building solutions that last.',
+    title: 'Read the paper, then question it',
+    desc: 'I read ML papers on weekends — not because I have to, but because understanding why an attention mechanism works the way it does is the only way I can meaningfully adapt it. Copying code is never enough.',
     color: '#a855f7',
   },
   {
     num: '03',
-    title: 'Users First, Always',
-    desc: 'Technology is a means to an end. The best products make complex things feel effortless, with invisible infrastructure and a delightful surface.',
+    title: 'The boring infrastructure matters most',
+    desc: "The model is maybe 10% of the work. Data pipelines, monitoring, deployment reliability — that's what separates a demo from a system people actually trust. I care about both.",
     color: '#10b981',
   },
 ]

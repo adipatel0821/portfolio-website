@@ -127,18 +127,18 @@ export default function HomePage() {
                   'linear-gradient(135deg, rgba(0,212,255,0.06) 0%, rgba(168,85,247,0.06) 50%, rgba(0,212,255,0.06) 100%)',
               }}
             >
-              <p className="section-label mb-4">Ready to collaborate?</p>
+              <p className="section-label mb-4">Got something interesting?</p>
               <h2 className="section-heading text-4xl md:text-6xl mb-6">
-                Let&apos;s build something
+                Let&apos;s talk
                 <br />
-                <span className="gradient-text">extraordinary</span>
+                <span className="gradient-text">seriously.</span>
               </h2>
               <p
                 className="text-base max-w-xl mx-auto mb-10"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                I&apos;m always open to discussing ambitious projects, creative ideas, or opportunities
-                to be part of a world-class team.
+                Whether it&apos;s a hard ML problem, a data pipeline you can&apos;t scale, or a role
+                where you need someone who&apos;ll actually dig in — I&apos;m listening.
               </p>
               <div className="flex items-center justify-center gap-4 flex-wrap">
                 <Link href="/contact">

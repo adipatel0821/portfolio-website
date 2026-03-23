@@ -4,9 +4,9 @@
 
 /* ─── Theme: Upper East Side Light ───────────────────────────── */
 :root {
-  --bg-primary: rgba(240, 242, 247, 0.70);
-  --bg-secondary: rgba(228, 232, 240, 0.68);
-  --bg-tertiary: rgba(221, 226, 236, 0.65);
+  --bg-primary: rgba(240, 242, 247, 0.12);
+  --bg-secondary: rgba(228, 232, 240, 0.08);
+  --bg-tertiary: rgba(221, 226, 236, 0.08);
   --text-primary: #0b1120;
   --text-secondary: #3d4a62;
   --text-muted: #7a8499;
@@ -32,9 +32,9 @@
 
 /* ─── Theme: Midtown Midnight ─────────────────────────────────── */
 [data-theme='dark'] {
-  --bg-primary: rgba(5, 8, 15, 0.7);
-  --bg-secondary: rgba(8, 13, 28, 0.65);
-  --bg-tertiary: rgba(13, 20, 40, 0.6);
+  --bg-primary: rgba(5, 8, 15, 0.12);
+  --bg-secondary: rgba(8, 13, 28, 0.08);
+  --bg-tertiary: rgba(13, 20, 40, 0.08);
   --text-primary: #e4ecff;
   --text-secondary: #7b8fb0;
   --text-muted: #455070;

@@ -3,31 +3,26 @@
 import { useEffect, useRef } from 'react'
 import { useScrollProgress } from '@/hooks/useScrollProgress'
 
-const CHARS = '01アイウエオカキクケコABCDEF{}[]<>|/\\#@!?%01101'
-const MAX_COLS = 28
+const CHARS = '01アイウエオカキクケコサシスセソタチツテトABCDEF{}[]<>|/\\#@!?%10110001'
+const FONT_SIZE = 15
 
 interface Column {
-  x: number
-  y: number
-  speed: number
-  chars: string[]
-  glowRow: number
+  x: number; y: number; speed: number; chars: string[]
+  glowRow: number; colorType: number // 0=green 1=cyan 2=white
 }
 
-function buildCols(w: number, h: number, count: number): Column[] {
-  const cols: Column[] = []
-  const gap = w / MAX_COLS
-  for (let i = 0; i < count; i++) {
-    const rows = Math.floor(h / 18) + 2
-    cols.push({
-      x: gap * i + gap * 0.5,
-      y: Math.random() * -h,
-      speed: 0.8 + (i % 5) * 0.5,
-      chars: Array.from({ length: rows }, () => CHARS[Math.floor(Math.random() * CHARS.length)]),
-      glowRow: Math.floor(Math.random() * rows),
-    })
-  }
-  return cols
+function buildColumns(w: number, h: number): Column[] {
+  const gap = 20
+  const count = Math.ceil(w / gap) + 1
+  const rows = Math.floor(h / FONT_SIZE) + 3
+  return Array.from({ length: count }, (_, i) => ({
+    x: i * gap + gap * 0.5,
+    y: Math.random() * -h * 1.5,
+    speed: 0.6 + (i % 7) * 0.52,
+    chars: Array.from({ length: rows }, () => CHARS[Math.floor(Math.random() * CHARS.length)]),
+    glowRow: Math.floor(Math.random() * rows),
+    colorType: i % 11 === 0 ? 2 : i % 5 === 0 ? 1 : 0,
+  }))
 }
 
 export default function DataStreamCanvas() {
@@ -46,63 +41,73 @@ export default function DataStreamCanvas() {
     const resize = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
-      colsRef.current = buildCols(canvas.width, canvas.height, MAX_COLS)
+      colsRef.current = buildColumns(canvas.width, canvas.height)
     }
     resize()
     window.addEventListener('resize', resize)
-
-    const FONT_SIZE = 14
 
     const draw = () => {
       const p = progressRef.current
       const w = canvas.width
       const h = canvas.height
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light'
 
       ctx.clearRect(0, 0, w, h)
 
-      const isDark = document.documentElement.getAttribute('data-theme') !== 'light'
+      // Show 40% of columns at p=0, full coverage with scroll
+      const total = colsRef.current.length
+      const visible = Math.max(Math.round(total * 0.40), Math.round(total * (0.40 + p * 0.60)))
+      const speedMult = 0.65 + p * 2.1
 
-      const colCount = Math.max(2, Math.round(2 + p * (MAX_COLS - 2)))
-      const speedMult = 0.5 + p * 2.5
-      const cols = colsRef.current.slice(0, colCount)
+      ctx.font = `${FONT_SIZE}px 'Courier New', monospace`
 
-      ctx.font = `${FONT_SIZE}px monospace`
-
-      cols.forEach((col, ci) => {
+      colsRef.current.slice(0, visible).forEach(col => {
         col.y += col.speed * speedMult
-
-        // Randomly mutate chars
-        if (Math.random() < 0.04) {
+        if (Math.random() < 0.044) {
           const ri = Math.floor(Math.random() * col.chars.length)
           col.chars[ri] = CHARS[Math.floor(Math.random() * CHARS.length)]
           col.glowRow = ri
         }
-
-        // Reset when off screen
-        if (col.y > h + 40) {
-          col.y = -FONT_SIZE * col.chars.length
+        if (col.y > h + FONT_SIZE * col.chars.length) {
+          col.y = -FONT_SIZE * col.chars.length * (0.5 + Math.random() * 0.5)
         }
 
-        // Draw each character
         col.chars.forEach((ch, row) => {
           const cy = col.y + row * FONT_SIZE
           if (cy < -FONT_SIZE || cy > h + FONT_SIZE) return
-
           const isGlow = row === col.glowRow
-          const fadeTop = Math.max(0, Math.min(1, (cy) / (h * 0.2)))
-          const fadeBot = Math.max(0, Math.min(1, (h - cy) / (h * 0.3)))
-          const fade = fadeTop * fadeBot
+          const fadeTop = Math.min(1, cy / (h * 0.14))
+          const fadeBot = Math.min(1, (h - cy) / (h * 0.22))
+          const fade = Math.max(0, fadeTop * fadeBot)
+          const dist = Math.abs(row - col.glowRow)
+          const rowAlpha = Math.max(0, 1 - dist * 0.055) * fade
 
           if (isGlow) {
-            ctx.fillStyle = isDark ? `rgba(200,255,230,${fade * 0.95})` : `rgba(0,80,40,${fade * 0.95})`
-            ctx.shadowColor = isDark ? '#10b981' : '#004020'
-            ctx.shadowBlur = 12
+            ctx.save()
+            if (isDark) ctx.globalCompositeOperation = 'lighter'
+            if (col.colorType === 2) {
+              ctx.fillStyle = isDark ? `rgba(255,255,255,${fade * 0.95})` : `rgba(10,10,60,${fade * 0.9})`
+              ctx.shadowColor = isDark ? '#fff' : '#0a0a3c'
+            } else if (col.colorType === 1) {
+              ctx.fillStyle = isDark ? `rgba(0,255,240,${fade * 0.95})` : `rgba(0,90,110,${fade * 0.9})`
+              ctx.shadowColor = isDark ? '#00fff0' : '#005a6e'
+            } else {
+              ctx.fillStyle = isDark ? `rgba(180,255,200,${fade * 0.95})` : `rgba(0,80,40,${fade * 0.9})`
+              ctx.shadowColor = isDark ? '#10b981' : '#004020'
+            }
+            ctx.shadowBlur = 14
+            ctx.fillText(ch, col.x, cy)
+            ctx.restore()
           } else {
-            const rowAlpha = Math.max(0, 1 - (row - col.glowRow) * 0.07) * fade
-            ctx.fillStyle = isDark ? `rgba(16,185,129,${rowAlpha * 0.75})` : `rgba(0,120,60,${rowAlpha * 0.85})`
-            ctx.shadowBlur = 0
+            if (col.colorType === 2) {
+              ctx.fillStyle = isDark ? `rgba(200,200,255,${rowAlpha * 0.55})` : `rgba(10,10,60,${rowAlpha * 0.45})`
+            } else if (col.colorType === 1) {
+              ctx.fillStyle = isDark ? `rgba(0,200,220,${rowAlpha * 0.60})` : `rgba(0,80,100,${rowAlpha * 0.50})`
+            } else {
+              ctx.fillStyle = isDark ? `rgba(16,185,129,${rowAlpha * 0.65})` : `rgba(0,110,55,${rowAlpha * 0.55})`
+            }
+            ctx.fillText(ch, col.x, cy)
           }
-          ctx.fillText(ch, col.x, cy)
         })
       })
       ctx.shadowBlur = 0

@@ -3,11 +3,14 @@
 import { useEffect, useRef } from 'react'
 import { useScrollProgress } from '@/hooks/useScrollProgress'
 
+interface WaveParticle { x: number; y: number; vy: number; life: number; hue: number }
+
 export default function WaveformCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const progressRef = useRef(0)
   const rafRef = useRef<number>()
   const tickRef = useRef(0)
+  const particlesRef = useRef<WaveParticle[]>([])
   const raw = useScrollProgress()
   progressRef.current = raw
 
@@ -23,79 +26,125 @@ export default function WaveformCanvas() {
     resize()
     window.addEventListener('resize', resize)
 
-    // Wave layers: [frequency, amplitude-factor, phase-offset, hue]
+    // [frequency, amp-factor, phase-offset, hue]
     const WAVES = [
-      [1.2, 1.0,  0.0,   210],
-      [2.5, 0.55, 0.8,   240],
-      [4.1, 0.35, 1.6,   190],
-      [6.8, 0.22, 2.4,   260],
-      [0.6, 0.7,  3.1,   200],
-      [9.0, 0.15, 0.5,   280],
+      [1.2, 1.00, 0.0, 210],
+      [2.5, 0.60, 0.8, 240],
+      [4.1, 0.38, 1.6, 190],
+      [6.8, 0.24, 2.4, 260],
+      [0.6, 0.75, 3.1, 200],
+      [9.0, 0.18, 0.5, 280],
     ]
 
     const draw = () => {
       const p = progressRef.current
       const w = canvas.width
       const h = canvas.height
-      tickRef.current += 0.012
+      tickRef.current += 0.013
+      const t = tickRef.current
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light'
 
       ctx.clearRect(0, 0, w, h)
 
-      const isDark = document.documentElement.getAttribute('data-theme') !== 'light'
+      // Aurora backdrop (dark mode only)
+      if (isDark) {
+        const aurora = ctx.createLinearGradient(0, 0, 0, h)
+        aurora.addColorStop(0, `rgba(0,40,100,${0.04 + p * 0.04})`)
+        aurora.addColorStop(0.5, `rgba(30,0,70,${0.03 + p * 0.03})`)
+        aurora.addColorStop(1, 'rgba(0,0,30,0)')
+        ctx.fillStyle = aurora
+        ctx.fillRect(0, 0, w, h)
+      }
 
-      const visLayers = Math.max(1, Math.round(1 + p * (WAVES.length - 1)))
       const cy = h * 0.5
 
-      for (let li = 0; li < visLayers; li++) {
-        const [freq, ampFactor, phaseOff, hue] = WAVES[li]
-        const layerProgress = Math.min(1, Math.max(0, (p * WAVES.length - li)))
-        if (layerProgress <= 0) continue
+      ctx.save()
+      if (isDark) ctx.globalCompositeOperation = 'lighter'
 
-        const amplitude = h * 0.08 * ampFactor * p * layerProgress
-        const alpha = 0.55 * layerProgress
-
-        ctx.beginPath()
-        ctx.moveTo(0, cy)
-
-        for (let x = 0; x <= w; x += 2) {
-          const t = (x / w) * Math.PI * 2 * freq
-          const y = cy + Math.sin(t + tickRef.current + phaseOff) * amplitude
-                     + Math.sin(t * 0.5 + tickRef.current * 1.3 + phaseOff) * amplitude * 0.3
-          if (x === 0) ctx.moveTo(x, y)
-          else ctx.lineTo(x, y)
-        }
+      WAVES.forEach(([freq, ampFactor, phaseOff, hue], li) => {
+        // Base amplitude always visible; scroll amplifies dramatically
+        const baseAmp = h * 0.022 * ampFactor
+        const scrollAmp = h * 0.12 * ampFactor * p
+        const amplitude = baseAmp + scrollAmp
+        const layerProgress = Math.min(1, 0.4 + p * 0.6)
+        const alpha = 0.50 * layerProgress
 
         const wL = isDark ? '65%' : '28%'
+        let peakX = 0, peakY = cy
+
+        ctx.beginPath()
+        for (let x = 0; x <= w; x += 2) {
+          const angle = (x / w) * Math.PI * 2 * freq
+          const y = cy
+            + Math.sin(angle + t + phaseOff) * amplitude
+            + Math.sin(angle * 0.5 + t * 1.3 + phaseOff) * amplitude * 0.3
+          if (x === 0) ctx.moveTo(x, y)
+          else ctx.lineTo(x, y)
+          if (Math.abs(y - cy) > Math.abs(peakY - cy)) { peakX = x; peakY = y }
+        }
         ctx.strokeStyle = `hsla(${hue},85%,${wL},${alpha})`
-        ctx.lineWidth = 1.5 + layerProgress
-        ctx.shadowColor = `hsla(${hue},100%,${wL},${isDark ? 0.6 : 0.4})`
-        ctx.shadowBlur = 8 + p * 12
+        ctx.lineWidth = 1.5 + layerProgress * 0.8
+        ctx.shadowColor = `hsla(${hue},100%,${wL},${isDark ? 0.55 : 0.3})`
+        ctx.shadowBlur = 10 + p * 14
         ctx.stroke()
         ctx.shadowBlur = 0
 
-        // Filled glow under wave
-        if (p > 0.3) {
+        // Fill under wave at higher scroll
+        if (p > 0.2 && amplitude > h * 0.015) {
           ctx.lineTo(w, cy)
           ctx.lineTo(0, cy)
           ctx.closePath()
           const fill = ctx.createLinearGradient(0, cy - amplitude, 0, cy + amplitude)
-          fill.addColorStop(0, `hsla(${hue},85%,${isDark ? '65%' : '35%'},${0.06 * layerProgress * p})`)
-          fill.addColorStop(1, isDark ? 'hsla(0,0%,0%,0)' : 'hsla(0,0%,100%,0)')
+          fill.addColorStop(0, `hsla(${hue},85%,${isDark ? '65%' : '35%'},${0.07 * layerProgress * p})`)
+          fill.addColorStop(1, `hsla(0,0%,${isDark ? '0%' : '100%'},0)`)
           ctx.fillStyle = fill
           ctx.fill()
         }
-      }
 
-      // Vertical bars at peaks (data viz feel)
-      if (p > 0.5) {
-        const barCount = Math.round(p * 60)
-        const barAlpha = (p - 0.5) * 0.4
-        for (let i = 0; i < barCount; i++) {
-          const x = (i / barCount) * w
-          const barH = (Math.sin(i * 0.8 + tickRef.current * 2) * 0.5 + 0.5) * h * 0.15 * p
-          ctx.fillStyle = isDark ? `rgba(99,102,241,${barAlpha})` : `rgba(30,50,200,${barAlpha * 2})`
-          ctx.fillRect(x, cy - barH, 2, barH * 2)
+        // Particle ejection from peaks
+        if (p > 0.25 && Math.random() < 0.22 && peakX > 0) {
+          particlesRef.current.push({
+            x: peakX + (Math.random() - 0.5) * 20,
+            y: peakY,
+            vy: (peakY < cy ? -1 : 1) * (0.6 + Math.random() * 1.4),
+            life: 1,
+            hue,
+          })
         }
+
+        void li
+      })
+      ctx.restore()
+
+      // Wave particles
+      ctx.save()
+      if (isDark) ctx.globalCompositeOperation = 'lighter'
+      particlesRef.current = particlesRef.current.filter(pt => {
+        pt.y += pt.vy
+        pt.life -= 0.032
+        if (pt.life <= 0) return false
+        const pL = isDark ? '75%' : '30%'
+        const g = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 5)
+        g.addColorStop(0, `hsla(${pt.hue},100%,${pL},${pt.life * 0.75})`)
+        g.addColorStop(1, `hsla(${pt.hue},100%,${pL},0)`)
+        ctx.fillStyle = g
+        ctx.beginPath()
+        ctx.arc(pt.x, pt.y, 5, 0, Math.PI * 2)
+        ctx.fill()
+        return true
+      })
+      ctx.restore()
+
+      // EQ spectrum bars at bottom — always visible
+      const barCount = Math.max(24, Math.round(24 + p * 48))
+      const bw = w / barCount
+      for (let i = 0; i < barCount; i++) {
+        const x = i * bw
+        const barH = (Math.sin(i * 0.85 + t * 2.2) * 0.5 + 0.5) * h * (0.04 + p * 0.1)
+        const hue = 200 + (i / barCount) * 80
+        const barAlpha = 0.14 + p * 0.22
+        ctx.fillStyle = isDark ? `hsla(${hue},80%,60%,${barAlpha})` : `hsla(${hue},80%,28%,${barAlpha * 1.8})`
+        ctx.fillRect(x + 1, h - barH, Math.max(1, bw - 2), barH)
       }
 
       rafRef.current = requestAnimationFrame(draw)
