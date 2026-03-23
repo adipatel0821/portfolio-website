@@ -113,9 +113,9 @@ export default function NeuralNetworkCanvas() {
               ctx.strokeStyle = `rgba(0,190,255,${str * 0.38})`
               ctx.lineWidth = 0.3 + str * 1.0
             } else {
-              // Light mode: very subtle so text stays readable
-              ctx.strokeStyle = `rgba(40,70,200,${str * 0.07})`
-              ctx.lineWidth = 0.2 + str * 0.4
+              // Light mode: visible but not overwhelming
+              ctx.strokeStyle = `rgba(40,70,200,${str * 0.20})`
+              ctx.lineWidth = 0.5 + str * 0.9
             }
             ctx.beginPath()
             ctx.moveTo(nodes[i].x, nodes[i].y)
@@ -182,7 +182,7 @@ export default function NeuralNetworkCanvas() {
           ctx.fillStyle = `hsla(195,100%,88%,${appear})`
         } else {
           // Light mode: small filled dots, no massive halos
-          ctx.fillStyle = `hsla(220,65%,32%,${appear * 0.50})`
+          ctx.fillStyle = `hsla(220,65%,25%,${appear * 0.70})`
         }
         ctx.beginPath()
         ctx.arc(n.x, n.y, n.r * (0.8 + pulse * 0.3), 0, Math.PI * 2)
