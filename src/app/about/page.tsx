@@ -1,6 +1,17 @@
 import SubwayTimeline from '@/components/SubwayTimeline'
 import ScrollReveal from '@/components/ScrollReveal'
-import { GraduationCap, MapPin, Award, Users, Cpu } from 'lucide-react'
+import { GraduationCap, MapPin, Users, Cpu } from 'lucide-react'
+
+const techStack = [
+  { category: 'Languages',       skills: ['Python', 'C#', 'C / C++'] },
+  { category: 'AI / ML',         skills: ['PyTorch', 'TensorFlow', 'Scikit-learn', 'GANs', 'LLMs'] },
+  { category: 'Data Engineering', skills: ['Apache Airflow', 'Pandas', 'NumPy', 'PostgreSQL', 'DynamoDB'] },
+  { category: 'Cloud & Infra',   skills: ['AWS SageMaker', 'GCP Vertex AI', 'Docker', 'REST APIs'] },
+  { category: 'Visualization',   skills: ['Power BI'] },
+  { category: 'Hardware & IoT',  skills: ['Arduino', 'Raspberry Pi'] },
+  { category: 'Web',             skills: ['ASP.NET MVC', 'Next.js', 'TypeScript'] },
+  { category: 'DevOps',          skills: ['Git / CI-CD'] },
+]
 
 const highlights = [
   { icon: GraduationCap, title: 'Stevens Institute',  sub: 'M.S. CS · Hoboken, NJ · 2025–2027',        color: '#00d4ff' },
@@ -131,8 +142,38 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Subway Timeline */}
+      {/* Tech Stack */}
       <section className="page-section" style={{ background: 'var(--bg-secondary)' }}>
+        <div className="container-xl">
+          <ScrollReveal>
+            <div className="text-center mb-12">
+              <p className="section-label mb-3">Tools of the Trade</p>
+              <h2 className="section-heading text-4xl md:text-5xl mb-4">Tech Stack</h2>
+              <div className="accent-line mx-auto" />
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
+            {techStack.map((group, i) => (
+              <ScrollReveal key={group.category} delay={i * 0.07}>
+                <div className="glass-card p-5 h-full" style={{ borderRadius: 18 }}>
+                  <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: 'var(--accent-primary)' }}>
+                    {group.category}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {group.skills.map((skill) => (
+                      <span key={skill} className="tech-chip">{skill}</span>
+                    ))}
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Subway Timeline */}
+      <section className="page-section" style={{ background: 'var(--bg-primary)' }}>
         <div className="container-xl">
           <SubwayTimeline />
         </div>
