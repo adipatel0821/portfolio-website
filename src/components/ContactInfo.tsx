@@ -3,30 +3,32 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Linkedin, Github, Mail, Copy, Check, MapPin, Clock } from 'lucide-react'
+import { useTheme } from '@/context/ThemeContext'
 
 const EMAIL = 'adityapatel280104@gmail.com'
 
-const socials = [
-  {
-    icon: Linkedin,
-    label: 'LinkedIn',
-    handle: '/in/adityapatel0821',
-    sub: 'Connect professionally',
-    href: 'https://linkedin.com/in/adityapatel0821',
-    color: '#0A66C2',
-  },
-  {
-    icon: Github,
-    label: 'GitHub',
-    handle: 'adityapatel0821',
-    sub: 'Open source & projects',
-    href: 'https://github.com/adityapatel0821',
-    color: '#ffffff',
-  },
-]
-
 export default function ContactInfo() {
   const [copied, setCopied] = useState(false)
+  const { isDark } = useTheme()
+
+  const socials = [
+    {
+      icon: Linkedin,
+      label: 'LinkedIn',
+      handle: '/in/adityapatel0821',
+      sub: 'Connect professionally',
+      href: 'https://linkedin.com/in/adityapatel0821',
+      color: '#0A66C2',
+    },
+    {
+      icon: Github,
+      label: 'GitHub',
+      handle: 'adityapatel0821',
+      sub: 'Open source & projects',
+      href: 'https://github.com/adityapatel0821',
+      color: isDark ? '#e6edf3' : '#1f2328',
+    },
+  ]
 
   const copyEmail = () => {
     navigator.clipboard.writeText(EMAIL).then(() => {
