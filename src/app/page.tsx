@@ -2,6 +2,7 @@ import HeroSection from '@/components/HeroSection'
 import QuickStats from '@/components/QuickStats'
 import TechMarquee from '@/components/TechMarquee'
 import ScrollReveal from '@/components/ScrollReveal'
+import NeuralNetworkCanvas from '@/components/animations/NeuralNetworkCanvas'
 import Link from 'next/link'
 import { ArrowRight, Code2, Rocket, Zap, Globe } from 'lucide-react'
 
@@ -35,7 +36,7 @@ const services = [
 export default function HomePage() {
   return (
     <>
-      {/* Hero — full-screen with Ken Burns + parallax */}
+      <NeuralNetworkCanvas />
       <HeroSection />
 
       {/* Quick Stats bar */}

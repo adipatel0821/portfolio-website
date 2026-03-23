@@ -1,6 +1,7 @@
 import ContactForm from '@/components/ContactForm'
 import ContactInfo from '@/components/ContactInfo'
 import ScrollReveal from '@/components/ScrollReveal'
+import ParticleOrbitCanvas from '@/components/animations/ParticleOrbitCanvas'
 
 const faqs = [
   {
@@ -24,6 +25,7 @@ const faqs = [
 export default function ContactPage() {
   return (
     <>
+      <ParticleOrbitCanvas />
       {/* Header — Soho reception aesthetic */}
       <div
         className="pt-36 page-section relative overflow-hidden"

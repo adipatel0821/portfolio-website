@@ -32,9 +32,9 @@
 
 /* ─── Theme: Midtown Midnight ─────────────────────────────────── */
 [data-theme='dark'] {
-  --bg-primary: #05080f;
-  --bg-secondary: #080d1c;
-  --bg-tertiary: #0d1428;
+  --bg-primary: rgba(5, 8, 15, 0.7);
+  --bg-secondary: rgba(8, 13, 28, 0.65);
+  --bg-tertiary: rgba(13, 20, 40, 0.6);
   --text-primary: #e4ecff;
   --text-secondary: #7b8fb0;
   --text-muted: #455070;

@@ -1,10 +1,12 @@
 import ProjectCard from '@/components/ProjectCard'
 import ScrollReveal from '@/components/ScrollReveal'
+import DataStreamCanvas from '@/components/animations/DataStreamCanvas'
 import { projects } from '@/data/projects'
 
 export default function ProjectsPage() {
   return (
     <>
+      <DataStreamCanvas />
       {/* Header */}
       <div className="pt-36 page-section" style={{ background: 'var(--bg-secondary)' }}>
         <div className="container-xl">

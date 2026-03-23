@@ -4,6 +4,7 @@ import { Calendar, ArrowRight, BookOpen } from 'lucide-react'
 import { getAllPosts } from '@/lib/contentful'
 import type { BlogPost } from '@/lib/contentful'
 import ScrollReveal from '@/components/ScrollReveal'
+import WaveformCanvas from '@/components/animations/WaveformCanvas'
 
 export const metadata: Metadata = {
   title: 'Blog | Aditya Patel',
@@ -200,6 +201,7 @@ export default async function BlogPage() {
 
   return (
     <>
+      <WaveformCanvas />
       {/* Header */}
       <div className="pt-36 page-section" style={{ background: 'var(--bg-secondary)' }}>
         <div className="container-xl">
