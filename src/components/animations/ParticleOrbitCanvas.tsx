@@ -41,12 +41,7 @@ export default function ParticleOrbitCanvas() {
 
       ctx.clearRect(0, 0, w, h)
 
-      // Background — very dark warm black
-      const bg = ctx.createRadialGradient(w * 0.5, h * 0.5, 0, w * 0.5, h * 0.5, w * 0.7)
-      bg.addColorStop(0, '#0f0c06')
-      bg.addColorStop(1, '#070503')
-      ctx.fillStyle = bg
-      ctx.fillRect(0, 0, w, h)
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light'
 
       const cx = w * 0.5
       const cy = h * 0.5
@@ -54,16 +49,17 @@ export default function ParticleOrbitCanvas() {
 
       // Central nucleus
       const nucR = baseR * (0.15 + p * 0.25)
+      const nucCol = isDark ? '251,191,36' : '160,80,0'
       const nucG = ctx.createRadialGradient(cx, cy, 0, cx, cy, nucR * 5)
-      nucG.addColorStop(0, `rgba(251,191,36,${0.85 * Math.min(1, p * 5)})`)
-      nucG.addColorStop(0.3, `rgba(251,191,36,${0.3 * Math.min(1, p * 5)})`)
-      nucG.addColorStop(1, 'rgba(251,191,36,0)')
+      nucG.addColorStop(0, `rgba(${nucCol},${0.85 * Math.min(1, p * 5)})`)
+      nucG.addColorStop(0.3, `rgba(${nucCol},${0.3 * Math.min(1, p * 5)})`)
+      nucG.addColorStop(1, `rgba(${nucCol},0)`)
       ctx.fillStyle = nucG
       ctx.beginPath()
       ctx.arc(cx, cy, nucR * 5, 0, Math.PI * 2)
       ctx.fill()
 
-      ctx.fillStyle = `rgba(255,255,200,${Math.min(1, p * 8)})`
+      ctx.fillStyle = isDark ? `rgba(255,255,200,${Math.min(1, p * 8)})` : `rgba(160,80,0,${Math.min(1, p * 8)})`
       ctx.beginPath()
       ctx.arc(cx, cy, Math.max(1, nucR), 0, Math.PI * 2)
       ctx.fill()
@@ -82,7 +78,8 @@ export default function ParticleOrbitCanvas() {
         const rotSpeed = (0.4 + ri * 0.2) * (1 + p * 0.5)
 
         // Draw orbit ring (ellipse for 3D feel)
-        ctx.strokeStyle = `hsla(${col.h},${col.s}%,${col.l}%,${0.12 * ringProgress})`
+        const rl = isDark ? col.l : Math.max(15, col.l - 45)
+        ctx.strokeStyle = `hsla(${col.h},${col.s}%,${rl}%,${(isDark ? 0.12 : 0.25) * ringProgress})`
         ctx.lineWidth = 1
         ctx.beginPath()
         ctx.ellipse(cx, cy, orbitR, orbitR * (0.25 + ri * 0.05), tiltX, 0, Math.PI * 2)
@@ -98,15 +95,16 @@ export default function ParticleOrbitCanvas() {
           const depth = (Math.sin(angle) + 1) * 0.5
           const pSize = (1.5 + ri * 0.8) * (0.4 + depth * 0.6) * ringProgress
 
+          const pl2 = isDark ? col.l : Math.max(15, col.l - 45)
           const pg = ctx.createRadialGradient(ex, ey, 0, ex, ey, pSize * 5)
-          pg.addColorStop(0, `hsla(${col.h},${col.s}%,${col.l}%,${0.7 * ringProgress * depth})`)
-          pg.addColorStop(1, `hsla(${col.h},${col.s}%,${col.l}%,0)`)
+          pg.addColorStop(0, `hsla(${col.h},${col.s}%,${pl2}%,${0.7 * ringProgress * depth})`)
+          pg.addColorStop(1, `hsla(${col.h},${col.s}%,${pl2}%,0)`)
           ctx.fillStyle = pg
           ctx.beginPath()
           ctx.arc(ex, ey, pSize * 5, 0, Math.PI * 2)
           ctx.fill()
 
-          ctx.fillStyle = `hsla(${col.h},100%,90%,${ringProgress * depth})`
+          ctx.fillStyle = isDark ? `hsla(${col.h},100%,90%,${ringProgress * depth})` : `hsla(${col.h},100%,15%,${ringProgress * depth})`
           ctx.beginPath()
           ctx.arc(ex, ey, Math.max(0.5, pSize), 0, Math.PI * 2)
           ctx.fill()
@@ -126,7 +124,7 @@ export default function ParticleOrbitCanvas() {
           const y1 = cy + Math.sin(a1) * (r1 * 0.28)
           const x2 = cx + Math.cos(a2) * r2
           const y2 = cy + Math.sin(a2) * (r2 * 0.28)
-          ctx.strokeStyle = `hsla(${c1.h},80%,60%,${trailAlpha})`
+          ctx.strokeStyle = isDark ? `hsla(${c1.h},80%,60%,${trailAlpha})` : `hsla(${c1.h},80%,20%,${trailAlpha})`
           ctx.lineWidth = 0.5
           ctx.beginPath()
           ctx.moveTo(x1, y1)

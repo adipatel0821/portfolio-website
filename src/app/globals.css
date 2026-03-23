@@ -4,9 +4,9 @@
 
 /* ─── Theme: Upper East Side Light ───────────────────────────── */
 :root {
-  --bg-primary: #f0f2f7;
-  --bg-secondary: #e4e8f0;
-  --bg-tertiary: #dde2ec;
+  --bg-primary: rgba(240, 242, 247, 0.70);
+  --bg-secondary: rgba(228, 232, 240, 0.68);
+  --bg-tertiary: rgba(221, 226, 236, 0.65);
   --text-primary: #0b1120;
   --text-secondary: #3d4a62;
   --text-muted: #7a8499;
@@ -62,8 +62,15 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
+/* Solid body backgrounds so canvas (z-0) has a clean backdrop */
 body {
-  background-color: var(--bg-primary);
+  background-color: #f0f2f7;
+}
+[data-theme='dark'] body {
+  background-color: #060b14;
+}
+
+body {
   color: var(--text-primary);
   font-family: var(--font-inter), system-ui, sans-serif;
   transition: background-color 0.5s ease, color 0.5s ease;

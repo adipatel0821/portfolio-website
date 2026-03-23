@@ -21,7 +21,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem('pf-theme') as Theme | null
-    const resolved = saved === 'light' || saved === 'dark' ? saved : 'dark'
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const resolved = saved === 'light' || saved === 'dark' ? saved : (systemDark ? 'dark' : 'light')
     setTheme(resolved)
     document.documentElement.setAttribute('data-theme', resolved)
   }, [])

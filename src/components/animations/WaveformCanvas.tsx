@@ -41,21 +41,7 @@ export default function WaveformCanvas() {
 
       ctx.clearRect(0, 0, w, h)
 
-      // Background — deep indigo
-      const bg = ctx.createLinearGradient(0, 0, 0, h)
-      bg.addColorStop(0, '#050918')
-      bg.addColorStop(1, '#080d22')
-      ctx.fillStyle = bg
-      ctx.fillRect(0, 0, w, h)
-
-      // Ambient center glow
-      if (p > 0.05) {
-        const g = ctx.createRadialGradient(w * 0.5, h * 0.5, 0, w * 0.5, h * 0.5, w * 0.55)
-        g.addColorStop(0, `rgba(59,130,246,${0.06 * p})`)
-        g.addColorStop(1, 'rgba(59,130,246,0)')
-        ctx.fillStyle = g
-        ctx.fillRect(0, 0, w, h)
-      }
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light'
 
       const visLayers = Math.max(1, Math.round(1 + p * (WAVES.length - 1)))
       const cy = h * 0.5
@@ -79,9 +65,10 @@ export default function WaveformCanvas() {
           else ctx.lineTo(x, y)
         }
 
-        ctx.strokeStyle = `hsla(${hue},85%,65%,${alpha})`
+        const wL = isDark ? '65%' : '28%'
+        ctx.strokeStyle = `hsla(${hue},85%,${wL},${alpha})`
         ctx.lineWidth = 1.5 + layerProgress
-        ctx.shadowColor = `hsla(${hue},100%,65%,0.6)`
+        ctx.shadowColor = `hsla(${hue},100%,${wL},${isDark ? 0.6 : 0.4})`
         ctx.shadowBlur = 8 + p * 12
         ctx.stroke()
         ctx.shadowBlur = 0
@@ -92,8 +79,8 @@ export default function WaveformCanvas() {
           ctx.lineTo(0, cy)
           ctx.closePath()
           const fill = ctx.createLinearGradient(0, cy - amplitude, 0, cy + amplitude)
-          fill.addColorStop(0, `hsla(${hue},85%,65%,${0.06 * layerProgress * p})`)
-          fill.addColorStop(1, 'hsla(0,0%,0%,0)')
+          fill.addColorStop(0, `hsla(${hue},85%,${isDark ? '65%' : '35%'},${0.06 * layerProgress * p})`)
+          fill.addColorStop(1, isDark ? 'hsla(0,0%,0%,0)' : 'hsla(0,0%,100%,0)')
           ctx.fillStyle = fill
           ctx.fill()
         }
@@ -106,7 +93,7 @@ export default function WaveformCanvas() {
         for (let i = 0; i < barCount; i++) {
           const x = (i / barCount) * w
           const barH = (Math.sin(i * 0.8 + tickRef.current * 2) * 0.5 + 0.5) * h * 0.15 * p
-          ctx.fillStyle = `rgba(99,102,241,${barAlpha})`
+          ctx.fillStyle = isDark ? `rgba(99,102,241,${barAlpha})` : `rgba(30,50,200,${barAlpha * 2})`
           ctx.fillRect(x, cy - barH, 2, barH * 2)
         }
       }

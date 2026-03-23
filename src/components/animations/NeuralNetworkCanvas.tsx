@@ -55,12 +55,7 @@ export default function NeuralNetworkCanvas() {
 
       ctx.clearRect(0, 0, w, h)
 
-      // Background
-      const bg = ctx.createLinearGradient(0, 0, w, h)
-      bg.addColorStop(0, '#060c18')
-      bg.addColorStop(1, '#090f1e')
-      ctx.fillStyle = bg
-      ctx.fillRect(0, 0, w, h)
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light'
 
       const nodeCount = Math.max(3, Math.round(3 + p * (MAX_NODES - 3)))
       const nodes = nodesRef.current.slice(0, nodeCount)
@@ -83,7 +78,7 @@ export default function NeuralNetworkCanvas() {
           const d = Math.sqrt(dx * dx + dy * dy)
           if (d < threshold) {
             const alpha = (1 - d / threshold) * 0.4 * Math.min(1, p * 3)
-            ctx.strokeStyle = `rgba(0,212,255,${alpha})`
+            ctx.strokeStyle = isDark ? `rgba(0,212,255,${alpha})` : `rgba(30,100,200,${alpha * 2})`
             ctx.lineWidth = 0.5 + (1 - d / threshold) * 0.5
             ctx.beginPath()
             ctx.moveTo(nodes[i].x, nodes[i].y)
@@ -116,9 +111,10 @@ export default function NeuralNetworkCanvas() {
         const n2 = nodes[sig.toIdx]
         const sx = n1.x + (n2.x - n1.x) * sig.t
         const sy = n1.y + (n2.y - n1.y) * sig.t
+        const sigL = isDark ? '70%' : '30%'
         const grd = ctx.createRadialGradient(sx, sy, 0, sx, sy, 9)
-        grd.addColorStop(0, `hsla(${sig.hue},100%,70%,0.9)`)
-        grd.addColorStop(1, `hsla(${sig.hue},100%,70%,0)`)
+        grd.addColorStop(0, `hsla(${sig.hue},100%,${sigL},0.9)`)
+        grd.addColorStop(1, `hsla(${sig.hue},100%,${sigL},0)`)
         ctx.fillStyle = grd
         ctx.beginPath()
         ctx.arc(sx, sy, 9, 0, Math.PI * 2)
@@ -132,14 +128,14 @@ export default function NeuralNetworkCanvas() {
         if (appear <= 0) return
         // Outer glow
         const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 7)
-        g.addColorStop(0, `rgba(0,212,255,${0.35 * appear})`)
-        g.addColorStop(1, 'rgba(0,212,255,0)')
+        g.addColorStop(0, isDark ? `rgba(0,212,255,${0.35 * appear})` : `rgba(30,100,200,${0.55 * appear})`)
+        g.addColorStop(1, isDark ? 'rgba(0,212,255,0)' : 'rgba(30,100,200,0)')
         ctx.fillStyle = g
         ctx.beginPath()
         ctx.arc(n.x, n.y, n.r * 7, 0, Math.PI * 2)
         ctx.fill()
         // Core dot
-        ctx.fillStyle = `rgba(180,240,255,${appear})`
+        ctx.fillStyle = isDark ? `rgba(180,240,255,${appear})` : `rgba(20,60,160,${appear})`
         ctx.beginPath()
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2)
         ctx.fill()

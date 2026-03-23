@@ -26,21 +26,12 @@ export default function ContactPage() {
   return (
     <>
       <ParticleOrbitCanvas />
-      {/* Header — Soho reception aesthetic */}
+      {/* Header */}
       <div
-        className="pt-36 page-section relative overflow-hidden"
+        className="pt-36 page-section"
         style={{ background: 'var(--bg-secondary)' }}
       >
-        {/* Subtle blueprint grid */}
-        <div
-          className="absolute inset-0 opacity-[0.025]"
-          style={{
-            backgroundImage:
-              'linear-gradient(var(--accent-primary) 1px, transparent 1px), linear-gradient(90deg, var(--accent-primary) 1px, transparent 1px)',
-            backgroundSize: '52px 52px',
-          }}
-        />
-        <div className="container-xl relative">
+        <div className="container-xl">
           <ScrollReveal>
             <p className="section-label mb-3">Get In Touch</p>
             <h1 className="section-heading mb-6" style={{ fontSize: 'clamp(2.6rem, 6.5vw, 5.5rem)' }}>

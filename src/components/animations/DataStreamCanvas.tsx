@@ -60,16 +60,7 @@ export default function DataStreamCanvas() {
 
       ctx.clearRect(0, 0, w, h)
 
-      // Background
-      ctx.fillStyle = '#040c0a'
-      ctx.fillRect(0, 0, w, h)
-
-      // Subtle green ambient
-      const amb = ctx.createRadialGradient(w * 0.5, h * 0.5, 0, w * 0.5, h * 0.5, w * 0.65)
-      amb.addColorStop(0, `rgba(16,185,129,${0.04 * p})`)
-      amb.addColorStop(1, 'rgba(16,185,129,0)')
-      ctx.fillStyle = amb
-      ctx.fillRect(0, 0, w, h)
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light'
 
       const colCount = Math.max(2, Math.round(2 + p * (MAX_COLS - 2)))
       const speedMult = 0.5 + p * 2.5
@@ -103,12 +94,12 @@ export default function DataStreamCanvas() {
           const fade = fadeTop * fadeBot
 
           if (isGlow) {
-            ctx.fillStyle = `rgba(200,255,230,${fade * 0.95})`
-            ctx.shadowColor = '#10b981'
+            ctx.fillStyle = isDark ? `rgba(200,255,230,${fade * 0.95})` : `rgba(0,80,40,${fade * 0.95})`
+            ctx.shadowColor = isDark ? '#10b981' : '#004020'
             ctx.shadowBlur = 12
           } else {
             const rowAlpha = Math.max(0, 1 - (row - col.glowRow) * 0.07) * fade
-            ctx.fillStyle = `rgba(16,185,129,${rowAlpha * 0.75})`
+            ctx.fillStyle = isDark ? `rgba(16,185,129,${rowAlpha * 0.75})` : `rgba(0,120,60,${rowAlpha * 0.85})`
             ctx.shadowBlur = 0
           }
           ctx.fillText(ch, col.x, cy)
