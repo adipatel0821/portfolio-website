@@ -3,33 +3,32 @@
 import { useEffect, useRef } from 'react'
 import { useScrollProgress } from '@/hooks/useScrollProgress'
 
-const MAX_PARTICLES = 520
-const MAX_TRAIL = 22
+const MAX_PARTICLES = 420
 
 interface Particle {
   x: number; y: number
+  vx: number; vy: number
   trail: Array<{ x: number; y: number }>
   hue: number; speed: number; size: number
 }
 
-function spawnParticle(w: number, h: number, i: number): Particle {
+function spawn(w: number, h: number, i: number): Particle {
   return {
     x: Math.random() * w,
     y: Math.random() * h,
+    vx: 0, vy: 0,
     trail: [],
-    hue: 190 + (i % 140) - 70,   // cyan → purple → violet range
-    speed: 0.7 + (i % 11) * 0.18,
-    size: 0.55 + (i % 6) * 0.22,
+    hue: 185 + (i % 150) - 75,
+    speed: 0.65 + (i % 10) * 0.15,
+    size: 0.5 + (i % 5) * 0.18,
   }
 }
 
-// Multi-octave trig noise → smooth organic flow angle
+// Curl-based flow field — guaranteed no fixed points (no convergence zones)
 function flowAngle(x: number, y: number, t: number): number {
-  return (
-    Math.sin(x * 0.0038 + t * 0.75) * Math.cos(y * 0.0030 + t * 0.55) +
-    Math.sin(x * 0.0072 - t * 0.48 + y * 0.0018) * 0.55 +
-    Math.cos(x * 0.0021 + y * 0.0052 + t * 0.28) * 0.32
-  ) * Math.PI * 2.2
+  const nx = Math.sin(x * 0.0035 + t * 0.70) * Math.cos(y * 0.0028 - t * 0.55)
+  const ny = Math.cos(x * 0.0028 - t * 0.45) * Math.sin(y * 0.0035 + t * 0.65)
+  return Math.atan2(ny, nx) + t * 0.018
 }
 
 export default function FlowFieldCanvas() {
@@ -50,7 +49,7 @@ export default function FlowFieldCanvas() {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
       particlesRef.current = Array.from({ length: MAX_PARTICLES }, (_, i) =>
-        spawnParticle(canvas.width, canvas.height, i)
+        spawn(canvas.width, canvas.height, i)
       )
     }
     resize()
@@ -60,76 +59,79 @@ export default function FlowFieldCanvas() {
       const p = progressRef.current
       const w = canvas.width
       const h = canvas.height
-      tickRef.current += 0.0055 + p * 0.007
+      tickRef.current += 0.005 + p * 0.005
       const t = tickRef.current
       const isDark = document.documentElement.getAttribute('data-theme') !== 'light'
 
-      // Semi-transparent fill instead of clearRect — creates the glowing trail persistence
-      ctx.fillStyle = isDark ? 'rgba(5,8,20,0.16)' : 'rgba(238,241,248,0.20)'
-      ctx.fillRect(0, 0, w, h)
+      // clearRect every frame — no accumulation, no bands
+      ctx.clearRect(0, 0, w, h)
 
-      // Particle count: start with 160, grow to MAX with scroll
-      const visCount = Math.max(160, Math.round(160 + p * (MAX_PARTICLES - 160)))
-      const speedMult = 1.0 + p * 2.8
-      const trailLen = Math.round(7 + p * (MAX_TRAIL - 7))
+      const visCount = Math.max(140, Math.round(140 + p * (MAX_PARTICLES - 140)))
+      const speedMult = 0.9 + p * 2.2
+      // Trail length: short always (prevents any visible banding)
+      const trailLen = Math.round(5 + p * 9)
 
       ctx.save()
       if (isDark) ctx.globalCompositeOperation = 'lighter'
 
       particlesRef.current.slice(0, visCount).forEach(pt => {
         const angle = flowAngle(pt.x, pt.y, t)
-        pt.x += Math.cos(angle) * pt.speed * speedMult
-        pt.y += Math.sin(angle) * pt.speed * speedMult
+        // Velocity with slight inertia + tiny noise to prevent exact convergence
+        const tx = Math.cos(angle) * pt.speed * speedMult
+        const ty = Math.sin(angle) * pt.speed * speedMult
+        pt.vx = pt.vx * 0.55 + tx * 0.45 + (Math.random() - 0.5) * 0.25
+        pt.vy = pt.vy * 0.55 + ty * 0.45 + (Math.random() - 0.5) * 0.25
+        pt.x += pt.vx
+        pt.y += pt.vy
 
-        // Wrap edges
-        if (pt.x < -2)  pt.x = w + 2
-        if (pt.x > w + 2) pt.x = -2
-        if (pt.y < -2)  pt.y = h + 2
-        if (pt.y > h + 2) pt.y = -2
+        // Edge wrap
+        if (pt.x < -4) pt.x = w + 4
+        if (pt.x > w + 4) pt.x = -4
+        if (pt.y < -4) pt.y = h + 4
+        if (pt.y > h + 4) pt.y = -4
 
         pt.trail.unshift({ x: pt.x, y: pt.y })
         if (pt.trail.length > trailLen) pt.trail.pop()
         if (pt.trail.length < 2) return
 
-        // Trail as gradient stroke: opaque head → transparent tail
-        const pL = isDark ? '62%' : '25%'
-        const headA = isDark ? 0.75 : 0.38
-        const tx0 = pt.trail[0].x, ty0 = pt.trail[0].y
-        const txN = pt.trail[pt.trail.length - 1].x, tyN = pt.trail[pt.trail.length - 1].y
+        const pL = isDark ? '60%' : '25%'
+        // In light mode keep alpha very low so content stays readable
+        const headA = isDark ? 0.55 : 0.13
+        const t0 = pt.trail[0], tN = pt.trail[pt.trail.length - 1]
+        const hasDist = Math.abs(t0.x - tN.x) + Math.abs(t0.y - tN.y) > 0.5
 
-        // Avoid zero-length gradient (causes warnings)
-        if (Math.abs(tx0 - txN) + Math.abs(ty0 - tyN) > 0.5) {
-          const grad = ctx.createLinearGradient(tx0, ty0, txN, tyN)
-          grad.addColorStop(0, `hsla(${pt.hue},90%,${pL},${headA})`)
-          grad.addColorStop(1, `hsla(${pt.hue},90%,${pL},0)`)
+        if (hasDist) {
+          const grad = ctx.createLinearGradient(t0.x, t0.y, tN.x, tN.y)
+          grad.addColorStop(0, `hsla(${pt.hue},85%,${pL},${headA})`)
+          grad.addColorStop(1, `hsla(${pt.hue},85%,${pL},0)`)
           ctx.strokeStyle = grad
         } else {
-          ctx.strokeStyle = `hsla(${pt.hue},90%,${pL},${headA})`
+          ctx.strokeStyle = `hsla(${pt.hue},85%,${pL},${headA})`
         }
-        ctx.lineWidth = pt.size * (isDark ? 1.3 : 0.9)
+        ctx.lineWidth = pt.size * (isDark ? 1.0 : 0.6)
         ctx.lineCap = 'round'
         ctx.lineJoin = 'round'
 
         ctx.beginPath()
-        ctx.moveTo(pt.trail[0].x, pt.trail[0].y)
-        for (let i = 1; i < pt.trail.length; i++) {
-          ctx.lineTo(pt.trail[i].x, pt.trail[i].y)
-        }
+        pt.trail.forEach((pos, i) => {
+          if (i === 0) ctx.moveTo(pos.x, pos.y)
+          else ctx.lineTo(pos.x, pos.y)
+        })
         ctx.stroke()
 
-        // Head dot with glow halo (dark) or small solid dot (light)
+        // Head dot
         if (isDark) {
-          const g = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, pt.size * 7)
-          g.addColorStop(0, `hsla(${pt.hue},100%,75%,0.55)`)
-          g.addColorStop(1, `hsla(${pt.hue},100%,75%,0)`)
+          const g = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, pt.size * 6)
+          g.addColorStop(0, `hsla(${pt.hue},100%,72%,0.45)`)
+          g.addColorStop(1, `hsla(${pt.hue},100%,72%,0)`)
           ctx.fillStyle = g
           ctx.beginPath()
-          ctx.arc(pt.x, pt.y, pt.size * 7, 0, Math.PI * 2)
+          ctx.arc(pt.x, pt.y, pt.size * 6, 0, Math.PI * 2)
           ctx.fill()
         }
         ctx.beginPath()
-        ctx.arc(pt.x, pt.y, pt.size * (isDark ? 1.6 : 1.0), 0, Math.PI * 2)
-        ctx.fillStyle = `hsla(${pt.hue},90%,${isDark ? '78%' : '22%'},${isDark ? 0.9 : 0.55})`
+        ctx.arc(pt.x, pt.y, Math.max(0.4, pt.size * (isDark ? 1.4 : 0.8)), 0, Math.PI * 2)
+        ctx.fillStyle = `hsla(${pt.hue},88%,${isDark ? '75%' : '28%'},${isDark ? 0.85 : 0.22})`
         ctx.fill()
       })
 
