@@ -19,7 +19,7 @@ export default function ContactForm() {
     setStatus('sending')
     try {
       const res = await fetch(
-        `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_ID}`,
+        'https://formspree.io/f/xkopwlee',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
