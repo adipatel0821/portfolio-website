@@ -30,9 +30,12 @@ export default function ContactForm() {
         setStatus('success')
         setForm({ name: '', email: '', subject: '', message: '' })
       } else {
+        const errBody = await res.json().catch(() => ({}))
+        console.error('Formspree error', res.status, errBody)
         setStatus('error')
       }
-    } catch {
+    } catch (err) {
+      console.error('Formspree fetch failed', err)
       setStatus('error')
     }
   }
