@@ -1,7 +1,7 @@
 import ContactForm from '@/components/ContactForm'
 import ContactInfo from '@/components/ContactInfo'
 import ScrollReveal from '@/components/ScrollReveal'
-import VortexCanvas from '@/components/animations/VortexCanvas'
+import WarpedLinesCanvas from '@/components/animations/WarpedLinesCanvas'
 
 const faqs = [
   {
@@ -25,7 +25,7 @@ const faqs = [
 export default function ContactPage() {
   return (
     <>
-      <VortexCanvas />
+      <WarpedLinesCanvas />
       {/* Header */}
       <div
         className="pt-36 page-section"
