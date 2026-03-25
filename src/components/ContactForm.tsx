@@ -17,14 +17,32 @@ export default function ContactForm() {
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setStatus('sending')
-    await new Promise((r) => setTimeout(r, 1200))
-    setStatus('success')
+    try {
+      const res = await fetch(
+        `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_ID}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(form),
+        },
+      )
+      if (res.ok) {
+        setStatus('success')
+        setForm({ name: '', email: '', subject: '', message: '' })
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
   }
 
   const reset = () => {
     setStatus('idle')
     setForm({ name: '', email: '', subject: '', message: '' })
   }
+
+  const retryOnError = () => setStatus('idle')
 
   return (
     <div
@@ -176,6 +194,14 @@ export default function ContactForm() {
                 </>
               )}
             </motion.button>
+
+            {/* Error message */}
+            {status === 'error' && (
+              <div className="flex items-center gap-2 text-sm px-4 py-3 rounded-xl" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#f87171' }}>
+                <AlertCircle size={16} />
+                Something went wrong — please try again or email me directly.
+              </div>
+            )}
 
             {/* Privacy note */}
             <p className="text-center text-xs" style={{ color: 'var(--text-muted)' }}>
