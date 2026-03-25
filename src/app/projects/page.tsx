@@ -1,12 +1,12 @@
 import ProjectCard from '@/components/ProjectCard'
 import ScrollReveal from '@/components/ScrollReveal'
-import DataStreamCanvas from '@/components/animations/DataStreamCanvas'
+import RippleGridCanvas from '@/components/animations/RippleGridCanvas'
 import { projects } from '@/data/projects'
 
 export default function ProjectsPage() {
   return (
     <>
-      <DataStreamCanvas />
+      <RippleGridCanvas />
       {/* Header */}
       <div className="pt-36 page-section" style={{ background: 'var(--bg-secondary)' }}>
         <div className="container-xl">
