@@ -26,11 +26,19 @@ export default function MobileSidebar({ open, onClose }: Props) {
   // Close on route change
   useEffect(() => { onClose() }, [pathname]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Lock body scroll when open
+  // Lock body scroll when open (html + body covers iOS Safari)
   useEffect(() => {
-    if (open) document.body.style.overflow = 'hidden'
-    else document.body.style.overflow = ''
-    return () => { document.body.style.overflow = '' }
+    if (open) {
+      document.body.style.overflow = 'hidden'
+      document.documentElement.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
+    }
   }, [open])
 
   return (
@@ -108,7 +116,7 @@ export default function MobileSidebar({ open, onClose }: Props) {
               {navLinks.map(({ href, label, icon: Icon }) => {
                 const active = pathname === href
                 return (
-                  <Link key={href} href={href}>
+                  <Link key={href} href={href} onClick={onClose}>
                     <div
                       className="flex items-center gap-3 px-4 py-3.5 rounded-2xl transition-all duration-200 cursor-pointer"
                       style={{
