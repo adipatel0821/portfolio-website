@@ -8,6 +8,7 @@ type Status = 'idle' | 'sending' | 'success' | 'error'
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>('idle')
+  const [errorMsg, setErrorMsg] = useState<string>('')
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -28,14 +29,18 @@ export default function ContactForm() {
       )
       if (res.ok) {
         setStatus('success')
+        setErrorMsg('')
         setForm({ name: '', email: '', subject: '', message: '' })
       } else {
         const errBody = await res.json().catch(() => ({}))
+        const detail = errBody?.error ?? errBody?.errors?.[0]?.message ?? `HTTP ${res.status}`
         console.error('Formspree error', res.status, errBody)
+        setErrorMsg(detail)
         setStatus('error')
       }
     } catch (err) {
       console.error('Formspree fetch failed', err)
+      setErrorMsg(err instanceof Error ? err.message : 'Network error')
       setStatus('error')
     }
   }
@@ -45,7 +50,7 @@ export default function ContactForm() {
     setForm({ name: '', email: '', subject: '', message: '' })
   }
 
-  const retryOnError = () => setStatus('idle')
+  const retryOnError = () => { setStatus('idle'); setErrorMsg('') }
 
   return (
     <div
@@ -200,9 +205,12 @@ export default function ContactForm() {
 
             {/* Error message */}
             {status === 'error' && (
-              <div className="flex items-center gap-2 text-sm px-4 py-3 rounded-xl" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#f87171' }}>
-                <AlertCircle size={16} />
-                Something went wrong — please try again or email me directly.
+              <div className="flex items-start gap-2 text-sm px-4 py-3 rounded-xl" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#f87171' }}>
+                <AlertCircle size={16} className="flex-shrink-0 mt-0.5" />
+                <span>
+                  Something went wrong — please try again or email me directly.
+                  {errorMsg ? ` (${errorMsg})` : ''}
+                </span>
               </div>
             )}
 
