@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Calendar, ArrowRight, BookOpen } from 'lucide-react'
+import { Calendar, BookOpen } from 'lucide-react'
 import { getAllPosts } from '@/lib/contentful'
 import type { BlogPost } from '@/lib/contentful'
 import ScrollReveal from '@/components/ScrollReveal'
@@ -25,83 +25,7 @@ function formatDate(iso: string): string {
   })
 }
 
-// ─── Featured card (first post) ───────────────────────────────────────────────
-
-function FeaturedCard({ post }: { post: BlogPost }) {
-  return (
-    <Link href={`/blog/${post.slug}`}>
-      <div
-        className="glass-card overflow-hidden group"
-        style={{ borderRadius: 24 }}
-      >
-        {/* Cover image */}
-        {post.coverImage ? (
-          <div className="relative h-64 overflow-hidden">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={post.coverImage.url}
-              alt={post.coverImage.title}
-              width={post.coverImage.width}
-              height={post.coverImage.height}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  'linear-gradient(to bottom, transparent 40%, var(--bg-primary) 100%)',
-              }}
-            />
-          </div>
-        ) : (
-          <div
-            className="h-2"
-            style={{
-              background:
-                'linear-gradient(90deg, var(--accent-primary), var(--accent-secondary))',
-            }}
-          />
-        )}
-
-        <div className="p-8 md:p-10">
-          {/* Date + tags */}
-          <div className="flex flex-wrap items-center gap-3 mb-5">
-            <span className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--text-muted)' }}>
-              <Calendar size={11} />
-              {formatDate(post.publishedDate)}
-            </span>
-            {post.tags.map((tag) => (
-              <span key={tag} className="tech-chip">{tag}</span>
-            ))}
-          </div>
-
-          <h2
-            className="font-display font-black text-2xl md:text-3xl leading-snug mb-4 group-hover:text-[var(--accent-primary)] transition-colors"
-            style={{ color: 'var(--text-primary)' }}
-          >
-            {post.title}
-          </h2>
-
-          <p
-            className="text-base leading-relaxed mb-6 max-w-2xl"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            {post.excerpt}
-          </p>
-
-          <span
-            className="inline-flex items-center gap-2 font-bold text-sm"
-            style={{ color: 'var(--accent-primary)' }}
-          >
-            Read Article <ArrowRight size={15} />
-          </span>
-        </div>
-      </div>
-    </Link>
-  )
-}
-
-// ─── Grid card ────────────────────────────────────────────────────────────────
+// ─── Post card ────────────────────────────────────────────────────────────────
 
 function PostCard({ post }: { post: BlogPost }) {
   return (
@@ -197,8 +121,6 @@ export default async function BlogPage() {
     // Contentful not reachable — render empty state
   }
 
-  const [featured, ...rest] = posts
-
   return (
     <>
       <WaveformCanvas />
@@ -246,37 +168,20 @@ export default async function BlogPage() {
           </div>
         </section>
       ) : (
-        <>
-          {/* Featured */}
-          <section className="pt-16 pb-8" style={{ background: 'var(--bg-primary)' }}>
-            <div className="container-xl">
-              <ScrollReveal>
-                <p className="section-label mb-4">Featured</p>
-              </ScrollReveal>
-              <ScrollReveal delay={0.05}>
-                <FeaturedCard post={featured} />
-              </ScrollReveal>
-            </div>
-          </section>
-
-          {/* Grid */}
-          {rest.length > 0 && (
-            <section className="pt-8 pb-24" style={{ background: 'var(--bg-primary)' }}>
-              <div className="container-xl">
-                <ScrollReveal>
-                  <p className="section-label mb-8">All Articles</p>
+        <section className="pt-12 pb-24" style={{ background: 'var(--bg-primary)' }}>
+          <div className="container-xl">
+            <ScrollReveal>
+              <p className="section-label mb-8">All Articles</p>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {posts.map((post, i) => (
+                <ScrollReveal key={post.slug} delay={i * 0.07}>
+                  <PostCard post={post} />
                 </ScrollReveal>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {rest.map((post, i) => (
-                    <ScrollReveal key={post.slug} delay={i * 0.07}>
-                      <PostCard post={post} />
-                    </ScrollReveal>
-                  ))}
-                </div>
-              </div>
-            </section>
-          )}
-        </>
+              ))}
+            </div>
+          </div>
+        </section>
       )}
 
       {/* CTA */}
