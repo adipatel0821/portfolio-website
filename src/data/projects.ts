@@ -2,6 +2,66 @@ import type { Project } from '@/components/ProjectCard'
 
 export const projects: Project[] = [
   {
+    id: 'global-market-lab',
+    title: 'Global Market Lab: Financial Analytics Platform',
+    tagline: 'Bloomberg Terminal-style analytics across 80+ global instruments.',
+    description:
+      'Built a Bloomberg Terminal-inspired analytics platform covering 84 instruments across equities, bonds, forex, metals, energy, and macro. Live data streams in through FRED, ECB, and EIA connectors, while a from-scratch math engine computes ARIMA, Holt-Winters, and GARCH forecasts alongside Monte Carlo VaR/CVaR, regime detection, and SVG correlation networks. Every chart is native SVG with zero external UI or charting libraries.',
+    vision:
+      'I wanted to see whether one person could rebuild the parts of a professional trading terminal that actually matter, the live data, the forecasting math, and the dense information design, without leaning on any UI or charting library.',
+    tech: ['Next.js 16', 'TypeScript', 'FRED API', 'ECB', 'EIA', 'ARIMA', 'GARCH', 'Holt-Winters', 'Monte Carlo', 'SVG'],
+    color: '#22d3ee',
+    accent: '#6366f1',
+    category: 'FinTech',
+    year: '2026',
+    impact: '84 instruments · Live FRED + ECB + EIA data · ARIMA/Holt-Winters/GARCH ensemble · Monte Carlo VaR/CVaR · zero chart libraries',
+  },
+  {
+    id: 'chaos-arbitrageur',
+    title: 'Chaos Arbitrageur: Event-Driven Alt-Data Platform',
+    tagline: 'Predicting equity impact from physical supply-chain shocks.',
+    description:
+      'An event-driven research platform that ingests physical-world alternative data instead of price charts. It streams live port-congestion data from IMF PortWatch and global news from GDELT, geolocates supply-chain disruptions on a dark interactive globe, then uses a LangChain and Claude correlation agent plus a Pinecone vector memory of historical analogues to estimate the equity impact on the most-exposed public companies. An event-study simulator measures cumulative abnormal returns against SPY.',
+    vision:
+      'Markets react to physical-world shocks like port collapses and conflict long before the price charts catch up. I wanted to build the pipeline that watches the physical world directly and turns a disruption into a ranked list of exposed tickers.',
+    tech: ['FastAPI', 'Python', 'Next.js', 'LangChain', 'Claude', 'Pinecone', 'IMF PortWatch', 'GDELT', 'DuckDB', 'React-Leaflet'],
+    color: '#ef4444',
+    accent: '#f59e0b',
+    category: 'AI/ML',
+    year: '2026',
+    impact: '200+ live alerts on an interactive globe · LLM correlation agent · Pinecone analogue memory (12 historical shocks) · event-study CAR vs SPY with t-stats',
+  },
+  {
+    id: 'medfusion-diff',
+    title: 'MedFusion-Diff: Brain MRI Diffusion Model',
+    tagline: 'Conditional diffusion model synthesizing brain tumor MRIs.',
+    description:
+      'A pixel-space conditional diffusion model (Conditional U-Net with cross-attention, DDPM) that synthesizes brain tumor MRI slices from the BraTS 2023 dataset, conditioned on patient metadata such as age, gender, diagnosis, and WHO grade. Trained on RunPod RTX 4090 GPUs with mixed-precision AMP over roughly 9,500 training slices, backed by a data pipeline that pulls scans directly from Synapse.',
+    vision:
+      'Medical imaging research is throttled by scarce, privacy-locked scans. I wanted to prove a conditional diffusion model could generate realistic, metadata-controllable MRI slices that expand training sets without exposing a single real patient.',
+    tech: ['PyTorch', 'DDPM', 'U-Net', 'Cross-Attention', 'BraTS 2023', 'RunPod', 'CUDA', 'AMP', 'NumPy'],
+    color: '#8b5cf6',
+    accent: '#ec4899',
+    category: 'AI/ML',
+    year: '2026',
+    impact: 'Conditional DDPM on BraTS 2023 · metadata-conditioned generation · ~9.5K training slices · RTX 4090 mixed-precision training',
+  },
+  {
+    id: 'jobpilot',
+    title: 'JobPilot: Multi-Agent Job-Application Assistant',
+    tagline: 'A 24/7 multi-agent system that finds and tailors job applications.',
+    description:
+      'A self-hosted, multi-agent job hunter that continuously discovers roles across Greenhouse, Lever, and other boards, then uses Claude-powered Matcher and Tailor agents to score fit and draft tailored resumes and cover letters. Built on a Fastify API with BullMQ and Redis workers and Prisma/SQLite, with a three-layer dedup pipeline and Discord alerts. It never auto-submits, it prepares everything and leaves the final apply to the user.',
+    vision:
+      'Job hunting is a full-time job on top of your job. I wanted an always-on system that does the discovery and tailoring grunt work overnight, while keeping a human firmly in control of every actual submission.',
+    tech: ['Node.js', 'TypeScript', 'Fastify', 'BullMQ', 'Redis', 'Prisma', 'SQLite', 'Claude', 'Docker'],
+    color: '#14b8a6',
+    accent: '#3b82f6',
+    category: 'SaaS',
+    year: '2026',
+    impact: 'Live multi-board discovery (4.7K to 627 after 3-layer dedup) · Claude Matcher + Tailor agents · never auto-submits · Discord alerts',
+  },
+  {
     id: 'multimodal-gan',
     title: 'Multimodal GAN: Synthetic Patient Data',
     tagline: 'Generating realistic multimodal patient records with GANs.',

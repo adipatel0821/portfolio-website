@@ -56,6 +56,9 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+  // Guard: an empty/undefined slug would drop the filter and return the first
+  // post for every URL. Fail closed instead.
+  if (!slug) return null
   const response = await getClient().getEntries({
     content_type: 'blogPost',
     'fields.slug': slug,

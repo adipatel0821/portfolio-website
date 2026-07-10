@@ -77,7 +77,7 @@ export default function ProjectsPage() {
                 share experiments, and document everything I learn.
               </p>
               <a
-                href="https://github.com"
+                href="https://github.com/adipatel0821"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="liquid-btn inline-flex items-center gap-2 px-8 py-4 text-base font-bold"

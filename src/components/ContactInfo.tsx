@@ -23,9 +23,9 @@ export default function ContactInfo() {
     {
       icon: Github,
       label: 'GitHub',
-      handle: 'adityapatel0821',
+      handle: 'adipatel0821',
       sub: 'Open source & projects',
-      href: 'https://github.com/adityapatel0821',
+      href: 'https://github.com/adipatel0821',
       color: isDark ? '#e6edf3' : '#1f2328',
     },
   ]

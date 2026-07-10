@@ -26,9 +26,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }): Promise<Metadata> {
-  const post = await getPostBySlug(params.slug)
+  const { slug } = await params
+  const post = await getPostBySlug(slug)
   if (!post) return {}
   return {
     title: `${post.title} | Aditya Patel`,
@@ -59,9 +60,10 @@ function formatDate(iso: string): string {
 export default async function BlogPostPage({
   params,
 }: {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
-  const post = await getPostBySlug(params.slug)
+  const { slug } = await params
+  const post = await getPostBySlug(slug)
   if (!post) notFound()
 
   const bodyHtml = post.body ? documentToHtmlString(post.body) : ''
