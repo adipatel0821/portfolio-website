@@ -63,7 +63,9 @@ export default function Reveal({
   const MotionTag = MOTION_TAGS[as] as typeof motion.div
 
   if (prefersReduced) {
-    const Tag = as as ElementType
+    // Same widening reason as MotionTag: the union of intrinsic tags produces
+    // an unsatisfiable intersection for props.
+    const Tag = as as 'div'
     return <Tag className={className}>{children}</Tag>
   }
 

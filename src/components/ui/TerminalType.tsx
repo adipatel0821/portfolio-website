@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useInView, useReducedMotion } from 'framer-motion'
 import { clsx } from '@/lib/clsx'
 
@@ -36,7 +36,16 @@ export default function TerminalType({
   caret = true,
   prompt,
 }: TerminalTypeProps) {
-  const strings = Array.isArray(text) ? text : [text]
+  // `strings` is an effect dependency, so it must be referentially stable. A
+  // caller passing an inline array literal hands us a fresh reference on every
+  // render, which would re-arm the timer forever and never settle. Keying the
+  // memo on the serialised value rather than the array identity breaks that.
+  const textKey = JSON.stringify(text)
+  const strings = useMemo<string[]>(() => {
+    const parsed: unknown = JSON.parse(textKey)
+    return Array.isArray(parsed) ? (parsed as string[]) : [String(parsed)]
+  }, [textKey])
+
   const fullText = strings.join(', ')
 
   const ref = useRef<HTMLSpanElement>(null)
