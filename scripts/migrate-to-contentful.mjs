@@ -27,6 +27,22 @@ const HEADERS = {
   'Content-Type': 'application/vnd.contentful.management.v1+json',
 }
 
+// ─── Token verification ───────────────────────────────────────────────────────
+
+async function verifyToken() {
+  console.log('Verifying token…')
+  console.log('  Token length:', CMA_TOKEN.length, '| First 10 chars:', CMA_TOKEN.slice(0, 10))
+  const res = await fetch(`https://api.contentful.com/spaces/${SPACE_ID}`, {
+    headers: { Authorization: `Bearer ${CMA_TOKEN}` },
+  })
+  const json = await res.json()
+  if (!res.ok) {
+    console.error('  Token rejected →', res.status, JSON.stringify(json))
+    process.exit(1)
+  }
+  console.log('  Token OK — space name:', json.name)
+}
+
 // ─── CMA helpers ──────────────────────────────────────────────────────────────
 
 async function cma(method, path, body) {
@@ -73,9 +89,8 @@ async function ensureContentType() {
     existing = null
   }
 
-  const saved = existing
-    ? await cma('PUT', '/content_types/blogPost', ct)   // update
-    : await cma('POST', '/content_types', { ...ct, sys: { id: 'blogPost' } })  // create
+  // PUT is idempotent — creates if missing, updates if exists
+  const saved = await cma('PUT', '/content_types/blogPost', ct)
 
   // Activate (publish) the content type
   await fetch(`${BASE}/content_types/blogPost/published`, {
@@ -472,8 +487,14 @@ async function createEntry(post) {
     tags:          { 'en-US': post.tags },
   }
 
-  const entry = await cma('POST', '/entries', { fields })
-  return entry
+  const res = await fetch(`${BASE}/entries`, {
+    method: 'POST',
+    headers: { ...HEADERS, 'X-Contentful-Content-Type': 'blogPost' },
+    body: JSON.stringify({ fields }),
+  })
+  const json = await res.json()
+  if (!res.ok) throw new Error(`CMA POST /entries → ${res.status}: ${json?.message ?? JSON.stringify(json)}`)
+  return json
 }
 
 async function publishEntry(entryId, version) {
@@ -490,6 +511,7 @@ async function publishEntry(entryId, version) {
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
+  await verifyToken()
   await ensureContentType()
 
   console.log(`\nMigrating ${POSTS.length} posts…`)

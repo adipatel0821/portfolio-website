@@ -1,12 +1,11 @@
 import ProjectCard from '@/components/ProjectCard'
 import ScrollReveal from '@/components/ScrollReveal'
-import RippleGridCanvas from '@/components/animations/RippleGridCanvas'
 import { projects } from '@/data/projects'
 
 export default function ProjectsPage() {
   return (
     <>
-      <RippleGridCanvas />
+      
       {/* Header */}
       <div className="pt-36 page-section" style={{ background: 'var(--bg-secondary)' }}>
         <div className="container-xl">
@@ -89,17 +88,6 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer
-        className="py-10 border-t text-center text-xs"
-        style={{ background: 'var(--bg-primary)', borderColor: 'var(--divider)', color: 'var(--text-muted)' }}
-      >
-        <p>
-          Designed &amp; built by{' '}
-          <span className="font-bold" style={{ color: 'var(--accent-primary)' }}>Aditya Patel</span>
-          {' '}in Hoboken, NJ · {new Date().getFullYear()}
-        </p>
-      </footer>
     </>
   )
 }

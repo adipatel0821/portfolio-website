@@ -2,7 +2,6 @@ import HeroSection from '@/components/HeroSection'
 import QuickStats from '@/components/QuickStats'
 import TechMarquee from '@/components/TechMarquee'
 import ScrollReveal from '@/components/ScrollReveal'
-import NeuralNetworkCanvas from '@/components/animations/NeuralNetworkCanvas'
 import Link from 'next/link'
 import { ArrowRight, Code2, Rocket, Zap, Globe } from 'lucide-react'
 
@@ -36,7 +35,7 @@ const services = [
 export default function HomePage() {
   return (
     <>
-      <NeuralNetworkCanvas />
+      
       <HeroSection />
 
       {/* Quick Stats bar */}
@@ -166,26 +165,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer
-        className="py-10 border-t text-center text-xs"
-        style={{
-          background: 'var(--bg-primary)',
-          borderColor: 'var(--divider)',
-          color: 'var(--text-muted)',
-        }}
-      >
-        <p>
-          Designed &amp; built by{' '}
-          <span className="font-bold" style={{ color: 'var(--accent-primary)' }}>
-            Aditya Patel
-          </span>{' '}
-          in Hoboken, NJ · {new Date().getFullYear()}
-        </p>
-        <p className="mt-1 opacity-60">
-          Next.js 14 · Tailwind CSS · Framer Motion · TypeScript
-        </p>
-      </footer>
     </>
   )
 }

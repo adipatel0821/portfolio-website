@@ -3,13 +3,11 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Linkedin, Github, Mail, Copy, Check, MapPin, Clock } from 'lucide-react'
-import { useTheme } from '@/context/ThemeContext'
 
 const EMAIL = 'adityapatel280104@gmail.com'
 
 export default function ContactInfo() {
   const [copied, setCopied] = useState(false)
-  const { isDark } = useTheme()
 
   const socials = [
     {
@@ -26,7 +24,7 @@ export default function ContactInfo() {
       handle: 'adipatel0821',
       sub: 'Open source & projects',
       href: 'https://github.com/adipatel0821',
-      color: isDark ? '#e6edf3' : '#1f2328',
+      color: '#e6edf3',
     },
   ]
 

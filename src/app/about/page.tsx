@@ -1,6 +1,5 @@
 import SubwayTimeline from '@/components/SubwayTimeline'
 import ScrollReveal from '@/components/ScrollReveal'
-import HexGridCanvas from '@/components/animations/HexGridCanvas'
 import { GraduationCap, MapPin, Users, Cpu } from 'lucide-react'
 
 const techStack = [
@@ -52,7 +51,7 @@ const values = [
 export default function AboutPage() {
   return (
     <>
-      <HexGridCanvas />
+      
       {/* Header */}
       <div className="pt-36 pb-18 page-section" style={{ background: 'var(--bg-secondary)' }}>
         <div className="container-xl">
@@ -215,17 +214,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer
-        className="py-10 border-t text-center text-xs"
-        style={{ background: 'var(--bg-primary)', borderColor: 'var(--divider)', color: 'var(--text-muted)' }}
-      >
-        <p>
-          Designed &amp; built by{' '}
-          <span className="font-bold" style={{ color: 'var(--accent-primary)' }}>Aditya Patel</span>
-          {' '}in Hoboken, NJ · {new Date().getFullYear()}
-        </p>
-      </footer>
     </>
   )
 }

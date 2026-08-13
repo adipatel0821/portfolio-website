@@ -1,7 +1,6 @@
 import ContactForm from '@/components/ContactForm'
 import ContactInfo from '@/components/ContactInfo'
 import ScrollReveal from '@/components/ScrollReveal'
-import WarpedLinesCanvas from '@/components/animations/WarpedLinesCanvas'
 
 const faqs = [
   {
@@ -25,7 +24,7 @@ const faqs = [
 export default function ContactPage() {
   return (
     <>
-      <WarpedLinesCanvas />
+      
       {/* Header */}
       <div
         className="pt-36 page-section"
@@ -95,17 +94,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer
-        className="py-10 border-t text-center text-xs"
-        style={{ background: 'var(--bg-primary)', borderColor: 'var(--divider)', color: 'var(--text-muted)' }}
-      >
-        <p>
-          Designed &amp; built by{' '}
-          <span className="font-bold" style={{ color: 'var(--accent-primary)' }}>Aditya Patel</span>
-          {' '}in Hoboken, NJ · {new Date().getFullYear()}
-        </p>
-      </footer>
     </>
   )
 }
