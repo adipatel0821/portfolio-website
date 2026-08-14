@@ -76,6 +76,20 @@ export const timeline: TimelineStop[] = [
       { label: 'Focus', value: 'ML · AI systems · Distributed computing' },
     ],
   },
+  {
+    num: '06',
+    period: 'Jul 2026 — Present',
+    title: 'AI Engineer Intern',
+    org: 'Licent Solutions LLC',
+    kind: 'Experience',
+    // The work itself is confidential. This entry deliberately describes the
+    // role and nothing else — no systems, no metrics, no domain detail.
+    body: 'Currently working as an AI engineer at Licent Solutions. The work is confidential, so there are no details here.',
+    detail: [
+      { label: 'Role', value: 'AI Engineer · Internship' },
+      { label: 'Status', value: 'Ongoing' },
+    ],
+  },
 ]
 
 export interface SkillGroup {

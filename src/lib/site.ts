@@ -22,11 +22,18 @@ export const nav = [
   { href: '/contact', label: 'Contact' },
 ] as const
 
+/**
+ * Outbound profiles. Every entry here must be a link that resolves — the rail
+ * and the footer render whatever is in this list.
+ *
+ * X is omitted deliberately: the handle guessed from the GitHub name
+ * (x.com/adipatel0821) returns 404, and pointing visitors at a dead URL — or
+ * worse, at whoever registers it later — is worse than showing two profiles.
+ * Add it back here once the real handle is known.
+ */
 export const socials = [
   { label: 'GitHub', short: 'GH', href: 'https://github.com/adipatel0821' },
   { label: 'LinkedIn', short: 'IN', href: 'https://linkedin.com/in/adityapatel0821' },
-  // TODO(aditya): confirm the X handle — this is a guess from the GitHub name.
-  { label: 'X', short: 'X', href: 'https://x.com/adipatel0821' },
 ] as const
 
 /** Served from /public. */

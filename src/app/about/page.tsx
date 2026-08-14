@@ -12,7 +12,7 @@ import { site } from '@/lib/site'
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Aditya Patel — M.S. Computer Science at Stevens Institute of Technology. Three industry internships across data engineering, IoT and web, and production ML deployments on AWS SageMaker and GCP Vertex AI.',
+    'Aditya Patel — M.S. Computer Science at Stevens Institute of Technology, currently an AI engineer intern at Licent Solutions. Four industry internships across AI, data engineering, IoT and web, and production ML deployments on AWS SageMaker and GCP Vertex AI.',
 }
 
 export default function AboutPage() {
@@ -61,7 +61,7 @@ export default function AboutPage() {
               <Reveal delay={0.08}>
                 <p className="mb-6 text-body text-ash">
                   I finished my B.Tech at VIT Chennai in 2025 with a GPA of 3.5/4.0, and
-                  spent the years around it doing three internships that had almost nothing
+                  spent the years around it doing internships that had almost nothing
                   in common — ETL pipelines at Intellect Design Arena, IoT systems at Intuz,
                   and full-stack web at Appuno. That turned out to be the useful part. Each
                   one taught me a different half of what makes a system actually work.
@@ -83,8 +83,11 @@ export default function AboutPage() {
                 <p className="text-body text-ash">
                   The through-line is healthcare AI and the data-scarcity problem underneath
                   it: the most valuable datasets in medicine are the ones you are least
-                  allowed to use. Most of my work is some attempt at that. I&apos;m currently
-                  looking for ML or data engineering roles — if you&apos;re building
+                  allowed to use. Most of my work is some attempt at that. Right now
+                  I&apos;m an AI engineer intern at{' '}
+                  <span className="text-chalk">Licent Solutions</span> — that work is
+                  confidential, so it isn&apos;t written up here — and I&apos;m looking for
+                  ML or data engineering roles alongside it. If you&apos;re building
                   something in that space,{' '}
                   <Link href="/contact" className="text-chalk underline underline-offset-4 hover:text-signal">
                     I want to hear about it
@@ -101,7 +104,8 @@ export default function AboutPage() {
                   { label: 'Based', value: site.location },
                   { label: 'Studying', value: 'M.S. CS · Stevens · 2025–2027' },
                   { label: 'Prior', value: 'B.Tech CS&E · VIT Chennai · 3.5/4.0' },
-                  { label: 'Internships', value: 'Data Eng · IoT · Web' },
+                  { label: 'Currently', value: 'AI Engineer Intern · Licent Solutions' },
+                  { label: 'Internships', value: 'AI · Data Eng · IoT · Web' },
                   { label: 'Focus', value: 'Generative models · Data pipelines' },
                   { label: 'Open to', value: 'Remote · Hybrid · On-site' },
                 ].map((row) => (

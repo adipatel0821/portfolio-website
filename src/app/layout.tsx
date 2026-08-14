@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: `%s · ${site.name}`,
   },
   description:
-    'Graduate CS student at Stevens Institute of Technology specializing in Machine Learning and Data Engineering. 3 industry internships, production AI deployments on AWS SageMaker and GCP Vertex AI.',
+    'Graduate CS student at Stevens Institute of Technology specializing in Machine Learning and Data Engineering. Four industry internships, production AI deployments on AWS SageMaker and GCP Vertex AI.',
   keywords: [
     'machine learning',
     'data engineering',

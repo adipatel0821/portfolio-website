@@ -68,7 +68,7 @@ export const chapters: Chapter[] = [
 
 /** Count-up stats. `value` is numeric so CountUp can animate it. */
 export const stats = [
-  { value: 3, suffix: '', label: 'Industry internships', sub: 'Data Eng · Web · IoT' },
+  { value: 4, suffix: '', label: 'Industry internships', sub: 'AI · Data Eng · Web · IoT' },
   { value: 9, suffix: '', label: 'Projects shipped', sub: 'ML, ETL, IoT & web' },
   { value: 50, suffix: 'K+', label: 'Synthetic records', sub: 'SynMedix on SageMaker' },
   { value: 84, suffix: '', label: 'Instruments modelled', sub: 'Global Market Lab' },
