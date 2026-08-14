@@ -21,7 +21,7 @@ export default function ProjectsPage() {
       {/* ── Header ── */}
       <header className="border-b border-hairline pb-16 pt-[calc(var(--nav-h)+clamp(4rem,10vh,7rem))]">
         <div className="shell">
-          <Reveal>
+          <Reveal priority>
             <Eyebrow label="Aditya Patel" sublabel="Selected Work" className="mb-8" />
           </Reveal>
 
@@ -32,7 +32,7 @@ export default function ProjectsPage() {
             delay={0.1}
           />
 
-          <Reveal delay={0.5}>
+          <Reveal delay={0.5} priority>
             <p className="max-w-[54ch] text-body text-ash">
               Nine builds across machine learning, data engineering, IoT and the web. Each
               one written up properly — the problem, the approach, the architecture, and

@@ -63,17 +63,27 @@ function detect(): { tier: Exclude<Tier, 'pending'>; budget: Budget } {
   const memory = nav.deviceMemory ?? 4
   const cores = navigator.hardwareConcurrency ?? 4
   const coarsePointer = window.matchMedia('(pointer: coarse)').matches
-  const narrow = window.innerWidth < 768
+  const narrow = window.innerWidth < 1024
 
-  // Genuinely weak hardware drops to the 2D path rather than limping along in
-  // WebGL at 20fps, which looks worse than the honest fallback.
-  if (memory <= 2 || cores <= 2) return { tier: 'canvas', budget: fallbackBudget }
+  // Phones and tablets take the 2D path — deliberately, not as a failure case.
+  //
+  // Measured on a mid-range mobile profile, shipping three.js here costs ~232kb
+  // of parse plus the formation-texture build, which pushed total blocking time
+  // over a second and LCP past five seconds. The 2D fallback runs the same five
+  // formations at a fraction of that, so the phone gets a scene that actually
+  // holds its frame rate instead of a better one that stutters.
+  //
+  // The same applies to genuinely weak desktops: limping along in WebGL at
+  // 20fps looks worse than the honest fallback.
+  if (coarsePointer || narrow || memory <= 2 || cores <= 2) {
+    return { tier: 'canvas', budget: fallbackBudget }
+  }
 
-  // Mid-tier and mobile get the real scene at a reduced budget.
-  if (coarsePointer || narrow || memory < 4 || cores <= 4) {
+  // Modest desktops get the real scene at a reduced budget.
+  if (memory < 4 || cores <= 4) {
     return {
       tier: 'webgl',
-      budget: { particleCount: 9000, pixelRatio: Math.min(window.devicePixelRatio || 1, 1.25) },
+      budget: { particleCount: 12000, pixelRatio: Math.min(window.devicePixelRatio || 1, 1.5) },
     }
   }
 
@@ -98,14 +108,42 @@ export default function CenterpieceStage({ chapter }: Props) {
 
   // Resolve the tier after mount so the server render is always the static
   // fallback — no hydration mismatch, no layout shift when the real scene lands.
+  //
+  // Deferred to idle rather than run on mount: the scene is decorative, and
+  // starting a 232kb dynamic import while React is still hydrating the page is
+  // what turns a fast first paint into a slow largest-contentful paint. The
+  // 1200ms timeout guarantees it still arrives promptly on a busy main thread.
   useEffect(() => {
     if (prefersReduced) {
       setTier('static')
       return
     }
-    const { tier: t, budget: b } = detect()
-    setBudget(b)
-    setTier(t)
+
+    let cancelled = false
+    const resolve = () => {
+      if (cancelled) return
+      const { tier: t, budget: b } = detect()
+      setBudget(b)
+      setTier(t)
+    }
+
+    const ric = (window as Window & { requestIdleCallback?: typeof requestIdleCallback })
+      .requestIdleCallback
+    if (typeof ric === 'function') {
+      const handle = ric(resolve, { timeout: 1200 })
+      return () => {
+        cancelled = true
+        ;(window as Window & { cancelIdleCallback?: typeof cancelIdleCallback })
+          .cancelIdleCallback?.(handle)
+      }
+    }
+
+    // Safari has no requestIdleCallback; a timeout is close enough here.
+    const t = setTimeout(resolve, 400)
+    return () => {
+      cancelled = true
+      clearTimeout(t)
+    }
   }, [prefersReduced])
 
   // Pause the render loop whenever the stage is off-screen or the tab is

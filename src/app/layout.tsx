@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { fontVariables } from '@/lib/fonts'
-import { site } from '@/lib/site'
+import { site, socials } from '@/lib/site'
 import Navbar from '@/components/chrome/Navbar'
 import Footer from '@/components/chrome/Footer'
 import SocialRail from '@/components/chrome/SocialRail'
@@ -31,6 +31,54 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: site.name, url: site.url }],
   creator: site.name,
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    siteName: site.name,
+    locale: 'en_US',
+    url: site.url,
+    title: `${site.name} · ML & Data Engineer`,
+    description: site.tagline,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${site.name} · ML & Data Engineer`,
+    description: site.tagline,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
+  },
+}
+
+/**
+ * Person structured data. Rendered once in the root layout so every page
+ * carries it — this is the record search engines use to associate the site
+ * with a real person rather than an anonymous domain.
+ */
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  url: site.url,
+  email: `mailto:${site.email}`,
+  jobTitle: 'Machine Learning & Data Engineer',
+  address: { '@type': 'PostalAddress', addressLocality: 'Hoboken', addressRegion: 'NJ', addressCountry: 'US' },
+  alumniOf: [
+    { '@type': 'CollegeOrUniversity', name: 'Stevens Institute of Technology' },
+    { '@type': 'CollegeOrUniversity', name: 'VIT Chennai' },
+  ],
+  knowsAbout: [
+    'Machine Learning',
+    'Generative Adversarial Networks',
+    'Diffusion Models',
+    'Data Engineering',
+    'Apache Airflow',
+    'AWS SageMaker',
+    'GCP Vertex AI',
+  ],
+  sameAs: socials.map((s) => s.href),
 }
 
 export const viewport: Viewport = {
@@ -44,6 +92,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={fontVariables}>
       <body className="bg-ink font-mono text-chalk antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+
         {/* First tab stop — skips the fixed chrome straight to content. */}
         <a href="#main" className="skip-link">
           Skip to content

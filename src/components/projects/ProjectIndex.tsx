@@ -109,13 +109,13 @@ export default function ProjectIndex({ projects }: { projects: Project[] }) {
 
                 <p className="mb-6 text-spec text-ash">{project.tagline}</p>
 
-                {/* Lead metric */}
-                <dl className="mt-auto border-t border-hairline-soft pt-5">
-                  <div className="flex items-baseline gap-3">
-                    <dt className="sr-only">{project.metrics[0].label}</dt>
-                    <dd className="type-pixel text-lg text-chalk">{project.metrics[0].value}</dd>
-                    <span className="type-label text-dust">{project.metrics[0].label}</span>
-                  </div>
+                {/* Lead metric. A <dl> may only contain dt/dd pairs (optionally
+                    inside a plain <div>), so the label is the <dt> itself
+                    rather than a sibling span, and CSS order puts the value
+                    first visually. */}
+                <dl className="mt-auto flex flex-row-reverse items-baseline justify-end gap-3 border-t border-hairline-soft pt-5">
+                  <dt className="type-label text-dust">{project.metrics[0].label}</dt>
+                  <dd className="type-pixel text-lg text-chalk">{project.metrics[0].value}</dd>
                 </dl>
 
                 <span className="type-label mt-6 inline-flex items-center gap-2 text-ash transition-colors duration-300 group-hover:text-signal">

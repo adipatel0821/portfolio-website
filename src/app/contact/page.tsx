@@ -36,7 +36,7 @@ export default function ContactPage() {
       {/* ── Header ── */}
       <header className="border-b border-hairline pb-16 pt-[calc(var(--nav-h)+clamp(4rem,10vh,7rem))]">
         <div className="shell">
-          <Reveal>
+          <Reveal priority>
             <Eyebrow label="Aditya Patel" sublabel="Contact" className="mb-8" />
           </Reveal>
 
@@ -47,7 +47,7 @@ export default function ContactPage() {
             delay={0.1}
           />
 
-          <Reveal delay={0.4}>
+          <Reveal delay={0.4} priority>
             <p className="max-w-[48ch] text-body text-ash">
               A hard problem, an open role, or a project that needs someone who will
               actually dig in. I read every message personally.
@@ -154,12 +154,17 @@ export default function ContactPage() {
           </div>
 
           <dl className="border-t border-hairline">
+            {/* Reveal renders the wrapping <div>, so dt/dd stay direct
+                children of it — a <dl> allows dt/dd or a plain div containing
+                them, but not a div inside a div. */}
             {faqs.map((faq, i) => (
-              <Reveal key={faq.q} delay={i * 0.05}>
-                <div className="grid gap-4 border-b border-hairline py-9 md:grid-cols-[1fr_1.3fr] md:gap-14">
-                  <dt className="type-display text-base text-chalk">{faq.q}</dt>
-                  <dd className="text-spec text-ash">{faq.a}</dd>
-                </div>
+              <Reveal
+                key={faq.q}
+                delay={i * 0.05}
+                className="grid gap-4 border-b border-hairline py-9 md:grid-cols-[1fr_1.3fr] md:gap-14"
+              >
+                <dt className="type-display text-base text-chalk">{faq.q}</dt>
+                <dd className="text-spec text-ash">{faq.a}</dd>
               </Reveal>
             ))}
           </dl>

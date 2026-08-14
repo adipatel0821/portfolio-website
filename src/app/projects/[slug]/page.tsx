@@ -152,18 +152,19 @@ export default async function CaseStudyPage({
       <section aria-label="Key metrics" className="border-b border-hairline">
         <div className="shell">
           <dl className="grid grid-cols-2 gap-px bg-[rgba(255,255,255,0.06)] lg:grid-cols-4">
+            {/* Reveal supplies the wrapping <div> itself — nesting another one
+                inside it would put a non-dt/dd grandchild in the <dl>. */}
             {project.metrics.map((metric, i) => (
-              <div key={metric.label} className="bg-ink px-2 py-9">
-                <Reveal delay={i * 0.06}>
-                  <dt className="sr-only">{metric.label}</dt>
-                  <dd>
-                    <span className="type-pixel mb-2 block text-2xl text-signal md:text-3xl">
-                      {metric.value}
-                    </span>
-                    <span className="type-label block text-ash">{metric.label}</span>
-                  </dd>
-                </Reveal>
-              </div>
+              <Reveal
+                key={metric.label}
+                delay={i * 0.06}
+                className="flex flex-col bg-ink px-2 py-9"
+              >
+                <dt className="type-label order-2 text-ash">{metric.label}</dt>
+                <dd className="type-pixel order-1 mb-2 text-2xl text-signal md:text-3xl">
+                  {metric.value}
+                </dd>
+              </Reveal>
             ))}
           </dl>
         </div>

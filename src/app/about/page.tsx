@@ -21,7 +21,7 @@ export default function AboutPage() {
       {/* ── Header ── */}
       <header className="border-b border-hairline pb-16 pt-[calc(var(--nav-h)+clamp(4rem,10vh,7rem))]">
         <div className="shell">
-          <Reveal>
+          <Reveal priority>
             <Eyebrow label="Aditya Patel" sublabel="About" className="mb-8" />
           </Reveal>
 
@@ -32,7 +32,7 @@ export default function AboutPage() {
             delay={0.1}
           />
 
-          <Reveal delay={0.45}>
+          <Reveal delay={0.45} priority>
             <TerminalType
               prompt=">"
               text="whoami"

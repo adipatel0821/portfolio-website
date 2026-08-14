@@ -33,6 +33,16 @@ interface RevealProps {
   className?: string
   /** Replay every time it enters the viewport instead of firing once. */
   repeat?: boolean
+  /**
+   * For above-the-fold content. Animates position only and never fades, so the
+   * element is painted from the very first frame.
+   *
+   * Fading in the hero means nothing above the fold qualifies as a contentful
+   * paint until JavaScript runs — which defers LCP badly and leaves the page
+   * blank entirely if the bundle fails. Content the user should see
+   * immediately must never start transparent.
+   */
+  priority?: boolean
 }
 
 /**
@@ -50,6 +60,7 @@ export default function Reveal({
   as = 'div',
   className,
   repeat = false,
+  priority = false,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null)
   const prefersReduced = useReducedMotion()
@@ -81,8 +92,14 @@ export default function Reveal({
     <MotionTag
       ref={ref}
       className={className}
-      initial={{ opacity: 0, ...offset }}
-      animate={inView ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, ...offset }}
+      // Priority content starts fully opaque so it is painted on the first
+      // frame; only its position animates.
+      initial={priority ? { opacity: 1, ...offset } : { opacity: 0, ...offset }}
+      animate={
+        inView || priority
+          ? { opacity: 1, x: 0, y: 0 }
+          : { opacity: 0, ...offset }
+      }
       transition={{
         duration: 0.75,
         delay,

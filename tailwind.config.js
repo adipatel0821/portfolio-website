@@ -30,7 +30,7 @@ module.exports = {
         /* ── Type ── */
         chalk: '#F2F2F2', // primary text
         ash: '#8A8A8A', // labels, secondary
-        dust: '#5A5A5A', // tertiary / disabled
+        dust: '#7A7A7A', // tertiary — 4.72:1 on ink, AA at body size
       },
       borderColor: {
         /* Hairlines at 8–12% white — never a visible grey box */

@@ -58,7 +58,10 @@ export default function Navbar() {
           <Link
             href="/"
             className="group flex items-center gap-2.5"
-            aria-label={`${site.name} — home`}
+            // Must contain the visible text. Below the sm breakpoint the only
+            // visible content is the "AP" mark, so a name of just "Aditya Patel"
+            // fails the accessible-name-contains-visible-label rule there.
+            aria-label={`${site.initials} · ${site.name} — home`}
           >
             <span
               className="type-pixel flex h-7 w-7 items-center justify-center bg-signal text-[11px] text-[#0a0a0a]"

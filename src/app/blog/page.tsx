@@ -36,7 +36,7 @@ export default async function BlogPage() {
       {/* ── Header ── */}
       <header className="border-b border-hairline pb-16 pt-[calc(var(--nav-h)+clamp(4rem,10vh,7rem))]">
         <div className="shell">
-          <Reveal>
+          <Reveal priority>
             <Eyebrow
               label="Aditya Patel"
               sublabel={`Writing · ${posts.length} ${posts.length === 1 ? 'article' : 'articles'}`}
@@ -51,7 +51,7 @@ export default async function BlogPage() {
             delay={0.1}
           />
 
-          <Reveal delay={0.45}>
+          <Reveal delay={0.45} priority>
             <p className="max-w-[52ch] text-body text-ash">
               Machine learning research, data engineering, and what actually happens in the
               gap between a paper implementation and a system people depend on.

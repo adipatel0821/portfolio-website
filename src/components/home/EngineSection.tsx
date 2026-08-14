@@ -91,7 +91,7 @@ export default function EngineSection() {
           style={prefersReduced ? undefined : { opacity: heroOpacity, y: heroY }}
         >
           <div className="shell w-full">
-            <Reveal delay={0.05} distance={14}>
+            <Reveal delay={0.05} distance={14} priority>
               <Eyebrow label={site.name} sublabel="ML / DATA ENG" className="mb-7" />
             </Reveal>
 
@@ -103,7 +103,7 @@ export default function EngineSection() {
               className="mb-8 max-w-[16ch]"
             />
 
-            <Reveal delay={0.95} distance={16}>
+            <Reveal delay={0.95} distance={16} priority>
               <p className="mb-10 max-w-[46ch] text-body-lg text-ash">
                 Machine learning and data engineering — from{' '}
                 <span className="text-chalk">GAN research</span> to{' '}
@@ -111,7 +111,7 @@ export default function EngineSection() {
               </p>
             </Reveal>
 
-            <Reveal delay={1.1} distance={16}>
+            <Reveal delay={1.1} distance={16} priority>
               <div className="flex flex-wrap items-center gap-3">
                 <MagneticButton href="/projects" className="pill pill-signal">
                   <span className="bracket">View Work</span>
@@ -122,7 +122,7 @@ export default function EngineSection() {
               </div>
             </Reveal>
 
-            <Reveal delay={1.3} distance={12}>
+            <Reveal delay={1.3} distance={12} priority>
               <p className="badge-dashed mt-12">
                 <span
                   aria-hidden="true"

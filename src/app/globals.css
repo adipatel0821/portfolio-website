@@ -24,7 +24,7 @@
   /* Type */
   --chalk: #f2f2f2;
   --ash: #8a8a8a;
-  --dust: #5a5a5a;
+  --dust: #7a7a7a;
 
   /* Hairlines — 6–16% white. Nothing in this design has a heavy border. */
   --hairline: rgba(255, 255, 255, 0.1);
@@ -560,4 +560,43 @@ html.lenis body {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-size: 0.6875rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PIXEL NUMERAL
+   The scatter-assemble reveal runs on CSS transitions rather than a spring per
+   dot. A four-chapter page carries ~280 dots; driving each through the
+   animation library cost more hydration time than the effect is worth, so a
+   single IntersectionObserver flips one attribute and CSS does the rest.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.pixel-dot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: translate(var(--tx, 0), var(--ty, 0)) scale(0.4);
+  transition:
+    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--delay, 0s);
+  will-change: transform, opacity;
+}
+
+[data-assembled='true'] .pixel-dot {
+  opacity: 1;
+  transform: none;
+}
+
+/* Once assembled, drop the compositor hint — keeping it costs memory on a
+   page with hundreds of these. */
+[data-assembled='true'] .pixel-dot {
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pixel-dot {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }

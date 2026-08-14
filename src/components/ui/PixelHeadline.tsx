@@ -49,12 +49,12 @@ export default function PixelHeadline({
     <h1
       id={id}
       className={clsx('type-pixel text-display-xl', className)}
-      // The LCP element must not wait on JS to be legible, and a screen reader
-      // should hear one headline, not 26 letters.
+      // The animated glyph spans are aria-hidden, so the heading needs its
+      // accessible name supplied here — a screen reader should hear one
+      // headline, not 26 separate letters. An sr-only copy of the text as well
+      // would be redundant: aria-label already overrides element content.
       aria-label={full}
     >
-      <span className="sr-only">{full}</span>
-
       {lines.map((line, lineIndex) => (
         <span
           key={lineIndex}
@@ -81,17 +81,23 @@ export default function PixelHeadline({
               <motion.span
                 key={`${lineIndex}-${i}`}
                 className="inline-block"
+                // Opacity stays at 1 throughout. This is the LCP element on
+                // every page it appears on, and an element that starts
+                // transparent is not a contentful paint — fading it in defers
+                // LCP until the animation runs. The scatter reads just as well
+                // with the glyphs visible from the first frame, and framer
+                // serialises these initial transforms into the server HTML, so
+                // there is no jump on hydration.
                 initial={{
-                  opacity: 0,
                   x: Math.cos(angle) * dist,
                   y: Math.sin(angle) * dist,
-                  scale: 0.6,
-                  filter: 'blur(3px)',
+                  scale: 0.72,
+                  filter: 'blur(4px)',
                 }}
-                animate={{ opacity: 1, x: 0, y: 0, scale: 1, filter: 'blur(0px)' }}
+                animate={{ x: 0, y: 0, scale: 1, filter: 'blur(0px)' }}
                 transition={{
-                  duration: 0.9,
-                  delay: delay + seed * 0.028 + seeded(seed + 11) * 0.1,
+                  duration: 0.75,
+                  delay: delay + seed * 0.016 + seeded(seed + 11) * 0.08,
                   ease: [0.16, 1, 0.3, 1],
                 }}
               >
