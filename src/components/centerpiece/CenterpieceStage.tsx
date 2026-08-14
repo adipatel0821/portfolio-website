@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { useReducedMotion, type MotionValue } from 'framer-motion'
+import { type MotionValue } from 'framer-motion'
 import StaticFallback from './StaticFallback'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 /**
  * Capability gate for the centerpiece. Decides which of three real
@@ -99,7 +100,7 @@ interface Props {
 }
 
 export default function CenterpieceStage({ chapter }: Props) {
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
   const containerRef = useRef<HTMLDivElement>(null)
 
   const [tier, setTier] = useState<Tier>('pending')

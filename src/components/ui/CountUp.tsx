@@ -1,8 +1,9 @@
 'use client'
 
 import { useRef, useEffect, useState } from 'react'
-import { useInView, useReducedMotion, animate } from 'framer-motion'
+import { useInView, animate } from 'framer-motion'
 import { clsx } from '@/lib/clsx'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 interface CountUpProps {
   /** Target number. */
@@ -34,7 +35,7 @@ export default function CountUp({
 }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, margin: '0px 0px -15% 0px' })
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
   const [display, setDisplay] = useState(0)
 
   useEffect(() => {

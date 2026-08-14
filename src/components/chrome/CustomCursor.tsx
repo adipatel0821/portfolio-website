@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { usePointerFine } from '@/hooks/usePointerFine'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 /**
  * Two-part custom cursor: a small solid dot that tracks the pointer exactly,
@@ -20,7 +21,7 @@ const INTERACTIVE = 'a, button, [role="button"], input, textarea, select, [data-
 
 export default function CustomCursor() {
   const pointerFine = usePointerFine()
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
   const enabled = pointerFine && !prefersReduced
 
   const [hovering, setHovering] = useState(false)

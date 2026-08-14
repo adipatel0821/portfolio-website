@@ -1,8 +1,9 @@
 'use client'
 
 import { useRef, type ReactNode } from 'react'
-import { motion, useInView, useReducedMotion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 import { clsx } from '@/lib/clsx'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 interface HighlightTextProps {
   children: ReactNode
@@ -35,7 +36,7 @@ export default function HighlightText({
 }: HighlightTextProps) {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, margin: '0px 0px -15% 0px' })
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
 
   const barColor = tone === 'signal' ? 'bg-signal' : 'bg-phosphor'
   // Orange and green are both light enough that near-black type is the only

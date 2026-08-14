@@ -1,8 +1,9 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import Eyebrow from '@/components/ui/Eyebrow'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 /**
  * Full-bleed cinematic moment — the reference's lifestyle band, translated to a
@@ -18,7 +19,7 @@ import Eyebrow from '@/components/ui/Eyebrow'
  */
 export default function CinematicBand() {
   const ref = useRef<HTMLElement>(null)
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
 
   const { scrollYProgress } = useScroll({
     target: ref,

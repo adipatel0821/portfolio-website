@@ -1,7 +1,8 @@
 'use client'
 
 import { useRef, type ReactNode, type ElementType } from 'react'
-import { motion, useInView, useReducedMotion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 /**
  * Motion components are created once at module scope. Calling `motion(tag)`
@@ -63,7 +64,7 @@ export default function Reveal({
   priority = false,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
 
   // -12% bottom margin: fire once the element is genuinely in view rather than
   // the instant its first pixel crosses the fold.

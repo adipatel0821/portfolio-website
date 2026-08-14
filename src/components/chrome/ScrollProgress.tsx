@@ -1,6 +1,7 @@
 'use client'
 
-import { motion, useScroll, useSpring, useReducedMotion } from 'framer-motion'
+import { motion, useScroll, useSpring } from 'framer-motion'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 /**
  * Hairline progress bar pinned to the very top of the viewport.
@@ -11,7 +12,7 @@ import { motion, useScroll, useSpring, useReducedMotion } from 'framer-motion'
  */
 export default function ScrollProgress() {
   const { scrollYProgress } = useScroll()
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
 
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 260,

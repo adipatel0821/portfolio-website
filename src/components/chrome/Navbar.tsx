@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { nav, site, RESUME_AVAILABLE, RESUME_PATH } from '@/lib/site'
 import { clsx } from '@/lib/clsx'
 import MagneticButton from '@/components/ui/MagneticButton'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 /**
  * Fixed top chrome: AP mark left, routes centre, HIRE ME + RESUME pills right.
@@ -18,7 +19,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)

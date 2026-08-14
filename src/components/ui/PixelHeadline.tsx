@@ -1,7 +1,8 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { clsx } from '@/lib/clsx'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 /**
  * The hero headline: dot-matrix glyphs that converge from scattered positions.
@@ -40,7 +41,7 @@ export default function PixelHeadline({
   delay = 0.15,
   id,
 }: PixelHeadlineProps) {
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
   const full = lines.join(' ')
 
   let charIndex = 0

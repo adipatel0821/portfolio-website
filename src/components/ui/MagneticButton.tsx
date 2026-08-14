@@ -2,9 +2,10 @@
 
 import { useRef, type ReactNode, type MouseEvent } from 'react'
 import Link from 'next/link'
-import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion'
+import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { usePointerFine } from '@/hooks/usePointerFine'
 import { clsx } from '@/lib/clsx'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 interface MagneticProps {
   children: ReactNode
@@ -40,7 +41,7 @@ export default function MagneticButton({
 }: MagneticProps) {
   const ref = useRef<HTMLDivElement>(null)
   const pointerFine = usePointerFine()
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
   const enabled = pointerFine && !prefersReduced
 
   const x = useMotionValue(0)

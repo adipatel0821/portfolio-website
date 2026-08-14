@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useInView, useReducedMotion } from 'framer-motion'
+import { useInView } from 'framer-motion'
 import { clsx } from '@/lib/clsx'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 interface TerminalTypeProps {
   /** One string, or several that cycle. */
@@ -50,7 +51,7 @@ export default function TerminalType({
 
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: false, margin: '0px 0px -10% 0px' })
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
 
   const [display, setDisplay] = useState('')
   const [index, setIndex] = useState(0)

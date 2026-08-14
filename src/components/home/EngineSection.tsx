@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion'
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import CenterpieceStage from '@/components/centerpiece/CenterpieceStage'
 import PixelHeadline from '@/components/ui/PixelHeadline'
 import PixelNumeral from '@/components/ui/PixelNumeral'
@@ -12,6 +12,7 @@ import MagneticButton from '@/components/ui/MagneticButton'
 import TerminalType from '@/components/ui/TerminalType'
 import { chapters } from '@/data/home'
 import { RESUME_AVAILABLE, RESUME_PATH, site } from '@/lib/site'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 /**
  * The signature moment: hero and the four capability chapters share one pinned
@@ -39,7 +40,7 @@ import { RESUME_AVAILABLE, RESUME_PATH, site } from '@/lib/site'
  */
 export default function EngineSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,

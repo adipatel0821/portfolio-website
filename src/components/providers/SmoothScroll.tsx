@@ -2,8 +2,9 @@
 
 import { useEffect, useRef } from 'react'
 import Lenis from 'lenis'
-import { useReducedMotion } from 'framer-motion'
+
 import { usePathname } from 'next/navigation'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 /**
  * Lenis smooth scroll — the backbone of the premium feel.
@@ -20,7 +21,7 @@ import { usePathname } from 'next/navigation'
  *    get the browser's own 1:1 scrolling.
  */
 export default function SmoothScroll() {
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
   const pathname = usePathname()
   const lenisRef = useRef<Lenis | null>(null)
 

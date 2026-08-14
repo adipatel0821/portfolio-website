@@ -1,10 +1,11 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { timeline } from '@/data/about'
 import PixelNumeral from '@/components/ui/PixelNumeral'
 import Reveal from '@/components/ui/Reveal'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 /**
  * Career timeline.
@@ -19,7 +20,7 @@ import Reveal from '@/components/ui/Reveal'
  */
 export default function Timeline() {
   const ref = useRef<HTMLOListElement>(null)
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
 
   const { scrollYProgress } = useScroll({
     target: ref,

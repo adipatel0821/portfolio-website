@@ -280,6 +280,16 @@ html.lenis body {
   color: var(--signal);
 }
 
+/* On a solid orange pill the accent-coloured brackets are invisible against
+   their own background, so inherit the pill's foreground there instead. */
+.pill-signal .bracket::before,
+.pill-signal .bracket::after,
+.pill:hover .bracket::before,
+.pill:hover .bracket::after {
+  color: currentColor;
+  opacity: 0.6;
+}
+
 /* Spec row — hairline divider, muted label left, white value right. */
 .spec-row {
   display: grid;
@@ -517,7 +527,11 @@ html.lenis body {
   border: 1px solid var(--hairline-soft);
   padding: 0.12em 0.4em;
   color: var(--phosphor);
-  white-space: nowrap;
+  /* Contentful renders code blocks as a bare <code> with no <pre> wrapper, so
+     this element can hold many lines. pre-wrap keeps the formatting while still
+     wrapping; `nowrap` here pushed a long snippet 600px past the viewport. */
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 
 /* Code blocks. Wide code scrolls inside its own container so the page body

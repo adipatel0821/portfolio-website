@@ -2,11 +2,12 @@
 
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { DOMAINS, type Domain, type Project } from '@/data/projects'
 import ProjectGlyph from './ProjectGlyph'
 import Reveal from '@/components/ui/Reveal'
 import { clsx } from '@/lib/clsx'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 /**
  * Filterable project index.
@@ -20,7 +21,7 @@ type Filter = Domain | 'All'
 
 export default function ProjectIndex({ projects }: { projects: Project[] }) {
   const [filter, setFilter] = useState<Filter>('All')
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
 
   const counts = useMemo(() => {
     const map = new Map<Filter, number>([['All', projects.length]])

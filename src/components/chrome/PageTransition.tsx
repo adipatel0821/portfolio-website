@@ -1,8 +1,9 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import type { ReactNode } from 'react'
+import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 /**
  * Route transitions with no white flash.
@@ -17,7 +18,7 @@ import type { ReactNode } from 'react'
  */
 export default function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname()
-  const prefersReduced = useReducedMotion()
+  const prefersReduced = useReducedMotionSafe()
 
   if (prefersReduced) return <>{children}</>
 
