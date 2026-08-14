@@ -51,6 +51,11 @@ html {
   /* Lenis drives scrolling; native smooth-scroll would fight it. */
   scroll-behavior: auto;
   background-color: var(--ink);
+  /* `useScroll({ target })` measures a section against its scroll container,
+     which defaults to document.scrollingElement — this element. A static
+     container makes those offsets unreliable, so the chapter scrub and the
+     timeline progress rule both depend on this being positioned. */
+  position: relative;
 }
 
 body {

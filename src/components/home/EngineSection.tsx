@@ -88,7 +88,10 @@ export default function EngineSection() {
         {/* ═══ HERO ═══ */}
         <motion.section
           aria-labelledby="hero-heading"
-          className="flex h-[100svh] flex-col justify-center"
+          // Explicitly positioned: the scroll hint below is absolute, and
+          // without this it only has a containing block because Framer's
+          // transform creates one — which does not exist under reduced motion.
+          className="relative flex h-[100svh] flex-col justify-center"
           style={prefersReduced ? undefined : { opacity: heroOpacity, y: heroY }}
         >
           <div className="shell w-full">
