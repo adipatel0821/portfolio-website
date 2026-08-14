@@ -1,219 +1,257 @@
-import SubwayTimeline from '@/components/SubwayTimeline'
-import ScrollReveal from '@/components/ScrollReveal'
-import { GraduationCap, MapPin, Users, Cpu } from 'lucide-react'
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { interests, principles, skillGroups } from '@/data/about'
+import Timeline from '@/components/about/Timeline'
+import Eyebrow from '@/components/ui/Eyebrow'
+import Reveal from '@/components/ui/Reveal'
+import PixelHeadline from '@/components/ui/PixelHeadline'
+import HighlightText from '@/components/ui/HighlightText'
+import TerminalType from '@/components/ui/TerminalType'
+import { site } from '@/lib/site'
 
-const techStack = [
-  { category: 'Languages',       skills: ['Python', 'C#', 'C / C++'] },
-  { category: 'AI / ML',         skills: ['PyTorch', 'TensorFlow', 'Scikit-learn', 'GANs', 'LLMs'] },
-  { category: 'Data Engineering', skills: ['Apache Airflow', 'Pandas', 'NumPy', 'PostgreSQL', 'DynamoDB'] },
-  { category: 'Cloud & Infra',   skills: ['AWS SageMaker', 'GCP Vertex AI', 'Docker', 'REST APIs'] },
-  { category: 'Visualization',   skills: ['Power BI'] },
-  { category: 'Hardware & IoT',  skills: ['Arduino', 'Raspberry Pi'] },
-  { category: 'Web',             skills: ['ASP.NET MVC', 'Next.js', 'TypeScript'] },
-  { category: 'DevOps',          skills: ['Git / CI-CD'] },
-]
-
-const highlights = [
-  { icon: GraduationCap, title: 'Stevens Institute',  sub: 'M.S. CS · Hoboken, NJ · 2025–2027',        color: '#00d4ff' },
-  { icon: GraduationCap, title: 'VIT Chennai',        sub: 'B.Tech CS&E · GPA 3.5/4.0 · 2021–2025',    color: '#a855f7' },
-  { icon: MapPin,        title: 'Hoboken, NJ',        sub: 'Open to remote · hybrid · in-person',       color: '#f59e0b' },
-  { icon: Users,         title: '3 Internships',      sub: 'Data Eng · Web Dev · IoT Engineering',      color: '#10b981' },
-  { icon: Cpu,           title: 'ML / Data Engineer', sub: 'PyTorch · TensorFlow · AWS SageMaker',      color: '#ef4444' },
-]
-
-const interests = [
-  'Machine Learning', 'Generative AI', 'Data Engineering', 'Distributed Systems',
-  'Cloud Architecture', 'IoT & Embedded Systems', 'Healthcare AI', 'Open Source',
-  'Cricket', 'Photography', 'Specialty Coffee', 'Hiking',
-]
-
-const values = [
-  {
-    num: '01',
-    title: 'Research that ships',
-    desc: "I've deployed GANs to GCP Vertex AI and built ETL pipelines processing real patient records. The gap between a paper implementation and production code is where most of the real work happens.",
-    color: '#00d4ff',
-  },
-  {
-    num: '02',
-    title: 'Read the paper, then question it',
-    desc: 'I read ML papers on weekends — not because I have to, but because understanding why an attention mechanism works the way it does is the only way I can meaningfully adapt it. Copying code is never enough.',
-    color: '#a855f7',
-  },
-  {
-    num: '03',
-    title: 'The boring infrastructure matters most',
-    desc: "The model is maybe 10% of the work. Data pipelines, monitoring, deployment reliability — that's what separates a demo from a system people actually trust. I care about both.",
-    color: '#10b981',
-  },
-]
+export const metadata: Metadata = {
+  title: 'About',
+  description:
+    'Aditya Patel — M.S. Computer Science at Stevens Institute of Technology. Three industry internships across data engineering, IoT and web, and production ML deployments on AWS SageMaker and GCP Vertex AI.',
+}
 
 export default function AboutPage() {
   return (
     <>
-      
-      {/* Header */}
-      <div className="pt-36 pb-18 page-section" style={{ background: 'var(--bg-secondary)' }}>
-        <div className="container-xl">
-          <ScrollReveal>
-            <p className="section-label mb-3">About Me</p>
-            <h1 className="section-heading mb-6" style={{ fontSize: 'clamp(2.8rem, 7vw, 6rem)' }}>
-              Engineer.
-              <br />
-              Researcher.
-              <br />
-              <span className="gradient-text">Builder.</span>
-            </h1>
-            <div className="accent-line" />
-          </ScrollReveal>
+      {/* ── Header ── */}
+      <header className="border-b border-hairline pb-16 pt-[calc(var(--nav-h)+clamp(4rem,10vh,7rem))]">
+        <div className="shell">
+          <Reveal>
+            <Eyebrow label="Aditya Patel" sublabel="About" className="mb-8" />
+          </Reveal>
+
+          <PixelHeadline
+            lines={['Engineer.', 'Builder.']}
+            accentLines={[1]}
+            className="mb-8 max-w-[13ch] text-display-lg"
+            delay={0.1}
+          />
+
+          <Reveal delay={0.45}>
+            <TerminalType
+              prompt=">"
+              text="whoami"
+              className="type-label text-ash"
+            />
+          </Reveal>
         </div>
-      </div>
+      </header>
 
-      {/* Bio */}
-      <section className="page-section" style={{ background: 'var(--bg-primary)' }}>
-        <div className="container-xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
-            {/* Left — narrative */}
-            <ScrollReveal direction="left">
-              <div className="space-y-5">
-                <p
-                  className="text-lg md:text-xl font-semibold leading-relaxed"
-                  style={{ color: 'var(--text-primary)' }}
-                >
-                  I&apos;m Aditya Patel, a Machine Learning and Data Engineer pursuing my M.S. in
-                  Computer Science at Stevens Institute of Technology, Hoboken NJ.
+      {/* ── Narrative ── */}
+      <section aria-labelledby="story-heading" className="py-chapter">
+        <div className="shell">
+          <div className="grid gap-14 lg:grid-cols-[1fr_auto] lg:gap-20">
+            <div className="max-w-prose">
+              <Reveal>
+                <h2 id="story-heading" className="sr-only">
+                  Background
+                </h2>
+                <p className="mb-7 text-body-lg text-chalk">
+                  I&apos;m Aditya Patel, a machine learning and data engineer doing my M.S. in
+                  Computer Science at{' '}
+                  <HighlightText delay={0.4}>Stevens Institute</HighlightText>, in Hoboken.
                 </p>
-                <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  I completed my B.Tech in Computer Science &amp; Engineering at VIT Chennai in 2025,
-                  where I built a strong foundation in algorithms, systems, and applied AI. Three industry
-                  internships gave me real-world depth, from ETL pipelines at Intellect Design Arena to
-                  IoT systems at Intuz and full-stack web development at Appuno IT Solutions.
-                </p>
-                <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  My core interest is building production-grade AI systems, particularly generative models
-                  and distributed data pipelines. I&apos;ve deployed multimodal GANs on GCP Vertex AI,
-                  built the SynMedix AI platform (50K+ synthetic patient records) on AWS SageMaker, and
-                  engineered automated ETL workflows using Apache Airflow.
-                </p>
-                <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  Currently focused on graduate research and seeking ML engineering or data engineering
-                  roles. If you&apos;re building something meaningful with AI or large-scale data, I want to talk.
-                </p>
-              </div>
-            </ScrollReveal>
+              </Reveal>
 
-            {/* Right — highlights + interests */}
-            <ScrollReveal direction="right">
-              <div className="grid grid-cols-1 gap-3 mb-6">
-                {highlights.map((h) => (
-                  <div
-                    key={h.title}
-                    className="glass-card flex items-center gap-4 p-4"
-                    style={{ borderRadius: 18, borderColor: `${h.color}22` }}
-                  >
-                    <div
-                      className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: `${h.color}16`, color: h.color }}
-                    >
-                      <h.icon size={19} />
-                    </div>
-                    <div>
-                      <p className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>
-                        {h.title}
-                      </p>
-                      <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                        {h.sub}
-                      </p>
-                    </div>
+              <Reveal delay={0.08}>
+                <p className="mb-6 text-body text-ash">
+                  I finished my B.Tech at VIT Chennai in 2025 with a GPA of 3.5/4.0, and
+                  spent the years around it doing three internships that had almost nothing
+                  in common — ETL pipelines at Intellect Design Arena, IoT systems at Intuz,
+                  and full-stack web at Appuno. That turned out to be the useful part. Each
+                  one taught me a different half of what makes a system actually work.
+                </p>
+              </Reveal>
+
+              <Reveal delay={0.14}>
+                <p className="mb-6 text-body text-ash">
+                  What I care about now is generative models and the distributed data
+                  pipelines that feed them. I&apos;ve deployed multimodal GANs to GCP Vertex
+                  AI, built SynMedix on AWS SageMaker to generate 50,000+ synthetic patient
+                  records, trained a conditional diffusion model on brain MRI slices, and
+                  written Airflow pipelines that regulators&apos; data actually flows
+                  through.
+                </p>
+              </Reveal>
+
+              <Reveal delay={0.2}>
+                <p className="text-body text-ash">
+                  The through-line is healthcare AI and the data-scarcity problem underneath
+                  it: the most valuable datasets in medicine are the ones you are least
+                  allowed to use. Most of my work is some attempt at that. I&apos;m currently
+                  looking for ML or data engineering roles — if you&apos;re building
+                  something in that space,{' '}
+                  <Link href="/contact" className="text-chalk underline underline-offset-4 hover:text-signal">
+                    I want to hear about it
+                  </Link>
+                  .
+                </p>
+              </Reveal>
+            </div>
+
+            {/* Facts rail */}
+            <Reveal delay={0.12} direction="right">
+              <dl className="border-t border-hairline lg:w-72">
+                {[
+                  { label: 'Based', value: site.location },
+                  { label: 'Studying', value: 'M.S. CS · Stevens · 2025–2027' },
+                  { label: 'Prior', value: 'B.Tech CS&E · VIT Chennai · 3.5/4.0' },
+                  { label: 'Internships', value: 'Data Eng · IoT · Web' },
+                  { label: 'Focus', value: 'Generative models · Data pipelines' },
+                  { label: 'Open to', value: 'Remote · Hybrid · On-site' },
+                ].map((row) => (
+                  <div key={row.label} className="spec-row !grid-cols-1 !gap-1">
+                    <dt>{row.label}</dt>
+                    <dd>{row.value}</dd>
                   </div>
                 ))}
-              </div>
-
-              {/* Interests */}
-              <div className="glass-card p-6" style={{ borderRadius: 20 }}>
-                <p className="section-label mb-4">Interests &amp; Passions</p>
-                <div className="flex flex-wrap gap-2">
-                  {interests.map((i) => (
-                    <span key={i} className="tech-chip">{i}</span>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
+              </dl>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* Tech Stack */}
-      <section className="page-section" style={{ background: 'var(--bg-secondary)' }}>
-        <div className="container-xl">
-          <ScrollReveal>
-            <div className="text-center mb-12">
-              <p className="section-label mb-3">Tools of the Trade</p>
-              <h2 className="section-heading text-4xl md:text-5xl mb-4">Tech Stack</h2>
-              <div className="accent-line mx-auto" />
-            </div>
-          </ScrollReveal>
+      {/* ── Timeline ── */}
+      <section aria-labelledby="timeline-heading" className="border-t border-hairline py-chapter">
+        <div className="shell">
+          <div className="mb-14 max-w-[46ch]">
+            <Reveal>
+              <Eyebrow label="Timeline" sublabel="2021 — Present" className="mb-6" />
+            </Reveal>
+            <Reveal delay={0.06}>
+              <h2 id="timeline-heading" className="type-display text-display-md text-chalk">
+                How I got here.
+              </h2>
+            </Reveal>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
-            {techStack.map((group, i) => (
-              <ScrollReveal key={group.category} delay={i * 0.07}>
-                <div className="glass-card p-5 h-full" style={{ borderRadius: 18 }}>
-                  <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: 'var(--accent-primary)' }}>
-                    {group.category}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
+          <Timeline />
+        </div>
+      </section>
+
+      {/* ── Skills ── */}
+      <section aria-labelledby="skills-heading" className="border-t border-hairline py-chapter">
+        <div className="shell">
+          <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <Reveal>
+                <Eyebrow label="Capabilities" sublabel="By domain" className="mb-6" />
+              </Reveal>
+              <Reveal delay={0.06}>
+                <h2 id="skills-heading" className="type-display text-display-md">
+                  <span className="text-chalk">What I </span>
+                  <span className="text-signal">work with.</span>
+                </h2>
+              </Reveal>
+            </div>
+          </div>
+
+          <div className="grid gap-x-14 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+            {skillGroups.map((group, i) => (
+              <Reveal key={group.num} delay={i * 0.05}>
+                <section>
+                  <header className="mb-5 flex items-baseline gap-3 border-b border-hairline pb-3">
+                    <span className="type-pixel text-sm text-signal">{group.num}</span>
+                    <h3 className="type-label text-chalk">{group.domain}</h3>
+                  </header>
+                  <ul className="flex flex-wrap gap-2">
                     {group.skills.map((skill) => (
-                      <span key={skill} className="tech-chip">{skill}</span>
+                      <li
+                        key={skill}
+                        className="type-label border border-hairline px-3 py-1.5 text-ash"
+                      >
+                        {skill}
+                      </li>
                     ))}
-                  </div>
-                </div>
-              </ScrollReveal>
+                  </ul>
+                </section>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Subway Timeline */}
-      <section className="page-section" style={{ background: 'var(--bg-primary)' }}>
-        <div className="container-xl">
-          <SubwayTimeline />
+      {/* ── Principles ── */}
+      <section aria-labelledby="principles-heading" className="border-t border-hairline py-chapter">
+        <div className="shell">
+          <div className="mb-14 max-w-[46ch]">
+            <Reveal>
+              <Eyebrow label="How I work" tone="phosphor" className="mb-6" />
+            </Reveal>
+            <Reveal delay={0.06}>
+              <h2 id="principles-heading" className="type-display text-display-md text-chalk">
+                Three things I believe.
+              </h2>
+            </Reveal>
+          </div>
+
+          <div className="grid gap-px bg-[rgba(255,255,255,0.06)] md:grid-cols-3">
+            {principles.map((p, i) => (
+              <article key={p.num} className="bg-ink p-8 md:p-10">
+                <Reveal delay={i * 0.07}>
+                  <span className="type-pixel mb-6 block text-2xl text-signal">{p.num}</span>
+                  <h3 className="type-display mb-4 text-lg text-chalk">{p.title}</h3>
+                  <p className="text-spec text-ash">{p.body}</p>
+                </Reveal>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Values */}
-      <section className="page-section" style={{ background: 'var(--bg-primary)' }}>
-        <div className="container-xl">
-          <ScrollReveal>
-            <div className="text-center mb-14">
-              <p className="section-label mb-3">How I Work</p>
-              <h2 className="section-heading text-4xl md:text-5xl mb-4">My Values</h2>
-              <div className="accent-line mx-auto" />
+      {/* ── Off the clock ── */}
+      <section aria-labelledby="interests-heading" className="border-t border-hairline py-chapter">
+        <div className="shell">
+          <div className="grid gap-10 md:grid-cols-[auto_1fr] md:gap-20">
+            <div className="md:w-56">
+              <Reveal>
+                <h2 id="interests-heading" className="type-label text-ash">
+                  Off the clock
+                </h2>
+              </Reveal>
             </div>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {values.map((v, i) => (
-              <ScrollReveal key={v.num} delay={i * 0.12}>
-                <div className="glass-card p-7 h-full" style={{ borderRadius: 22 }}>
-                  <span
-                    className="font-display font-black text-5xl block mb-4 leading-none"
-                    style={{ color: v.color, opacity: 0.18 }}
-                  >
-                    {v.num}
-                  </span>
-                  <h3 className="font-display font-bold text-lg mb-3" style={{ color: 'var(--text-primary)' }}>
-                    {v.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                    {v.desc}
-                  </p>
-                </div>
-              </ScrollReveal>
-            ))}
+            <div className="max-w-prose">
+              <Reveal delay={0.06}>
+                <p className="mb-8 text-body text-ash">
+                  Cricket, a camera I do not use often enough, and an ongoing and expensive
+                  interest in coffee that has produced no measurable improvement in my
+                  ability to make it.
+                </p>
+              </Reveal>
+              <Reveal delay={0.12}>
+                <ul className="flex flex-wrap gap-2">
+                  {interests.map((interest) => (
+                    <li
+                      key={interest}
+                      className="type-label border border-hairline px-3 py-1.5 text-dust"
+                    >
+                      {interest}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            </div>
           </div>
         </div>
       </section>
 
+      {/* ── Next ── */}
+      <section className="border-t border-hairline py-16">
+        <div className="shell flex flex-wrap items-center justify-between gap-6">
+          <p className="type-label text-dust">Next</p>
+          <Link
+            href="/projects"
+            className="type-display text-display-sm text-chalk transition-colors hover:text-signal"
+          >
+            See the work →
+          </Link>
+        </div>
+      </section>
     </>
   )
 }

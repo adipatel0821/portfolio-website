@@ -385,188 +385,179 @@ html.lenis body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   LEGACY — classes still referenced by pages not yet rebuilt (About, Projects,
-   Blog, Contact). Re-pointed at the dark tokens and stripped of glass/blur so
-   those pages stay coherent mid-migration. Deleted at the end of Phase 4.
+   ARTICLE PROSE
+   Long-form reading is the one place the monospace system relaxes: measure is
+   capped at 68ch, leading opens up, and the type scale is quieter than the
+   marketing sections. Everything else on the site shouts; this should not.
    ═══════════════════════════════════════════════════════════════════════════ */
-.glass,
-.glass-heavy,
-.glass-card {
-  background: var(--ink-800);
-  border: 1px solid var(--hairline);
-  border-radius: 2px;
-  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s;
-}
-.glass-card:hover {
-  background: var(--ink-700);
-  border-color: var(--hairline-hot);
-  transform: none;
-}
-.gradient-text,
-.stat-num {
-  color: var(--signal);
-  -webkit-text-fill-color: currentColor;
-  background: none;
-}
-.liquid-btn,
-.shimmer-btn {
-  background: var(--signal);
-  animation: none;
-  color: #0a0a0a;
-  font-weight: 700;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  letter-spacing: 0.08em;
-}
-.liquid-btn:hover,
-.shimmer-btn:hover {
-  background: var(--signal-bright);
-  box-shadow: none;
-}
-.glass-input {
-  background: var(--ink-600);
-  border: 1px solid var(--hairline);
-  border-radius: 2px;
-  color: var(--chalk);
-  width: 100%;
-  padding: 0.85rem 1rem;
-  font-family: var(--font-jetbrains), monospace;
-  font-size: 0.875rem;
-  outline: none;
-  transition: border-color 0.2s ease;
-}
-.glass-input::placeholder {
-  color: var(--dust);
-}
-.glass-input:focus {
-  border-color: var(--signal);
-  box-shadow: none;
-}
-.section-label {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--signal);
-}
-.section-heading {
-  font-family: var(--font-martian), ui-monospace, monospace;
-  font-weight: 700;
-  letter-spacing: -0.015em;
-  line-height: 1;
-  color: var(--chalk);
-}
-.accent-line {
-  width: 48px;
-  height: 2px;
-  background: var(--signal);
-}
-.tech-chip {
-  font-size: 0.625rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.2rem 0.55rem;
-  border-radius: 2px;
-  background: transparent;
-  border: 1px solid var(--hairline);
-  color: var(--ash);
-  white-space: nowrap;
-}
-.glow-text,
-.neon-border {
-  text-shadow: none;
-  box-shadow: none;
-}
-.page-section {
-  padding: 5.5rem 0;
-  position: relative;
-  z-index: 1;
-}
-.container-xl {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-@media (min-width: 640px) {
-  .container-xl {
-    padding: 0 2rem;
-  }
-}
-@media (min-width: 1024px) {
-  .container-xl {
-    padding: 0 3rem;
-  }
+.article-prose {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: #b4b4b4; /* between ash and chalk — long-form wants more than ash */
 }
 
-/* ─── Blog prose (rebuilt properly in Phase 4) ─────────────────────────────── */
-.prose-custom {
-  line-height: 1.8;
-  font-size: 1rem;
-  color: var(--ash);
+.article-prose > * + * {
+  margin-top: 1.35em;
 }
-.prose-custom h2 {
-  font-family: var(--font-martian), monospace;
-  font-weight: 700;
-  font-size: 1.35rem;
+
+.article-prose h2,
+.article-prose h3,
+.article-prose h4 {
+  font-family: var(--font-martian), ui-monospace, monospace;
   color: var(--chalk);
-  margin: 2.5rem 0 0.9rem;
   letter-spacing: -0.015em;
+  line-height: 1.25;
 }
-.prose-custom h3 {
-  font-family: var(--font-martian), monospace;
+
+.article-prose h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.article-prose h3 {
+  font-size: 1.0625rem;
   font-weight: 600;
-  font-size: 1.05rem;
+  margin-top: 2.25rem;
+}
+
+.article-prose h4 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin-top: 1.75rem;
+}
+
+.article-prose p {
+  margin-bottom: 0;
+}
+
+.article-prose strong {
   color: var(--chalk);
-  margin: 1.8rem 0 0.6rem;
+  font-weight: 700;
 }
-.prose-custom p {
-  margin: 0 0 1.2rem;
+
+.article-prose em {
+  font-style: italic;
+  color: #cfcfcf;
 }
-.prose-custom ul,
-.prose-custom ol {
-  margin: 0 0 1.2rem 1.5rem;
+
+.article-prose a {
+  color: var(--chalk);
+  text-decoration: underline;
+  text-decoration-color: var(--signal);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.article-prose a:hover {
+  color: var(--signal);
+}
+
+.article-prose ul,
+.article-prose ol {
+  padding-left: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: 0.6rem;
 }
-.prose-custom ul {
-  list-style: disc;
+.article-prose ul {
+  list-style: none;
+  padding-left: 1.25rem;
 }
-.prose-custom ol {
+/* Square bullets in the accent colour — the dot-matrix motif, at text scale. */
+.article-prose ul > li {
+  position: relative;
+  padding-left: 1rem;
+}
+.article-prose ul > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 4px;
+  height: 4px;
+  background: var(--signal);
+}
+.article-prose ol {
   list-style: decimal;
 }
-.prose-custom strong {
-  color: var(--chalk);
-  font-weight: 700;
-}
-.prose-custom a {
+.article-prose ol > li::marker {
   color: var(--signal);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  font-size: 0.8em;
 }
-.prose-custom code {
-  font-family: var(--font-jetbrains), monospace;
-  font-size: 0.85em;
+
+.article-prose blockquote {
+  border-left: 2px solid var(--signal);
+  padding-left: 1.5rem;
+  margin-left: 0;
+  color: var(--ash);
+  font-style: italic;
+}
+
+.article-prose hr {
+  border: 0;
+  height: 1px;
+  background: var(--hairline);
+  margin: 2.5rem 0;
+}
+
+.article-prose img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--hairline);
+}
+
+/* Inline code — phosphor green, the terminal motif at text scale. */
+.article-prose code {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.86em;
   background: var(--ink-700);
   border: 1px solid var(--hairline-soft);
-  border-radius: 2px;
-  padding: 0.1em 0.4em;
+  padding: 0.12em 0.4em;
   color: var(--phosphor);
+  white-space: nowrap;
 }
-.prose-custom pre {
+
+/* Code blocks. Wide code scrolls inside its own container so the page body
+   never scrolls horizontally. */
+.article-prose pre {
   background: var(--ink-800);
   border: 1px solid var(--hairline);
-  border-radius: 2px;
-  padding: 1.25rem 1.5rem;
+  border-left: 2px solid var(--signal);
+  padding: 1.35rem 1.5rem;
   overflow-x: auto;
-  margin: 1.5rem 0;
+  font-size: 0.8125rem;
+  line-height: 1.7;
 }
-.prose-custom pre code {
+.article-prose pre code {
   background: none;
   border: none;
   padding: 0;
+  color: #c6c6c6;
+  white-space: pre;
+  font-size: inherit;
+}
+
+/* Tables scroll rather than forcing the page wide. */
+.article-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  display: block;
+  overflow-x: auto;
+}
+.article-prose th,
+.article-prose td {
+  border-bottom: 1px solid var(--hairline-soft);
+  padding: 0.7rem 1rem 0.7rem 0;
+  text-align: left;
+}
+.article-prose th {
   color: var(--ash);
-  font-size: 0.85em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.6875rem;
 }
