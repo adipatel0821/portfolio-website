@@ -3,7 +3,7 @@ import ContactForm from '@/components/contact/ContactForm'
 import Eyebrow from '@/components/ui/Eyebrow'
 import Reveal from '@/components/ui/Reveal'
 import PixelHeadline from '@/components/ui/PixelHeadline'
-import { RESUME_PATH, site, socials } from '@/lib/site'
+import { RESUME_AVAILABLE, RESUME_PATH, site, socials } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -124,16 +124,18 @@ export default function ContactPage() {
                 </ul>
               </Reveal>
 
-              <Reveal delay={0.14}>
-                <a
-                  href={RESUME_PATH}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="pill"
-                >
-                  <span className="bracket">Resume</span>
-                </a>
-              </Reveal>
+              {RESUME_AVAILABLE && (
+                <Reveal delay={0.14}>
+                  <a
+                    href={RESUME_PATH}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pill"
+                  >
+                    <span className="bracket">Resume</span>
+                  </a>
+                </Reveal>
+              )}
             </aside>
           </div>
         </div>

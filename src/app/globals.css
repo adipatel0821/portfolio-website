@@ -600,3 +600,50 @@ html.lenis body {
     transition: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RANGE INPUT — used by the latent explorer.
+   Styled per-engine because range pseudo-elements are not standardised.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.lx-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2px;
+  background: var(--hairline-hot);
+  outline: none;
+  cursor: pointer;
+}
+
+.lx-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: var(--signal);
+  border: none;
+  cursor: grab;
+}
+.lx-range::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  background: var(--signal-bright);
+}
+
+.lx-range::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: var(--signal);
+  border: none;
+  border-radius: 0;
+  cursor: grab;
+}
+.lx-range::-moz-range-track {
+  height: 2px;
+  background: var(--hairline-hot);
+}
+
+/* The thumb is small, so the focus ring needs room to be visible. */
+.lx-range:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 6px;
+}

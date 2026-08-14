@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- The AP mark: signal orange on ink, drawn as pixel blocks to match the
+       dot-matrix display face used across the site. -->
+  <rect width="32" height="32" fill="#060606"/>
+  <g fill="#E86A2B">
+    <!-- A -->
+    <rect x="4"  y="10" width="3" height="3"/>
+    <rect x="7"  y="7"  width="3" height="3"/>
+    <rect x="10" y="10" width="3" height="3"/>
+    <rect x="4"  y="13" width="3" height="3"/>
+    <rect x="10" y="13" width="3" height="3"/>
+    <rect x="4"  y="16" width="9" height="3"/>
+    <rect x="4"  y="19" width="3" height="3"/>
+    <rect x="10" y="19" width="3" height="3"/>
+    <rect x="4"  y="22" width="3" height="3"/>
+    <rect x="10" y="22" width="3" height="3"/>
+    <!-- P -->
+    <rect x="17" y="7"  width="9" height="3"/>
+    <rect x="17" y="10" width="3" height="3"/>
+    <rect x="23" y="10" width="3" height="3"/>
+    <rect x="17" y="13" width="3" height="3"/>
+    <rect x="23" y="13" width="3" height="3"/>
+    <rect x="17" y="16" width="9" height="3"/>
+    <rect x="17" y="19" width="3" height="3"/>
+    <rect x="17" y="22" width="3" height="3"/>
+  </g>
+</svg>

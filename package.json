@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "verify:parity": "tsc src/lib/synmedix/inference.ts --outDir .parity --module esnext --target es2020 --moduleResolution bundler --skipLibCheck && node scripts/verify-parity.mjs .parity/inference.js"
   },
   "dependencies": {
     "@contentful/rich-text-html-renderer": "^17.1.6",

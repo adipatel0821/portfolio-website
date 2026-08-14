@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getProject, projects } from '@/data/projects'
@@ -7,6 +8,13 @@ import Eyebrow from '@/components/ui/Eyebrow'
 import Reveal from '@/components/ui/Reveal'
 import HighlightText from '@/components/ui/HighlightText'
 import PixelNumeral from '@/components/ui/PixelNumeral'
+import LazyMount from '@/components/ui/LazyMount'
+
+/**
+ * Only the SynMedix case study carries a live demo, and the weights are only
+ * fetched once it mounts — so every other case study pays nothing for it.
+ */
+const LatentExplorer = dynamic(() => import('@/components/demo/LatentExplorer'))
 
 /** All nine case studies are static — there is no dynamic project source. */
 export function generateStaticParams() {
@@ -241,6 +249,48 @@ export default async function CaseStudyPage({
           </Reveal>
         </Chapter>
       </div>
+
+      {/* ── Live demo (SynMedix only) ── */}
+      {project.id === 'synmedix' && (
+        <section
+          aria-labelledby="demo-heading"
+          className="border-t border-hairline py-chapter"
+        >
+          <div className="shell">
+            <div className="mb-10 max-w-[52ch]">
+              <Reveal>
+                <Eyebrow label="Live demo" sublabel="Not a screenshot" className="mb-6" />
+              </Reveal>
+              <Reveal delay={0.06}>
+                <h2 id="demo-heading" className="type-display mb-5 text-display-sm text-chalk">
+                  Explore the latent space.
+                </h2>
+              </Reveal>
+              <Reveal delay={0.12}>
+                <p className="text-body text-ash">
+                  The generator described above, trained and exported to run client-side.
+                  Move a latent dimension or change the conditioning and the record
+                  regenerates — no server, no API call, no round trip.
+                </p>
+              </Reveal>
+            </div>
+
+            {/* Mounted on approach: the explorer fetches 70kb of weights and
+                runs inference on mount, which is pure LCP cost while it is
+                still four screens below the fold. */}
+            <LazyMount
+              minHeight={520}
+              placeholder={
+                <div className="border border-hairline bg-ink-800 p-8">
+                  <p className="type-label text-ash">Generator loads as you reach it…</p>
+                </div>
+              }
+            >
+              <LatentExplorer />
+            </LazyMount>
+          </div>
+        </section>
+      )}
 
       {/* ── Next project ── */}
       <section

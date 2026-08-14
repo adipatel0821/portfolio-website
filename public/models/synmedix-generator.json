@@ -1,0 +1,401 @@
+{
+ "architecture": "SynMedix conditional WGAN-GP generator",
+ "trainedOn": "502-patient SynMedix sample cohort",
+ "imputedCellFraction": 0.12313247011952191,
+ "fullyCompleteRows": 68,
+ "latentDim": 16,
+ "hiddenDims": [
+  96,
+  96
+ ],
+ "conditionDim": 24,
+ "diagnosisDim": 12,
+ "numAgeBuckets": 10,
+ "numGenders": 3,
+ "numContinuous": 16,
+ "numCategorical": 1,
+ "epochs": 700,
+ "parameterCount": 17633,
+ "marginalFit": {
+  "meanAbsErr": 0.023404071107506752,
+  "stdAbsErr": 0.045965224504470825
+ },
+ "diagnosisCodes": [
+  "E78.5",
+  "I50.9",
+  "M54.5",
+  "496",
+  "250.00",
+  "428.0",
+  "J44.1",
+  "J18.9",
+  "I25.10",
+  "F32.9",
+  "585.3",
+  "E11.9"
+ ],
+ "features": [
+  {
+   "key": "vital_heart_rate",
+   "label": "Heart rate",
+   "unit": "bpm",
+   "min": 51.0,
+   "max": 120.0,
+   "mean": 85.19721221923828,
+   "std": 27.035888671875,
+   "p25": 67.0,
+   "p75": 101.0
+  },
+  {
+   "key": "vital_respiratory_rate",
+   "label": "Respiratory rate",
+   "unit": "/min",
+   "min": 10.0,
+   "max": 30.0,
+   "mean": 19.87848663330078,
+   "std": 5.759037494659424,
+   "p25": 15.0,
+   "p75": 25.0
+  },
+  {
+   "key": "vital_spo2",
+   "label": "SpO\u2082",
+   "unit": "%",
+   "min": 88.19999694824219,
+   "max": 99.79900360107422,
+   "mean": 93.82191467285156,
+   "std": 3.354743003845215,
+   "p25": 91.0,
+   "p75": 96.5999984741211
+  },
+  {
+   "key": "vital_temperature",
+   "label": "Temperature",
+   "unit": "\u00b0C",
+   "min": 35.599998474121094,
+   "max": 39.3998908996582,
+   "mean": 37.412147521972656,
+   "std": 1.0620918273925781,
+   "p25": 36.5,
+   "p75": 38.26388931274414
+  },
+  {
+   "key": "vital_weight",
+   "label": "Weight",
+   "unit": "kg",
+   "min": 46.72581100463867,
+   "max": 147.6929931640625,
+   "mean": 97.57429504394531,
+   "std": 28.075529098510742,
+   "p25": 77.04695129394531,
+   "p75": 119.49890899658203
+  },
+  {
+   "key": "bp_systolic",
+   "label": "BP systolic",
+   "unit": "mmHg",
+   "min": 90.01000213623047,
+   "max": 179.99000549316406,
+   "mean": 132.0916290283203,
+   "std": 24.620277404785156,
+   "p25": 111.0,
+   "p75": 152.0
+  },
+  {
+   "key": "bp_diastolic",
+   "label": "BP diastolic",
+   "unit": "mmHg",
+   "min": 50.0099983215332,
+   "max": 110.0,
+   "mean": 79.17330932617188,
+   "std": 16.891258239746094,
+   "p25": 65.0,
+   "p75": 92.0
+  },
+  {
+   "key": "lab_glucose_value",
+   "label": "Glucose",
+   "unit": "mg/dL",
+   "min": 62.023231506347656,
+   "max": 294.1985168457031,
+   "mean": 184.35638427734375,
+   "std": 64.00768280029297,
+   "p25": 140.19000244140625,
+   "p75": 234.83999633789062
+  },
+  {
+   "key": "lab_hba1c_value",
+   "label": "HbA1c",
+   "unit": "%",
+   "min": 4.110000133514404,
+   "max": 13.849900245666504,
+   "mean": 8.891195297241211,
+   "std": 2.6921896934509277,
+   "p25": 6.835000038146973,
+   "p75": 10.992500305175781
+  },
+  {
+   "key": "lab_creatinine_value",
+   "label": "Creatinine",
+   "unit": "mg/dL",
+   "min": 0.5498760342597961,
+   "max": 3.9512438774108887,
+   "mean": 2.3767011165618896,
+   "std": 0.9012496471405029,
+   "p25": 1.6925339698791504,
+   "p75": 3.065000057220459
+  },
+  {
+   "key": "lab_bun_value",
+   "label": "BUN",
+   "unit": "mg/dL",
+   "min": 5.520299911499023,
+   "max": 39.31890106201172,
+   "mean": 22.985597610473633,
+   "std": 9.198172569274902,
+   "p25": 16.40999984741211,
+   "p75": 29.842500686645508
+  },
+  {
+   "key": "lab_hemoglobin_value",
+   "label": "Hemoglobin",
+   "unit": "g/dL",
+   "min": 10.150599479675293,
+   "max": 166.88999938964844,
+   "mean": 64.09977722167969,
+   "std": 60.00475311279297,
+   "p25": 14.227499961853027,
+   "p75": 127.3499984741211
+  },
+  {
+   "key": "lab_platelets_value",
+   "label": "Platelets",
+   "unit": "K/\u00b5L",
+   "min": 103.7439956665039,
+   "max": 444.2774963378906,
+   "mean": 288.9033203125,
+   "std": 92.37703704833984,
+   "p25": 218.8300018310547,
+   "p75": 358.8475036621094
+  },
+  {
+   "key": "lab_potassium_value",
+   "label": "Potassium",
+   "unit": "mmol/L",
+   "min": 3.0299999713897705,
+   "max": 5.969899654388428,
+   "mean": 4.531215190887451,
+   "std": 0.7717630863189697,
+   "p25": 3.9625000953674316,
+   "p75": 5.090000152587891
+  },
+  {
+   "key": "lab_sodium_value",
+   "label": "Sodium",
+   "unit": "mmol/L",
+   "min": 130.3907012939453,
+   "max": 149.85000610351562,
+   "mean": 139.728271484375,
+   "std": 5.397947788238525,
+   "p25": 135.49749755859375,
+   "p75": 143.9449920654297
+  },
+  {
+   "key": "lab_wbc_value",
+   "label": "WBC",
+   "unit": "K/\u00b5L",
+   "min": 3.2901999950408936,
+   "max": 14.699899673461914,
+   "mean": 9.082012176513672,
+   "std": 2.9695417881011963,
+   "p25": 6.880000114440918,
+   "p75": 11.007499694824219
+  }
+ ],
+ "tensors": [
+  {
+   "name": "cond.age_embed.weight",
+   "shape": [
+    10,
+    16
+   ],
+   "offset": 0,
+   "size": 160
+  },
+  {
+   "name": "cond.gender_embed.weight",
+   "shape": [
+    3,
+    8
+   ],
+   "offset": 160,
+   "size": 24
+  },
+  {
+   "name": "cond.diag_proj.weight",
+   "shape": [
+    32,
+    12
+   ],
+   "offset": 184,
+   "size": 384
+  },
+  {
+   "name": "cond.diag_proj.bias",
+   "shape": [
+    32
+   ],
+   "offset": 568,
+   "size": 32
+  },
+  {
+   "name": "cond.fc.0.weight",
+   "shape": [
+    24,
+    56
+   ],
+   "offset": 600,
+   "size": 1344
+  },
+  {
+   "name": "cond.fc.0.bias",
+   "shape": [
+    24
+   ],
+   "offset": 1944,
+   "size": 24
+  },
+  {
+   "name": "gen.trunk.0.weight",
+   "shape": [
+    96,
+    40
+   ],
+   "offset": 1968,
+   "size": 3840
+  },
+  {
+   "name": "gen.trunk.0.bias",
+   "shape": [
+    96
+   ],
+   "offset": 5808,
+   "size": 96
+  },
+  {
+   "name": "gen.trunk.1.weight",
+   "shape": [
+    96
+   ],
+   "offset": 5904,
+   "size": 96
+  },
+  {
+   "name": "gen.trunk.1.bias",
+   "shape": [
+    96
+   ],
+   "offset": 6000,
+   "size": 96
+  },
+  {
+   "name": "gen.trunk.1.running_mean",
+   "shape": [
+    96
+   ],
+   "offset": 6096,
+   "size": 96
+  },
+  {
+   "name": "gen.trunk.1.running_var",
+   "shape": [
+    96
+   ],
+   "offset": 6192,
+   "size": 96
+  },
+  {
+   "name": "gen.trunk.4.weight",
+   "shape": [
+    96,
+    96
+   ],
+   "offset": 6288,
+   "size": 9216
+  },
+  {
+   "name": "gen.trunk.4.bias",
+   "shape": [
+    96
+   ],
+   "offset": 15504,
+   "size": 96
+  },
+  {
+   "name": "gen.trunk.5.weight",
+   "shape": [
+    96
+   ],
+   "offset": 15600,
+   "size": 96
+  },
+  {
+   "name": "gen.trunk.5.bias",
+   "shape": [
+    96
+   ],
+   "offset": 15696,
+   "size": 96
+  },
+  {
+   "name": "gen.trunk.5.running_mean",
+   "shape": [
+    96
+   ],
+   "offset": 15792,
+   "size": 96
+  },
+  {
+   "name": "gen.trunk.5.running_var",
+   "shape": [
+    96
+   ],
+   "offset": 15888,
+   "size": 96
+  },
+  {
+   "name": "gen.continuous_head.weight",
+   "shape": [
+    16,
+    96
+   ],
+   "offset": 15984,
+   "size": 1536
+  },
+  {
+   "name": "gen.continuous_head.bias",
+   "shape": [
+    16
+   ],
+   "offset": 17520,
+   "size": 16
+  },
+  {
+   "name": "gen.categorical_head.weight",
+   "shape": [
+    1,
+    96
+   ],
+   "offset": 17536,
+   "size": 96
+  },
+  {
+   "name": "gen.categorical_head.bias",
+   "shape": [
+    1
+   ],
+   "offset": 17632,
+   "size": 1
+  }
+ ]
+}

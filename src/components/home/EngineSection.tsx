@@ -11,7 +11,7 @@ import Reveal from '@/components/ui/Reveal'
 import MagneticButton from '@/components/ui/MagneticButton'
 import TerminalType from '@/components/ui/TerminalType'
 import { chapters } from '@/data/home'
-import { RESUME_PATH, site } from '@/lib/site'
+import { RESUME_AVAILABLE, RESUME_PATH, site } from '@/lib/site'
 
 /**
  * The signature moment: hero and the four capability chapters share one pinned
@@ -116,9 +116,15 @@ export default function EngineSection() {
                 <MagneticButton href="/projects" className="pill pill-signal">
                   <span className="bracket">View Work</span>
                 </MagneticButton>
-                <MagneticButton href={RESUME_PATH} external className="pill">
-                  Resume
-                </MagneticButton>
+                {RESUME_AVAILABLE ? (
+                  <MagneticButton href={RESUME_PATH} external className="pill">
+                    Resume
+                  </MagneticButton>
+                ) : (
+                  <MagneticButton href="/about" className="pill">
+                    About Me
+                  </MagneticButton>
+                )}
               </div>
             </Reveal>
 

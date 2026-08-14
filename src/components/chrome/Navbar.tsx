@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { nav, site, RESUME_PATH } from '@/lib/site'
+import { nav, site, RESUME_AVAILABLE, RESUME_PATH } from '@/lib/site'
 import { clsx } from '@/lib/clsx'
 import MagneticButton from '@/components/ui/MagneticButton'
 
@@ -109,14 +109,16 @@ export default function Navbar() {
 
           {/* ── Actions ── */}
           <div className="flex items-center gap-2.5">
-            <a
-              href={RESUME_PATH}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pill hidden lg:inline-flex"
-            >
-              Resume
-            </a>
+            {RESUME_AVAILABLE && (
+              <a
+                href={RESUME_PATH}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pill hidden lg:inline-flex"
+              >
+                Resume
+              </a>
+            )}
 
             <MagneticButton href="/contact" className="pill pill-signal hidden md:inline-flex">
               Hire Me
@@ -188,14 +190,16 @@ export default function Navbar() {
                 <Link href="/contact" className="pill pill-signal">
                   Hire Me
                 </Link>
-                <a
-                  href={RESUME_PATH}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="pill"
-                >
-                  Resume
-                </a>
+                {RESUME_AVAILABLE && (
+                  <a
+                    href={RESUME_PATH}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pill"
+                  >
+                    Resume
+                  </a>
+                )}
               </div>
             </nav>
           </motion.div>
