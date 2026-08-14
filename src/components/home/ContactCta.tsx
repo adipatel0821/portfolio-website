@@ -8,7 +8,10 @@ import { site } from '@/lib/site'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
-const FORMSPREE = `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_ID ?? 'xkopwlee'}`
+// `||`, not `??`: an env var that is present but empty (a declared-but-unset
+// CI secret or Vercel variable) would satisfy `??` and build the URL
+// `formspree.io/f/` — a silently broken form. Empty must fall back too.
+const FORMSPREE = `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_ID || 'xkopwlee'}`
 
 /**
  * Closing CTA — the reference's mailing-list footer, repurposed as a one-field
