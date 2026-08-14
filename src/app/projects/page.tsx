@@ -1,93 +1,93 @@
-import ProjectCard from '@/components/ProjectCard'
-import ScrollReveal from '@/components/ScrollReveal'
+import type { Metadata } from 'next'
+import Link from 'next/link'
 import { projects } from '@/data/projects'
+import ProjectIndex from '@/components/projects/ProjectIndex'
+import Eyebrow from '@/components/ui/Eyebrow'
+import Reveal from '@/components/ui/Reveal'
+import PixelHeadline from '@/components/ui/PixelHeadline'
+import { socials } from '@/lib/site'
+
+export const metadata: Metadata = {
+  title: 'Projects',
+  description:
+    'Case studies in machine learning, data engineering, IoT and full-stack development — problem, approach, architecture, and measured outcome for each.',
+}
 
 export default function ProjectsPage() {
+  const github = socials.find((s) => s.label === 'GitHub')
+
   return (
     <>
-      
-      {/* Header */}
-      <div className="pt-36 page-section" style={{ background: 'var(--bg-secondary)' }}>
-        <div className="container-xl">
-          <ScrollReveal>
-            <p className="section-label mb-3">My Work</p>
-            <h1 className="section-heading mb-6" style={{ fontSize: 'clamp(2.8rem, 7vw, 6rem)' }}>
-              Projects that
-              <br />
-              <span className="gradient-text">ship &amp; scale.</span>
-            </h1>
-            <div className="accent-line" />
-            <p className="mt-6 text-base max-w-2xl" style={{ color: 'var(--text-secondary)' }}>
-              A curated selection of products, startups, and experiments I&apos;ve built.
-              Click any card to dive into the Founder&apos;s Vision and full story.
+      {/* ── Header ── */}
+      <header className="border-b border-hairline pb-16 pt-[calc(var(--nav-h)+clamp(4rem,10vh,7rem))]">
+        <div className="shell">
+          <Reveal>
+            <Eyebrow label="Aditya Patel" sublabel="Selected Work" className="mb-8" />
+          </Reveal>
+
+          <PixelHeadline
+            lines={['Things that', 'shipped.']}
+            accentLines={[1]}
+            className="mb-8 max-w-[14ch] text-display-lg"
+            delay={0.1}
+          />
+
+          <Reveal delay={0.5}>
+            <p className="max-w-[54ch] text-body text-ash">
+              Nine builds across machine learning, data engineering, IoT and the web. Each
+              one written up properly — the problem, the approach, the architecture, and
+              what actually came out the other end.
             </p>
-          </ScrollReveal>
+          </Reveal>
         </div>
-      </div>
+      </header>
 
-      {/* Grid */}
-      <section className="page-section" style={{ background: 'var(--bg-primary)' }}>
-        <div className="container-xl">
-          {/* Category filters (static UI) */}
-          <ScrollReveal>
-            <div className="flex flex-wrap items-center gap-2.5 mb-12">
-              {['All', 'Startup', 'SaaS', 'AI/ML', 'Mobile', 'Hackathon Winner', 'Marketplace'].map(
-                (cat, i) => (
-                  <button
-                    key={cat}
-                    className="text-xs font-bold px-4 py-2 rounded-full transition-all hover:scale-105"
-                    style={{
-                      background: i === 0 ? 'var(--accent-primary)' : 'var(--glass-bg)',
-                      border: i === 0 ? 'none' : '1px solid var(--glass-border)',
-                      color: i === 0 ? 'white' : 'var(--text-secondary)',
-                    }}
-                  >
-                    {cat}
-                  </button>
-                )
-              )}
-            </div>
-          </ScrollReveal>
+      {/* ── Index ── */}
+      <section aria-label="Project index" className="py-16">
+        <div className="shell">
+          <ProjectIndex projects={projects} />
+        </div>
+      </section>
 
-          {/* Cards grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project, i) => (
-              <ScrollReveal key={project.id} delay={i * 0.08} direction="up">
-                <div className="h-full">
-                  <ProjectCard p={project} />
-                </div>
-              </ScrollReveal>
-            ))}
+      {/* ── Open source ── */}
+      <section aria-labelledby="oss-heading" className="border-t border-hairline py-chapter">
+        <div className="shell">
+          <div className="max-w-[46ch]">
+            <Reveal>
+              <Eyebrow label="Open Source" sublabel="Build in public" className="mb-6" />
+            </Reveal>
+            <Reveal delay={0.06}>
+              <h2 id="oss-heading" className="type-display mb-5 text-display-sm text-chalk">
+                Most of this is on GitHub.
+              </h2>
+            </Reveal>
+            <Reveal delay={0.12}>
+              <p className="mb-8 text-body text-ash">
+                Experiments, half-finished ideas, and the commit history behind the writeups
+                above.
+              </p>
+            </Reveal>
+            <Reveal delay={0.18}>
+              <a href={github?.href} target="_blank" rel="noopener noreferrer" className="pill">
+                <span className="bracket">View GitHub</span>
+              </a>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* Open source banner */}
-      <section className="py-20" style={{ background: 'var(--bg-secondary)' }}>
-        <div className="container-xl">
-          <ScrollReveal direction="scale">
-            <div className="glass-card text-center py-16 px-8" style={{ borderRadius: 28 }}>
-              <p className="section-label mb-3">Open Source</p>
-              <h2 className="section-heading text-3xl md:text-5xl mb-4">
-                I build in public
-              </h2>
-              <p className="text-base max-w-lg mx-auto mb-8" style={{ color: 'var(--text-secondary)' }}>
-                Most of my work is open source. Find me on GitHub where I contribute to projects,
-                share experiments, and document everything I learn.
-              </p>
-              <a
-                href="https://github.com/adipatel0821"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="liquid-btn inline-flex items-center gap-2 px-8 py-4 text-base font-bold"
-              >
-                View GitHub →
-              </a>
-            </div>
-          </ScrollReveal>
+      {/* ── Next ── */}
+      <section className="border-t border-hairline py-16">
+        <div className="shell flex flex-wrap items-center justify-between gap-6">
+          <p className="type-label text-dust">Next</p>
+          <Link
+            href="/contact"
+            className="type-display text-display-sm text-chalk transition-colors hover:text-signal"
+          >
+            Get in touch →
+          </Link>
         </div>
       </section>
-
     </>
   )
 }

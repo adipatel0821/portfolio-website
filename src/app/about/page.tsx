@@ -15,7 +15,7 @@ const techStack = [
 
 const highlights = [
   { icon: GraduationCap, title: 'Stevens Institute',  sub: 'M.S. CS · Hoboken, NJ · 2025–2027',        color: '#00d4ff' },
-  { icon: GraduationCap, title: 'VIT Chennai',        sub: 'B.Tech CS&E · GPA 3.2/4.0 · 2021–2025',    color: '#a855f7' },
+  { icon: GraduationCap, title: 'VIT Chennai',        sub: 'B.Tech CS&E · GPA 3.5/4.0 · 2021–2025',    color: '#a855f7' },
   { icon: MapPin,        title: 'Hoboken, NJ',        sub: 'Open to remote · hybrid · in-person',       color: '#f59e0b' },
   { icon: Users,         title: '3 Internships',      sub: 'Data Eng · Web Dev · IoT Engineering',      color: '#10b981' },
   { icon: Cpu,           title: 'ML / Data Engineer', sub: 'PyTorch · TensorFlow · AWS SageMaker',      color: '#ef4444' },
