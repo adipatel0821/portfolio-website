@@ -12,11 +12,11 @@ import LazyMount from '@/components/ui/LazyMount'
 
 /**
  * Only the SynMedix case study carries a live demo, and the weights are only
- * fetched once it mounts — so every other case study pays nothing for it.
+ * fetched once it mounts, so every other case study pays nothing for it.
  */
 const LatentExplorer = dynamic(() => import('@/components/demo/LatentExplorer'))
 
-/** All nine case studies are static — there is no dynamic project source. */
+/** All nine case studies are static, there is no dynamic project source. */
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.id }))
 }
@@ -43,7 +43,7 @@ export async function generateMetadata({
   }
 }
 
-/** Numbered section wrapper — the spec-sheet rhythm used across the case study. */
+/** Numbered section wrapper, the spec-sheet rhythm used across the case study. */
 function Chapter({
   num,
   label,
@@ -143,7 +143,7 @@ export default async function CaseStudyPage({
               )}
             </div>
 
-            {/* Signature glyph — the centerpiece formation for this domain. */}
+            {/* Signature glyph, the centerpiece formation for this domain. */}
             <Reveal delay={0.14} direction="right">
               <div className="relative border border-hairline bg-ink-800 p-8">
                 <div className="glow-signal inset-[22%] rounded-full" aria-hidden="true" />
@@ -160,7 +160,7 @@ export default async function CaseStudyPage({
       <section aria-label="Key metrics" className="border-b border-hairline">
         <div className="shell">
           <dl className="grid grid-cols-2 gap-px bg-[rgba(255,255,255,0.06)] lg:grid-cols-4">
-            {/* Reveal supplies the wrapping <div> itself — nesting another one
+            {/* Reveal supplies the wrapping <div> itself, nesting another one
                 inside it would put a non-dt/dd grandchild in the <dl>. */}
             {project.metrics.map((metric, i) => (
               <Reveal
@@ -259,7 +259,7 @@ export default async function CaseStudyPage({
           <div className="shell">
             <div className="mb-10 max-w-[52ch]">
               <Reveal>
-                <Eyebrow label="Live demo" sublabel="Not a screenshot" className="mb-6" />
+                <Eyebrow label="Live demo" sublabel="Runs in your browser" className="mb-6" />
               </Reveal>
               <Reveal delay={0.06}>
                 <h2 id="demo-heading" className="type-display mb-5 text-display-sm text-chalk">
@@ -268,9 +268,9 @@ export default async function CaseStudyPage({
               </Reveal>
               <Reveal delay={0.12}>
                 <p className="text-body text-ash">
-                  The generator described above, trained and exported to run client-side.
-                  Move a latent dimension or change the conditioning and the record
-                  regenerates — no server, no API call, no round trip.
+                  The generator described above, trained and exported to run in the
+                  browser. Move a latent dimension or change the conditioning and the
+                  record regenerates locally, with no call to a server.
                 </p>
               </Reveal>
             </div>

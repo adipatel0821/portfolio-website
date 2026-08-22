@@ -2,7 +2,7 @@
  * Reading time from a Contentful Rich Text document.
  *
  * Walks the node tree collecting text values rather than rendering to HTML and
- * stripping tags — the tree is already structured, and regex-stripping HTML is
+ * stripping tags, the tree is already structured, and regex-stripping HTML is
  * how you end up counting attribute values as prose.
  */
 
@@ -32,7 +32,7 @@ export function wordCount(document: unknown): number {
   return text.split(/\s+/).length
 }
 
-/** Minutes, floored at 1 — "0 min read" helps nobody. */
+/** Minutes, floored at 1, "0 min read" helps nobody. */
 export function readingMinutes(document: unknown): number {
   const words = wordCount(document)
   return Math.max(1, Math.round(words / WORDS_PER_MINUTE))

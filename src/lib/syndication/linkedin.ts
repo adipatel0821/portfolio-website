@@ -5,7 +5,7 @@ import type { SyndicationPost, SyndicationResult } from './types'
 // LinkedIn" product (w_member_social scope) and a stored refresh token.
 //
 // Access tokens live 60 days; refresh tokens live 365 days and are exchanged
-// for a fresh access token on every publish — so this stays stateless on Vercel.
+// for a fresh access token on every publish, so this stays stateless on Vercel.
 
 const {
   LINKEDIN_CLIENT_ID,

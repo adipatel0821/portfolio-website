@@ -2,13 +2,13 @@
  * Hand-written forward pass for the SynMedix conditional generator.
  *
  * No TensorFlow.js, no ONNX runtime, no WASM blob. The network is four matrix
- * multiplies, two batch-norm applications and two activations — roughly 17,600
- * parameters — so a runtime would cost several hundred kilobytes to do
+ * multiplies, two batch-norm applications and two activations, roughly 17,600
+ * parameters, so a runtime would cost several hundred kilobytes to do
  * arithmetic that fits in this file.
  *
  * Everything here mirrors torch semantics exactly:
  *   nn.Linear         y = xW^T + b   (torch stores weight as [out, in])
- *   nn.BatchNorm1d    eval mode — running stats, never batch stats
+ *   nn.BatchNorm1d    eval mode, running stats, never batch stats
  *   nn.LeakyReLU(0.2)
  *   tanh              on the continuous head
  *   nn.Embedding      a row lookup
@@ -55,7 +55,7 @@ export interface Manifest {
   tensors: TensorSpec[]
 }
 
-/** A view onto one tensor inside the flat weight blob — no copying. */
+/** A view onto one tensor inside the flat weight blob, no copying. */
 type Weights = Map<string, { data: Float32Array; shape: number[] }>
 
 export interface GeneratorInput {
@@ -124,7 +124,7 @@ export class SynMedixGenerator {
 
   /**
    * BatchNorm1d in eval mode. Uses the running statistics captured during
-   * training — using the current activations here would make a single-sample
+   * training, using the current activations here would make a single-sample
    * forward pass produce zeros.
    */
   private batchNorm(x: Float32Array, prefix: string, eps = 1e-5): Float32Array {
@@ -208,7 +208,7 @@ export class SynMedixGenerator {
   }
 }
 
-/** Box–Muller standard normal — the latent prior the model was trained under. */
+/** Box–Muller standard normal, the latent prior the model was trained under. */
 export function randomLatent(dim: number): Float32Array {
   const z = new Float32Array(dim)
   for (let i = 0; i < dim; i++) {

@@ -1,4 +1,4 @@
-// Lightweight Discord webhook notifier — used to deliver the "assisted"
+// Lightweight Discord webhook notifier, used to deliver the "assisted"
 // Substack draft to you for one-click manual publishing.
 
 const { DISCORD_SYNDICATION_WEBHOOK } = process.env

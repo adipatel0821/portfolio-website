@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 
 /**
- * Contentful webhook endpoint — called whenever a blog post is published or
+ * Contentful webhook endpoint, called whenever a blog post is published or
  * unpublished. Revalidates both the blog index and all individual post pages
  * so changes go live immediately without waiting for the 60-second ISR window.
  *

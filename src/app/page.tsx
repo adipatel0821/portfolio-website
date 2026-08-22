@@ -8,7 +8,7 @@ import ContactCta from '@/components/home/ContactCta'
 export const metadata: Metadata = {
   title: 'Aditya Patel · ML & Data Engineer',
   description:
-    'Machine learning and data engineering — GANs, diffusion models, and ETL pipelines taken from research to production on AWS SageMaker and GCP Vertex AI.',
+    'Machine learning and data engineering. GANs, diffusion models and ETL pipelines taken from research to production on AWS SageMaker and GCP Vertex AI.',
 }
 
 export default function HomePage() {

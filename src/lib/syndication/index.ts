@@ -8,7 +8,7 @@ const PLATFORMS = ['reddit', 'linkedin', 'substack'] as const
 
 /**
  * Fan out one published post to every platform in parallel. Each platform
- * fails/skips independently — a broken token on one never blocks the others.
+ * fails/skips independently, a broken token on one never blocks the others.
  */
 export async function syndicatePost(post: SyndicationPost): Promise<SyndicationResult[]> {
   const commentary = teaser(post)

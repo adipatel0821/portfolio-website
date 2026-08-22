@@ -12,7 +12,7 @@ import { site } from '@/lib/site'
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Aditya Patel — M.S. Computer Science at Stevens Institute of Technology, currently an AI engineer intern at Licent Solutions. Four industry internships across AI, data engineering, IoT and web, and production ML deployments on AWS SageMaker and GCP Vertex AI.',
+    'Aditya Patel, M.S. Computer Science at Stevens Institute of Technology and currently an AI engineer intern at Licent Solutions. Four industry internships across AI, data engineering, IoT and web, plus production ML deployments on AWS SageMaker and GCP Vertex AI.',
 }
 
 export default function AboutPage() {
@@ -62,9 +62,9 @@ export default function AboutPage() {
                 <p className="mb-6 text-body text-ash">
                   I finished my B.Tech at VIT Chennai in 2025 with a GPA of 3.5/4.0, and
                   spent the years around it doing internships that had almost nothing
-                  in common — ETL pipelines at Intellect Design Arena, IoT systems at Intuz,
+                  in common: ETL pipelines at Intellect Design Arena, IoT systems at Intuz,
                   and full-stack web at Appuno. That turned out to be the useful part. Each
-                  one taught me a different half of what makes a system actually work.
+                  one covered a different piece of what makes a system work.
                 </p>
               </Reveal>
 
@@ -85,10 +85,10 @@ export default function AboutPage() {
                   it: the most valuable datasets in medicine are the ones you are least
                   allowed to use. Most of my work is some attempt at that. Right now
                   I&apos;m an AI engineer intern at{' '}
-                  <span className="text-chalk">Licent Solutions</span> — that work is
-                  confidential, so it isn&apos;t written up here — and I&apos;m looking for
-                  ML or data engineering roles alongside it. If you&apos;re building
-                  something in that space,{' '}
+                  <span className="text-chalk">Licent Solutions</span>. That work is
+                  confidential, so it is not written up here. I&apos;m looking for ML or
+                  data engineering roles alongside it, so if you are building something
+                  in that space,{' '}
                   <Link href="/contact" className="text-chalk underline underline-offset-4 hover:text-signal">
                     I want to hear about it
                   </Link>
@@ -102,7 +102,7 @@ export default function AboutPage() {
               <dl className="border-t border-hairline lg:w-72">
                 {[
                   { label: 'Based', value: site.location },
-                  { label: 'Studying', value: 'M.S. CS · Stevens · 2025–2027' },
+                  { label: 'Studying', value: 'M.S. CS · Stevens · 2025-2027' },
                   { label: 'Prior', value: 'B.Tech CS&E · VIT Chennai · 3.5/4.0' },
                   { label: 'Currently', value: 'AI Engineer Intern · Licent Solutions' },
                   { label: 'Internships', value: 'AI · Data Eng · IoT · Web' },
@@ -125,7 +125,7 @@ export default function AboutPage() {
         <div className="shell">
           <div className="mb-14 max-w-[46ch]">
             <Reveal>
-              <Eyebrow label="Timeline" sublabel="2021 — Present" className="mb-6" />
+              <Eyebrow label="Timeline" sublabel="2021 to Present" className="mb-6" />
             </Reveal>
             <Reveal delay={0.06}>
               <h2 id="timeline-heading" className="type-display text-display-md text-chalk">

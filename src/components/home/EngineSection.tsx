@@ -22,7 +22,7 @@ import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
  * ────────────────
  * The visual is `sticky top-0 h-screen` with `-mb-[100svh]`, which pins it for
  * the length of the section while removing it from the flow so the copy scrolls
- * over the top. That avoids a scroll-jacking pin library entirely — no
+ * over the top. That avoids a scroll-jacking pin library entirely, no
  * ScrollTrigger, no transform on the body, and native scrollbar behaviour is
  * preserved.
  *
@@ -31,7 +31,7 @@ import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
  * `useScroll` over the section yields 0..1; that maps to a 0..4 chapter float
  * handed to the centerpiece as a MotionValue. The value is read inside the
  * render loop's `useFrame`, so scrubbing the entire scene costs zero React
- * renders — the component tree never updates while you scroll.
+ * renders, the component tree never updates while you scroll.
  *
  * Reduced motion
  * ──────────────
@@ -90,7 +90,7 @@ export default function EngineSection() {
           aria-labelledby="hero-heading"
           // Explicitly positioned: the scroll hint below is absolute, and
           // without this it only has a containing block because Framer's
-          // transform creates one — which does not exist under reduced motion.
+          // transform creates one, which does not exist under reduced motion.
           className="relative flex h-[100svh] flex-col justify-center"
           style={prefersReduced ? undefined : { opacity: heroOpacity, y: heroY }}
         >
@@ -109,7 +109,7 @@ export default function EngineSection() {
 
             <Reveal delay={0.95} distance={16} priority>
               <p className="mb-10 max-w-[46ch] text-body-lg text-ash">
-                Machine learning and data engineering — from{' '}
+                Machine learning and data engineering, from{' '}
                 <span className="text-chalk">GAN research</span> to{' '}
                 <span className="text-chalk">cloud-scale deployment</span>.
               </p>
@@ -143,7 +143,7 @@ export default function EngineSection() {
             </Reveal>
           </div>
 
-          {/* Scroll hint — terminal typing, bottom of the fold. */}
+          {/* Scroll hint, terminal typing, bottom of the fold. */}
           <div className="shell absolute inset-x-0 bottom-8 hidden md:block">
             <TerminalType
               prompt="$"
@@ -163,7 +163,10 @@ export default function EngineSection() {
             <section
               key={chapterData.num}
               aria-labelledby={`chapter-${chapterData.num}`}
-              className="flex h-[100svh] items-center"
+              // 78svh rather than a full screen. The chapter still owns the
+              // viewport when centred, but four of them at 100svh made the page
+              // five screens tall before any real content began.
+              className="flex h-[78svh] min-h-[30rem] items-center"
             >
               <div className="shell w-full">
                 <div

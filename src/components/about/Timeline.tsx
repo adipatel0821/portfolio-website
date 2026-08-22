@@ -11,7 +11,7 @@ import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
  * Career timeline.
  *
  * A single hairline runs the length of the list with an orange progress rule
- * drawn over it, scaled by scroll position — so the accent line literally
+ * drawn over it, scaled by scroll position, so the accent line literally
  * tracks how far through the history you have read. Each entry's node fills as
  * the rule reaches it.
  *
@@ -25,7 +25,7 @@ export default function Timeline() {
   const { scrollYProgress } = useScroll({
     target: ref,
     // Start filling when the list reaches the lower third of the viewport and
-    // finish when its end passes the middle — otherwise the rule completes
+    // finish when its end passes the middle, otherwise the rule completes
     // long before the last entry is readable.
     offset: ['start 75%', 'end 55%'],
   })

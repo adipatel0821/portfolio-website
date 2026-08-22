@@ -24,7 +24,7 @@ export const chapters: Chapter[] = [
     num: '01',
     eyebrow: 'Machine Learning & AI',
     headline: ['Models that survive contact with ', 'production', '.'],
-    body: 'GANs, diffusion models, and LLM systems in PyTorch and TensorFlow — taken past the notebook into deployed inference on AWS SageMaker and GCP Vertex AI. The paper is the easy half.',
+    body: 'GANs, diffusion models and LLM systems in PyTorch and TensorFlow, taken past the notebook into deployed inference on AWS SageMaker and GCP Vertex AI.',
     specs: [
       { label: 'Generative', value: 'WGAN-GP · Conditional DDPM · PaLM-E' },
       { label: 'Frameworks', value: 'PyTorch · TensorFlow · Keras' },
@@ -35,7 +35,7 @@ export const chapters: Chapter[] = [
     num: '02',
     eyebrow: 'Data Engineering',
     headline: ['Pipelines built to be ', 'boring', '.'],
-    body: 'End-to-end ETL orchestrated in Apache Airflow, with automated quality gates and parallel execution. A pipeline nobody has to think about is a pipeline that works.',
+    body: 'End-to-end ETL orchestrated in Apache Airflow, with automated quality gates and parallel execution across roughly 10 GB of records.',
     specs: [
       { label: 'Orchestration', value: 'Apache Airflow · BullMQ' },
       { label: 'Stores', value: 'PostgreSQL · DynamoDB · S3 · DuckDB' },
@@ -46,7 +46,7 @@ export const chapters: Chapter[] = [
     num: '03',
     eyebrow: 'Full-Stack Development',
     headline: ['The surface that makes it ', 'usable', '.'],
-    body: 'Typed Next.js frontends over REST APIs in ASP.NET MVC and Node. A model with no interface is a result nobody can act on.',
+    body: 'Typed Next.js frontends over REST APIs in ASP.NET MVC and Node, with role-based access control where the data needs it.',
     specs: [
       { label: 'Frontend', value: 'Next.js · TypeScript · React' },
       { label: 'Backend', value: 'ASP.NET MVC · C# · Fastify' },
@@ -57,7 +57,7 @@ export const chapters: Chapter[] = [
     num: '04',
     eyebrow: 'IoT & Embedded',
     headline: ['Where the data ', 'actually', ' comes from.'],
-    body: 'Arduino and Raspberry Pi sensor firmware, local aggregation, and real-time dashboards. Before anything can be modelled, something physical has to measure it.',
+    body: 'Arduino and Raspberry Pi sensor firmware, local aggregation and real-time dashboards for the hardware that produces the data in the first place.',
     specs: [
       { label: 'Hardware', value: 'Arduino · Raspberry Pi' },
       { label: 'Telemetry', value: 'Real-time aggregation · anomaly alerts' },
@@ -138,7 +138,7 @@ export const techSpecs: SpecGroup[] = [
   },
 ]
 
-/** Marquee strip — a secondary flourish under the spec grid. */
+/** Marquee strip, a secondary flourish under the spec grid. */
 export const marqueeItems = [
   'PyTorch',
   'TensorFlow',

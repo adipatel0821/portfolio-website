@@ -3,7 +3,7 @@ import { socials } from '@/lib/site'
 /**
  * Left-edge vertical FOLLOW rail. Mirrors the reference's chrome.
  *
- * Hidden below xl, where the viewport is too narrow to spare the gutter — the
+ * Hidden below xl, where the viewport is too narrow to spare the gutter, the
  * same links live in the footer, so nothing is lost. Marked aria-hidden there
  * would be wrong (it isn't rendered at all), so no duplicate announcement.
  */

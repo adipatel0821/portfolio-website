@@ -3,7 +3,7 @@ import { clsx } from '@/lib/clsx'
 /**
  * Isometric line diagrams for the "how it works" rows.
  *
- * Drawn as real isometric projection rather than eyeballed parallelograms —
+ * Drawn as real isometric projection rather than eyeballed parallelograms
  * every vertex goes through `iso()`, so the boxes actually line up and the
  * shared edges meet. White/hairline strokes only; no fills beyond a 4% wash.
  */
@@ -147,7 +147,7 @@ export default function IsoDiagram({ variant, className, title }: IsoDiagramProp
         <g>
           <Box x={-34} y={0} z={0} w={18} h={16} d={18} accent />
           {Array.from({ length: 26 }, (_, i) => {
-            // Deterministic scatter — this renders on the server.
+            // Deterministic scatter, this renders on the server.
             const r = (Math.sin(i * 12.9898) * 43758.5453) % 1
             const s = (Math.sin(i * 78.233) * 43758.5453) % 1
             const x = 2 + Math.abs(r) * 34

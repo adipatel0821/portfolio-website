@@ -8,7 +8,7 @@ import { site } from '@/lib/site'
  * Contact form with real per-field validation and honest status states.
  *
  * Validation runs on submit and then live per-field once a field has been
- * touched — validating on every keystroke before the user has finished typing
+ * touched, validating on every keystroke before the user has finished typing
  * is how you tell someone their half-entered email is wrong.
  *
  * Accessibility: every field has a real <label>, errors are wired through
@@ -19,7 +19,7 @@ import { site } from '@/lib/site'
 
 // `||`, not `??`: an env var that is present but empty (a declared-but-unset
 // CI secret or Vercel variable) would satisfy `??` and build the URL
-// `formspree.io/f/` — a silently broken form. Empty must fall back too.
+// `formspree.io/f/`, a silently broken form. Empty must fall back too.
 const FORMSPREE = `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_ID || 'xkopwlee'}`
 
 const SUBJECTS = [
@@ -44,7 +44,7 @@ function validate(values: Record<Field, string>): Errors {
   if (!values.subject) errors.subject = 'Please pick a topic.'
   if (!values.message.trim()) errors.message = 'Please write a message.'
   else if (values.message.trim().length < 20)
-    errors.message = 'A little more detail would help — at least 20 characters.'
+    errors.message = 'A little more detail would help. Please write at least 20 characters.'
   return errors
 }
 
@@ -91,7 +91,7 @@ export default function ContactForm() {
       return
     }
 
-    // Silently succeed for bots — telling them they were caught only helps them.
+    // Silently succeed for bots, telling them they were caught only helps them.
     if (honeypot) {
       setStatus('sent')
       return
@@ -142,7 +142,7 @@ export default function ContactForm() {
       >
         <p className="type-pixel mb-4 text-2xl text-phosphor">Message sent</p>
         <p className="mb-8 text-body text-ash">
-          Thanks for reaching out — I read everything personally and reply within 24 hours.
+          Thanks for reaching out. I read everything personally and reply within 24 hours.
         </p>
         <button
           type="button"
@@ -157,7 +157,7 @@ export default function ContactForm() {
 
   return (
     <form ref={formRef} onSubmit={onSubmit} noValidate className="flex flex-col gap-7">
-      {/* Honeypot — off-screen, not display:none, so bots still see it. */}
+      {/* Honeypot, off-screen, not display:none, so bots still see it. */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
         <label htmlFor={`${uid}-company`}>Company (leave blank)</label>
         <input
@@ -286,7 +286,7 @@ export default function ContactForm() {
         <p className="type-label text-dust">Replies within 24 hours</p>
       </div>
 
-      {/* Submit failure — announced, with a working way out. */}
+      {/* Submit failure, announced, with a working way out. */}
       {status === 'error' && (
         <p role="alert" className="type-label border border-signal/50 px-4 py-3 text-signal-bright">
           Could not send ({submitError}). Please email{' '}

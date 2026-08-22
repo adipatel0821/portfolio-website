@@ -10,11 +10,11 @@ type Status = 'idle' | 'sending' | 'sent' | 'error'
 
 // `||`, not `??`: an env var that is present but empty (a declared-but-unset
 // CI secret or Vercel variable) would satisfy `??` and build the URL
-// `formspree.io/f/` — a silently broken form. Empty must fall back too.
+// `formspree.io/f/`, a silently broken form. Empty must fall back too.
 const FORMSPREE = `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_ID || 'xkopwlee'}`
 
 /**
- * Closing CTA — the reference's mailing-list footer, repurposed as a one-field
+ * Closing CTA, the reference's mailing-list footer, repurposed as a one-field
  * way in.
  *
  * This posts for real to the same endpoint as the full contact form, so the
@@ -29,7 +29,7 @@ export default function ContactCta() {
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
-    // Validate before touching the network — a failed round-trip is a worse
+    // Validate before touching the network, a failed round-trip is a worse
     // way to learn you typed your address wrong.
     const trimmed = email.trim()
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(trimmed)) {
@@ -98,7 +98,7 @@ export default function ContactCta() {
                 role="status"
                 className="type-label border border-phosphor/40 px-5 py-4 text-phosphor"
               >
-                Received — I&apos;ll be in touch within 24 hours.
+                Received. I&apos;ll be in touch within 24 hours.
               </p>
             ) : (
               <form onSubmit={onSubmit} noValidate className="flex flex-col gap-3">
@@ -133,7 +133,7 @@ export default function ContactCta() {
 
                 {status === 'error' && (
                   <p id="cta-error" role="alert" className="type-label text-signal-bright">
-                    {error} — or email{' '}
+                    {error}. Or email{' '}
                     <a href={`mailto:${site.email}`} className="underline">
                       {site.email}
                     </a>{' '}

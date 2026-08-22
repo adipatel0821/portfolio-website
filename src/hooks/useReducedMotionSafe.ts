@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react'
  *
  * Framer's `useReducedMotion` reads matchMedia synchronously, so on a machine
  * with the setting enabled it returns `true` on the very first client render
- * while the server rendered with `false`. Every component that branches on it —
- * choosing a plain element over a motion one, or omitting a style prop —
+ * while the server rendered with `false`. Every component that branches on it
+ * choosing a plain element over a motion one, or omitting a style prop
  * therefore produces a different tree on the client and React throws a
  * hydration error (#418) on load.
  *

@@ -5,7 +5,7 @@ export interface SyndicationPost {
   slug: string
   excerpt: string
   tags: string[]
-  /** Canonical URL on pateladitya.dev — every platform links back here. */
+  /** Canonical URL on pateladitya.dev, every platform links back here. */
   url: string
 }
 

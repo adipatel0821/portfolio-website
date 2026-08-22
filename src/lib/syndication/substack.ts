@@ -10,7 +10,7 @@ const SUBSTACK_PUBLISH_URL = process.env.SUBSTACK_PUBLISH_URL
 
 export function buildSubstackDraft(post: SyndicationPost): string {
   const lines: (string | null)[] = [
-    '📝 **New post — ready to cross-post to Substack**',
+    '📝 **New post, ready to cross-post to Substack**',
     '',
     `**Title:** ${post.title}`,
     '',
@@ -22,7 +22,7 @@ export function buildSubstackDraft(post: SyndicationPost): string {
     '',
     SUBSTACK_PUBLISH_URL ? `▶️ Open the Substack editor: ${SUBSTACK_PUBLISH_URL}` : null,
     '',
-    '— Paste into a new Substack post and hit publish.',
+    'Paste into a new Substack post and hit publish.',
   ]
   return lines.filter((l) => l !== null).join('\n')
 }
@@ -32,7 +32,7 @@ export async function assistSubstack(post: SyndicationPost): Promise<Syndication
     return {
       platform: 'substack',
       status: 'skipped',
-      detail: 'DISCORD_SYNDICATION_WEBHOOK not set — no notification channel',
+      detail: 'DISCORD_SYNDICATION_WEBHOOK not set, no notification channel',
     }
   }
   const sent = await notifyDiscord(buildSubstackDraft(post))

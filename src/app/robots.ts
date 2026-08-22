@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      // API routes are webhooks and form handlers — nothing to index.
+      // API routes are webhooks and form handlers, nothing to index.
       disallow: ['/api/'],
     },
     sitemap: `${site.url}/sitemap.xml`,

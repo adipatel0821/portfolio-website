@@ -7,8 +7,8 @@ import type { MotionValue } from 'framer-motion'
  * 2D-canvas fallback for devices without WebGL2 or with too little headroom to
  * hold the frame budget.
  *
- * This is a real, working reduced version of the centerpiece — the same five
- * formations, projected by hand — not a static placeholder. It runs ~900
+ * This is a real, working reduced version of the centerpiece, the same five
+ * formations, projected by hand, not a static placeholder. It runs ~900
  * particles with no shaders, no textures and no depth buffer, which any device
  * that can render the rest of the page can also render.
  */
@@ -34,7 +34,7 @@ function formationPoint(f: number, i: number): Vec3 {
 
   switch (f) {
     case 1: {
-      // network — four columns wired together
+      // network, four columns wired together
       const layer = Math.floor(a * 4)
       const x = -1.4 + layer * 0.93
       const t = b
@@ -46,12 +46,12 @@ function formationPoint(f: number, i: number): Vec3 {
         : [x + (nextX - x) * t, y1 + (y2 - y1) * t, (c - 0.5) * 0.1]
     }
     case 2: {
-      // pipeline — five lanes
+      // pipeline, five lanes
       const lane = (Math.floor(a * 5) / 4 - 0.5) * 1.5
       return [(b - 0.5) * 3, lane, (c - 0.5) * 0.16]
     }
     case 3: {
-      // lattice — grid edges
+      // lattice, grid edges
       const g = (v: number) => Math.round(v * 4) / 4
       const axis = Math.floor(a * 3)
       const t = (b - 0.5) * 2.2
@@ -60,7 +60,7 @@ function formationPoint(f: number, i: number): Vec3 {
       return axis === 0 ? [t, u, v] : axis === 1 ? [u, t, v] : [u, v, t]
     }
     case 4: {
-      // mesh — sphere shell
+      // mesh, sphere shell
       const theta = a * Math.PI * 2
       const phi = Math.acos(2 * b - 1)
       const r = 1.25

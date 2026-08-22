@@ -1,5 +1,5 @@
 /**
- * Minimal class-name joiner. Deliberately not the `clsx` package — this is
+ * Minimal class-name joiner. Deliberately not the `clsx` package, this is
  * eight lines and keeps a dependency out of the bundle.
  */
 type ClassValue = string | number | null | undefined | false | ClassValue[]

@@ -7,13 +7,13 @@ import { usePathname } from 'next/navigation'
 import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 /**
- * Lenis smooth scroll — the backbone of the premium feel.
+ * Lenis smooth scroll, the backbone of the premium feel.
  *
  * Two details make this work with the rest of the site:
  *
  * 1. Lenis is driven by its own rAF loop but still writes to the real document
  *    scroll position (it transforms nothing). That means Framer Motion's
- *    `useScroll` — which reads `window.scrollY` / IntersectionObserver — stays
+ *    `useScroll`, which reads `window.scrollY` / IntersectionObserver, stays
  *    correct for free. No manual `scrollerProxy` wiring is needed.
  *
  * 2. Under `prefers-reduced-motion` we never instantiate Lenis at all. Easing
@@ -33,7 +33,7 @@ export default function SmoothScroll() {
       // fast flick still lands where the user expects.
       duration: 1.05,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      // Touch devices already have native inertia — doubling it feels laggy.
+      // Touch devices already have native inertia, doubling it feels laggy.
       smoothWheel: true,
       syncTouch: false,
       wheelMultiplier: 1,
@@ -71,7 +71,7 @@ export default function SmoothScroll() {
   }, [prefersReduced])
 
   // Lenis caches its own scroll position independently of the document, so a
-  // route change needs an explicit immediate reset — otherwise the next page
+  // route change needs an explicit immediate reset, otherwise the next page
   // mounts at the top but Lenis eases it back down to where the last one was.
   useEffect(() => {
     if (lenisRef.current) lenisRef.current.scrollTo(0, { immediate: true })

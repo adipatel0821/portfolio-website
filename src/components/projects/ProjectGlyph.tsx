@@ -5,7 +5,7 @@ import { clsx } from '@/lib/clsx'
  * Per-project signature visual.
  *
  * Rather than a screenshot or a stock image, each project gets a point-and-line
- * glyph in the same visual language as the centerpiece — the formation that
+ * glyph in the same visual language as the centerpiece, the formation that
  * matches its primary domain:
  *
  *   ML → network · Data Eng → pipeline · Web → lattice · IoT → mesh

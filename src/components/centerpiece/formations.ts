@@ -1,11 +1,11 @@
 /**
- * THE LATENT ENGINE — formation geometry.
+ * THE LATENT ENGINE, formation geometry.
  *
  * One particle buffer, five target arrangements. The same points are reused
  * throughout the page: they never reset, they reorganise. Each formation
  * corresponds to a capability chapter.
  *
- *   0  NOISE     raw, unlabelled data — the hero state
+ *   0  NOISE     raw, unlabelled data, the hero state
  *   1  NETWORK   a layered neural net (01 · Machine Learning & AI)
  *   2  PIPELINE  a DAG of lanes and stage gates (02 · Data Engineering)
  *   3  LATTICE   an isometric structural grid (03 · Full-Stack)
@@ -81,7 +81,7 @@ function network(out: Float32Array, count: number, rng: () => number) {
 
   for (let i = 0; i < count; i++) {
     if (i < nodeShare) {
-      // Tight gaussian blob at a node — reads as a solid vertex.
+      // Tight gaussian blob at a node, reads as a solid vertex.
       const l = layers[Math.floor(rng() * layers.length)]
       const n = l[Math.floor(rng() * l.length)]
       out[i * 3] = n[0] + gaussian(rng) * 0.045
@@ -129,7 +129,7 @@ function pipeline(out: Float32Array, count: number, rng: () => number) {
 }
 
 // ─── 3 · LATTICE ──────────────────────────────────────────────────────────────
-// Points along the edges of a 4×4×4 cell grid — a structure being assembled.
+// Points along the edges of a 4×4×4 cell grid, a structure being assembled.
 
 function lattice(out: Float32Array, count: number, rng: () => number) {
   const DIV = 4 // cells per axis

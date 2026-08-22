@@ -6,7 +6,7 @@ import { clsx } from '@/lib/clsx'
 /**
  * 5×7 bitmap digits. Hand-plotted rather than rendered from a pixel font,
  * because each dot has to be individually positioned for the scatter-assemble
- * reveal — you cannot address the pixels inside a glyph.
+ * reveal, you cannot address the pixels inside a glyph.
  */
 const GLYPHS: Record<string, string[]> = {
   '0': ['01110', '10001', '10011', '10101', '11001', '10001', '01110'],
@@ -24,7 +24,7 @@ const GLYPHS: Record<string, string[]> = {
 const ROWS = 7
 const COLS = 5
 
-/** Deterministic PRNG — identical on server and client, so no hydration drift. */
+/** Deterministic PRNG, identical on server and client, so no hydration drift. */
 function seeded(n: number): number {
   const x = Math.sin(n * 12.9898) * 43758.5453
   return x - Math.floor(x)
@@ -53,7 +53,7 @@ const TONE_CLASS = {
  * scrolls into view. Each dot flies in from a seeded random offset with a
  * distance-weighted delay, so the numeral resolves from the outside in.
  *
- * The animation is pure CSS (see `.pixel-dot` in globals.css) — this component
+ * The animation is pure CSS (see `.pixel-dot` in globals.css), this component
  * only flips one attribute when the numeral enters the viewport. Driving each
  * dot through the animation library was measurably worse for hydration cost on
  * a page carrying several numerals, and the effect is identical.
@@ -76,7 +76,7 @@ export default function PixelNumeral({
     const el = ref.current
     if (!el) return
 
-    // Fires once — the numeral does not re-scatter on the way back up.
+    // Fires once, the numeral does not re-scatter on the way back up.
     const io = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return

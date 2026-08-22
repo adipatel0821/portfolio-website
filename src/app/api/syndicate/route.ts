@@ -3,11 +3,11 @@ import { syndicatePost } from '@/lib/syndication'
 import { canonicalUrl } from '@/lib/syndication/format'
 import type { SyndicationPost } from '@/lib/syndication/types'
 
-// Uses Buffer + outbound fetch to several APIs — run on the Node runtime.
+// Uses Buffer + outbound fetch to several APIs, run on the Node runtime.
 export const runtime = 'nodejs'
 
 /**
- * Contentful webhook endpoint — fires when a blog post is published and
+ * Contentful webhook endpoint, fires when a blog post is published and
  * cross-posts it to LinkedIn, Reddit, and (assisted) Substack.
  *
  * Contentful webhook setup:
@@ -54,10 +54,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ skipped: 'not a blogPost', contentType })
   }
 
-  // Idempotency guard — only the first publish should syndicate.
+  // Idempotency guard, only the first publish should syndicate.
   const publishedCounter = payload?.sys?.publishedCounter
   if (typeof publishedCounter === 'number' && publishedCounter > 1) {
-    return NextResponse.json({ skipped: 'republish — already syndicated', publishedCounter })
+    return NextResponse.json({ skipped: 'republish, already syndicated', publishedCounter })
   }
 
   const fields = payload?.fields ?? {}

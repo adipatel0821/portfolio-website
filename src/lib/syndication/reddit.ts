@@ -1,7 +1,7 @@
 import type { SyndicationPost, SyndicationResult } from './types'
 
 // Reddit "script" app (OAuth password grant). Posts a self-post to your own
-// user profile (u/username) — no subreddit rules, no self-promo bans.
+// user profile (u/username), no subreddit rules, no self-promo bans.
 // Register the app at https://www.reddit.com/prefs/apps (type: "script").
 
 const {
@@ -11,7 +11,7 @@ const {
   REDDIT_PASSWORD,
 } = process.env
 
-// Reddit heavily throttles generic user agents — keep this descriptive.
+// Reddit heavily throttles generic user agents, keep this descriptive.
 const USER_AGENT =
   process.env.REDDIT_USER_AGENT ||
   `web:pateladitya-portfolio-syndication:1.0 (by /u/${REDDIT_USERNAME ?? 'unknown'})`

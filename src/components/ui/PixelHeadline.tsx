@@ -8,7 +8,7 @@ import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
  * The hero headline: dot-matrix glyphs that converge from scattered positions.
  *
  * The characters are set in Departure Mono, so each one is *already* built from
- * pixels — scattering the glyphs themselves reads as a dot-matrix assembly
+ * pixels, scattering the glyphs themselves reads as a dot-matrix assembly
  * without the cost of animating thousands of individual dots. A true per-dot
  * reveal at this type size would mean ~2,000 animated nodes in the LCP element,
  * which is the wrong trade for the one thing that must paint fastest.
@@ -17,7 +17,7 @@ import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
  * animated spans are aria-hidden.
  */
 
-/** Deterministic scatter — must match between server and client render. */
+/** Deterministic scatter, must match between server and client render. */
 function seeded(n: number): number {
   const x = Math.sin(n * 78.233) * 43758.5453
   return x - Math.floor(x)
@@ -51,7 +51,7 @@ export default function PixelHeadline({
       id={id}
       className={clsx('type-pixel text-display-xl', className)}
       // The animated glyph spans are aria-hidden, so the heading needs its
-      // accessible name supplied here — a screen reader should hear one
+      // accessible name supplied here, a screen reader should hear one
       // headline, not 26 separate letters. An sr-only copy of the text as well
       // would be redundant: aria-label already overrides element content.
       aria-label={full}
@@ -84,7 +84,7 @@ export default function PixelHeadline({
                 className="inline-block"
                 // Opacity stays at 1 throughout. This is the LCP element on
                 // every page it appears on, and an element that starts
-                // transparent is not a contentful paint — fading it in defers
+                // transparent is not a contentful paint, fading it in defers
                 // LCP until the animation runs. The scatter reads just as well
                 // with the glyphs visible from the first frame, and framer
                 // serialises these initial transforms into the server HTML, so

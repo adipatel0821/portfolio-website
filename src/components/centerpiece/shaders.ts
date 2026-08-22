@@ -4,7 +4,7 @@
  * The entire morph happens here. Positions live in a float texture (five
  * formations stacked vertically); the vertex shader samples the two formations
  * bracketing `uChapter` and interpolates. The CPU writes exactly one uniform
- * per frame — no attribute uploads, no geometry rebuilds, no React renders.
+ * per frame, no attribute uploads, no geometry rebuilds, no React renders.
  */
 
 export const vertexShader = /* glsl */ `
@@ -15,7 +15,7 @@ export const vertexShader = /* glsl */ `
   uniform float uTexHeight;
   uniform float uRowsPerFormation;
 
-  uniform float uChapter;      // 0..4, fractional — the scroll scrub
+  uniform float uChapter;      // 0..4, fractional, the scroll scrub
   uniform float uTime;
   uniform float uSize;
   uniform float uPixelRatio;
@@ -109,7 +109,7 @@ export const fragmentShader = /* glsl */ `
     // Activation overrides colour where the wavefront passes.
     color = mix(color, uColorPhosphor, vActivation);
 
-    // Depth fade — far particles recede rather than crowding the near ones.
+    // Depth fade, far particles recede rather than crowding the near ones.
     float depthFade = smoothstep(7.0, 1.4, vDepth);
 
     gl_FragColor = vec4(color, alpha * uOpacity * depthFade * (0.35 + vActivation * 0.65 + 0.3));

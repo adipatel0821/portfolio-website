@@ -5,7 +5,7 @@
  * before any capability check has run. Pure CSS: two radial pools and a fixed
  * dot grid, no animation of any kind, no JavaScript.
  *
- * It is deliberately still — a slowed-down version of the centerpiece would
+ * It is deliberately still, a slowed-down version of the centerpiece would
  * still be motion, which is exactly what the user asked not to have.
  */
 export default function StaticFallback() {
@@ -28,7 +28,7 @@ export default function StaticFallback() {
           filter: 'blur(56px)',
         }}
       />
-      {/* Dot grid — the dot-matrix motif, held still. Masked to a soft ellipse
+      {/* Dot grid, the dot-matrix motif, held still. Masked to a soft ellipse
           so it reads as a cloud rather than wallpaper. */}
       <div
         className="absolute inset-0"

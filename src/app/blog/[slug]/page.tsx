@@ -17,7 +17,7 @@ export async function generateStaticParams() {
     const posts = await getAllPosts()
     return posts.map((p) => ({ slug: p.slug }))
   } catch {
-    // Content type not yet created in Contentful — skip pre-rendering.
+    // Content type not yet created in Contentful, skip pre-rendering.
     return []
   }
 }
@@ -76,7 +76,7 @@ export default async function BlogPostPage({
   const allPosts = await getAllPosts()
   const related = allPosts.filter((p) => p.slug !== post.slug).slice(0, 2)
 
-  // Article structured data — helps the post surface correctly in search.
+  // Article structured data, helps the post surface correctly in search.
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',

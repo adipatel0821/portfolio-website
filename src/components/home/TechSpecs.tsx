@@ -45,7 +45,7 @@ export default function TechSpecs() {
 
           <Reveal delay={0.12}>
             <p className="max-w-[34ch] text-spec text-ash md:text-right">
-              Everything listed here has shipped in something real — an internship
+              Everything listed here has shipped in something real: an internship
               deliverable, a deployed model, or a project running today.
             </p>
           </Reveal>

@@ -27,7 +27,7 @@ interface RevealProps {
   children: ReactNode
   /** Stagger offset in seconds. */
   delay?: number
-  /** Distance travelled, in px. Small by default — this is a lift, not a slide. */
+  /** Distance travelled, in px. Small by default, this is a lift, not a slide. */
   distance?: number
   direction?: 'up' | 'down' | 'left' | 'right' | 'none'
   as?: RevealTag
@@ -39,7 +39,7 @@ interface RevealProps {
    * element is painted from the very first frame.
    *
    * Fading in the hero means nothing above the fold qualifies as a contentful
-   * paint until JavaScript runs — which defers LCP badly and leaves the page
+   * paint until JavaScript runs, which defers LCP badly and leaves the page
    * blank entirely if the bundle fails. Content the user should see
    * immediately must never start transparent.
    */
@@ -51,7 +51,7 @@ interface RevealProps {
  * so the whole site shares one timing curve.
  *
  * Under `prefers-reduced-motion` the element renders at its final state with
- * no transform and no opacity ramp — not a shortened animation, none at all.
+ * no transform and no opacity ramp, not a shortened animation, none at all.
  */
 export default function Reveal({
   children,

@@ -29,7 +29,7 @@ function Particles({ chapter, particleCount, pixelRatio }: Omit<SceneProps, 'act
   const pointer = useRef({ x: 0, y: 0, tx: 0, ty: 0 })
 
   // The pinned wrapper is `pointer-events-none` so the copy above stays
-  // clickable, which means r3f's own `state.pointer` never updates — the canvas
+  // clickable, which means r3f's own `state.pointer` never updates, the canvas
   // receives no events at all. Track the pointer on the window instead.
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
@@ -111,7 +111,7 @@ function Particles({ chapter, particleCount, pixelRatio }: Omit<SceneProps, 'act
       pointsRef.current.rotation.x = -p.y * 0.14
     }
 
-    // Camera dollies in per chapter — the reference's push into the lens.
+    // Camera dollies in per chapter, the reference's push into the lens.
     const targetZ = 4.35 - c * 0.3
     camera.position.z += (targetZ - camera.position.z) * Math.min(1, dt * 2.4)
     camera.position.x += (p.x * 0.16 - camera.position.x) * Math.min(1, dt * 2.4)
@@ -129,7 +129,7 @@ function Particles({ chapter, particleCount, pixelRatio }: Omit<SceneProps, 'act
         transparent
         depthWrite={false}
         // Additive keeps overlapping particles reading as density rather than
-        // flat occlusion — essential for the edges to look like connections.
+        // flat occlusion, essential for the edges to look like connections.
         blending={THREE.AdditiveBlending}
       />
     </points>
@@ -153,7 +153,7 @@ export default function LatentEngineScene({
   return (
     <Canvas
       // Halting the render loop when off-screen is the single biggest win on
-      // battery devices — the section is pinned but the page is long.
+      // battery devices, the section is pinned but the page is long.
       frameloop={active ? 'always' : 'never'}
       dpr={pixelRatio}
       gl={{

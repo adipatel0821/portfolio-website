@@ -16,8 +16,8 @@ interface LazyMountProps {
  * Mounts children only once they are close to the viewport.
  *
  * `next/dynamic` splits the code but still fetches and executes it on page
- * load. For something heavy and far below the fold — the latent explorer pulls
- * 70kb of weights and runs inference on mount — that competes with the
+ * load. For something heavy and far below the fold, the latent explorer pulls
+ * 70kb of weights and runs inference on mount, that competes with the
  * above-the-fold paint for no benefit. Measured cost of mounting it eagerly on
  * the SynMedix case study was ~0.9s of LCP.
  *

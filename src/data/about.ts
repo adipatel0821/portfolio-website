@@ -1,5 +1,5 @@
 /**
- * About page content — narrative, timeline, skills, personality.
+ * About page content: narrative, timeline, skills, personality.
  * Facts carried over from the previous About page and the subway timeline.
  */
 
@@ -18,11 +18,11 @@ export interface TimelineStop {
 export const timeline: TimelineStop[] = [
   {
     num: '01',
-    period: 'Sep 2021 — May 2025',
+    period: 'Sep 2021 - May 2025',
     title: 'B.Tech, Computer Science & Engineering',
     org: 'VIT Chennai',
     kind: 'Education',
-    body: 'Four years of data structures, algorithms and systems programming, graduating with a GPA of 3.5/4.0. The foundation everything else is built on — and the years I learned that understanding why something works matters more than getting it to run.',
+    body: 'Four years of data structures, algorithms and systems programming, graduating with a GPA of 3.5/4.0. The foundation everything else is built on, and where I learned that understanding why something works matters more than getting it to run.',
     detail: [
       { label: 'GPA', value: '3.5 / 4.0' },
       { label: 'Focus', value: 'Algorithms · Systems · Applied AI' },
@@ -34,7 +34,7 @@ export const timeline: TimelineStop[] = [
     title: 'Web Development Intern',
     org: 'Appuno IT Solutions',
     kind: 'Experience',
-    body: 'Built full-stack features for an investor marketplace in ASP.NET MVC and C# — RESTful APIs, role-based access control, responsive UI. My first encounter with code that other people depend on, which is a different discipline entirely from code that merely works.',
+    body: 'Built full-stack features for an investor marketplace in ASP.NET MVC and C#: RESTful APIs, role-based access control and responsive UI. My first encounter with code other people depend on, which is a different discipline from code that merely works.',
     detail: [
       { label: 'Stack', value: 'ASP.NET MVC · C# · SQL Server' },
       { label: 'Shipped', value: 'Investor Marketplace Platform' },
@@ -46,7 +46,7 @@ export const timeline: TimelineStop[] = [
     title: 'IoT Engineering Intern',
     org: 'Intuz Solution',
     kind: 'Experience',
-    body: 'Engineered SHEMS, a smart home energy management system on Arduino and Raspberry Pi: sensor firmware, local data aggregation, and a real-time monitoring dashboard. Hardware teaches you that the data does not simply exist — something physical has to go and measure it.',
+    body: 'Engineered SHEMS, a smart home energy management system on Arduino and Raspberry Pi: sensor firmware, local data aggregation and a real-time monitoring dashboard. Working with hardware is a reminder that data does not simply exist. Something physical has to go and measure it.',
     detail: [
       { label: 'Stack', value: 'Arduino · Raspberry Pi · Python' },
       { label: 'Shipped', value: 'SHEMS energy monitor' },
@@ -58,7 +58,7 @@ export const timeline: TimelineStop[] = [
     title: 'Data Engineering Intern',
     org: 'Intellect Design Arena',
     kind: 'Experience',
-    body: 'Designed and shipped the AMFI mutual fund ETL pipeline in Apache Airflow and Python — automated regulatory ingestion, quality gates between stages, and Power BI dashboards for stakeholders. A measurable cut in manual preparation time, and my first taste of infrastructure people quietly rely on.',
+    body: 'Designed and shipped the AMFI mutual fund ETL pipeline in Apache Airflow and Python: automated regulatory ingestion, quality gates between stages, and Power BI dashboards for stakeholders. It cut manual preparation time measurably, and it was my first go at infrastructure other people quietly rely on.',
     detail: [
       { label: 'Stack', value: 'Apache Airflow · Python · PostgreSQL' },
       { label: 'Shipped', value: 'AMFI ETL Pipeline' },
@@ -66,7 +66,7 @@ export const timeline: TimelineStop[] = [
   },
   {
     num: '05',
-    period: 'Sep 2025 — 2027',
+    period: 'Sep 2025 - 2027',
     title: 'M.S. Computer Science',
     org: 'Stevens Institute of Technology',
     kind: 'Education',
@@ -78,12 +78,12 @@ export const timeline: TimelineStop[] = [
   },
   {
     num: '06',
-    period: 'Jul 2026 — Present',
+    period: 'Jul 2026 - Present',
     title: 'AI Engineer Intern',
     org: 'Licent Solutions LLC',
     kind: 'Experience',
     // The work itself is confidential. This entry deliberately describes the
-    // role and nothing else — no systems, no metrics, no domain detail.
+    // role and nothing else: no systems, no metrics, no domain detail.
     body: 'Currently working as an AI engineer at Licent Solutions. The work is confidential, so there are no details here.',
     detail: [
       { label: 'Role', value: 'AI Engineer · Internship' },
@@ -112,7 +112,7 @@ export const principles = [
   {
     num: '01',
     title: 'Research that ships',
-    body: "I have deployed GANs to GCP Vertex AI and built ETL pipelines over real patient records. The gap between a paper implementation and production code is where most of the real work lives — and most of the interesting problems.",
+    body: "I have deployed GANs to GCP Vertex AI and built ETL pipelines over real patient records. The gap between a paper implementation and production code is where most of the real work lives, and most of the interesting problems.",
   },
   {
     num: '02',
@@ -122,7 +122,7 @@ export const principles = [
   {
     num: '03',
     title: 'The boring infrastructure matters most',
-    body: "The model is maybe 10% of the work. Data pipelines, monitoring, deployment reliability — that is what separates a demo from a system people trust. I care about both halves, and the second one is where I have spent more hours.",
+    body: "The model is maybe 10% of the work. Data pipelines, monitoring and deployment reliability are what separate a demo from a system people trust. I care about both halves, and the second is where I have spent more hours.",
   },
 ]
 

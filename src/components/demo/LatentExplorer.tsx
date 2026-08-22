@@ -12,7 +12,7 @@ import { clsx } from '@/lib/clsx'
  * Interactive latent-space explorer for the SynMedix generator.
  *
  * This is not a mock. It loads real weights from a real WGAN-GP training run
- * and runs the forward pass in the browser on every input change — inference is
+ * and runs the forward pass in the browser on every input change, inference is
  * ~17.6k multiply-accumulates, so it completes in well under a millisecond and
  * can be driven synchronously from a slider's onChange.
  *
@@ -41,7 +41,7 @@ function FeatureRow({ spec, value }: { spec: FeatureSpec; value: number }) {
   const iqrStart = pct(spec.p25)
   const iqrWidth = Math.max(0.5, pct(spec.p75) - iqrStart)
 
-  // Flag values outside the observed range of the training cohort — a generator
+  // Flag values outside the observed range of the training cohort, a generator
   // can extrapolate, and pretending otherwise would be the dishonest choice.
   const outside = value < spec.p25 - span * 0.35 || value > spec.p75 + span * 0.35
 
@@ -162,7 +162,7 @@ export default function LatentExplorer() {
             { label: 'Training epochs', value: String(manifest.epochs) },
             {
               label: 'Marginal error',
-              value: fit ? `${(fit.meanAbsErr * 100).toFixed(1)}%` : '—',
+              value: fit ? `${(fit.meanAbsErr * 100).toFixed(1)}%` : 'n/a',
             },
           ]
         : [],
@@ -196,9 +196,9 @@ export default function LatentExplorer() {
         <p className="type-label mb-3 text-phosphor">Live model · runs in your browser</p>
         <p className="max-w-prose text-spec text-ash">
           A conditional WGAN-GP generator using the SynMedix architecture, trained on the
-          project&apos;s {manifest.trainedOn}. The forward pass is hand-written TypeScript —
-          no inference runtime — and matches the PyTorch original to within 2.5×10⁻⁵.
-          Move anything below and every value regenerates.
+          project&apos;s {manifest.trainedOn}. The forward pass is hand-written TypeScript
+          with no inference runtime, and it matches the PyTorch original to within
+          2.5×10⁻⁵. Move anything below and every value regenerates.
         </p>
 
         <dl className="mt-6 grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-4">
@@ -336,7 +336,7 @@ export default function LatentExplorer() {
 
           <p className="mt-7 border-t border-hairline pt-5 text-[0.6875rem] leading-relaxed text-dust">
             Synthetic output for demonstration. Trained on the SynMedix sample cohort, not
-            on clinical data — these are not real patients and carry no diagnostic meaning.
+            on clinical data. These are not real patients and carry no diagnostic meaning.
           </p>
         </div>
       </div>

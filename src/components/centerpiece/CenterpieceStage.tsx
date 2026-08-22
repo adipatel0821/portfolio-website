@@ -12,7 +12,7 @@ import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
  *
  *   webgl   full point cloud, 24k particles, GPU morph
  *   canvas  hand-projected 2D version, ~900 particles
- *   static  CSS only — reduced motion, or no JS
+ *   static  CSS only, reduced motion, or no JS
  *
  * Everything below the top tier is a working scene, not a hidden element: the
  * page reads the same on a four-year-old Android as on a desktop GPU.
@@ -49,7 +49,7 @@ function detect(): { tier: Exclude<Tier, 'pending'>; budget: Budget } {
     const probe = document.createElement('canvas')
     const gl = probe.getContext('webgl2')
     hasWebGL2 = Boolean(gl)
-    // Float textures are the whole mechanism — no point continuing without them.
+    // Float textures are the whole mechanism, no point continuing without them.
     if (gl && !gl.getExtension('EXT_color_buffer_float') && !gl.getExtension('OES_texture_float')) {
       // WebGL2 guarantees float *sampling*, so this is informational only.
     }
@@ -66,7 +66,7 @@ function detect(): { tier: Exclude<Tier, 'pending'>; budget: Budget } {
   const coarsePointer = window.matchMedia('(pointer: coarse)').matches
   const narrow = window.innerWidth < 1024
 
-  // Phones and tablets take the 2D path — deliberately, not as a failure case.
+  // Phones and tablets take the 2D path, deliberately, not as a failure case.
   //
   // Measured on a mid-range mobile profile, shipping three.js here costs ~232kb
   // of parse plus the formation-texture build, which pushed total blocking time
@@ -108,7 +108,7 @@ export default function CenterpieceStage({ chapter }: Props) {
   const [active, setActive] = useState(false)
 
   // Resolve the tier after mount so the server render is always the static
-  // fallback — no hydration mismatch, no layout shift when the real scene lands.
+  // fallback, no hydration mismatch, no layout shift when the real scene lands.
   //
   // Deferred to idle rather than run on mount: the scene is decorative, and
   // starting a 232kb dynamic import while React is still hydrating the page is

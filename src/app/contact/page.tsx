@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: 'Are you open to roles right now?',
-    a: 'Yes — actively looking for ML engineering, data engineering or SWE roles. Most interested in teams working on generative models, large-scale data, or cloud infrastructure.',
+    a: 'Yes. Actively looking for ML engineering, data engineering or SWE roles. Most interested in teams working on generative models, large-scale data, or cloud infrastructure.',
   },
   {
     q: 'What is your availability?',
@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     q: 'How fast do you reply?',
-    a: 'Within 24 hours. I read every message myself — there is no filter and no assistant.',
+    a: 'Within 24 hours. I read every message myself, so there is no filter and no assistant.',
   },
 ]
 
@@ -157,7 +157,7 @@ export default function ContactPage() {
 
           <dl className="border-t border-hairline">
             {/* Reveal renders the wrapping <div>, so dt/dd stay direct
-                children of it — a <dl> allows dt/dd or a plain div containing
+                children of it. A <dl> allows dt/dd or a plain div containing
                 them, but not a div inside a div. */}
             {faqs.map((faq, i) => (
               <Reveal

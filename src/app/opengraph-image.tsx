@@ -4,7 +4,7 @@ import { ImageResponse } from 'next/og'
 import { site } from '@/lib/site'
 
 /**
- * Generated OG card, rendered at build time by next/og — no design file to
+ * Generated OG card, rendered at build time by next/og, no design file to
  * keep in sync and no image asset in the repo.
  *
  * Constraints worth knowing: next/og runs a subset of CSS through Satori. No
@@ -17,7 +17,7 @@ import { site } from '@/lib/site'
  * build-time only and never ships to the browser.
  */
 
-export const alt = `${site.name} — Machine Learning & Data Engineer`
+export const alt = `${site.name}, Machine Learning and Data Engineer`
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -76,7 +76,7 @@ export default async function OpenGraphImage() {
           </div>
         </div>
 
-        {/* Headline — mirrors the site's hero */}
+        {/* Headline, mirrors the site's hero */}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div
             style={{
@@ -113,7 +113,7 @@ export default async function OpenGraphImage() {
           }}
         >
           <div style={{ fontSize: 24, color: ASH, maxWidth: 620 }}>
-            GANs, diffusion models and ETL pipelines — from research to production.
+            GANs, diffusion models and ETL pipelines, from research to production.
           </div>
           <div style={{ fontSize: 24, color: CHALK, letterSpacing: 3 }}>
             pateladitya.dev

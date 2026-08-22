@@ -1,13 +1,12 @@
 /**
  * Project case studies.
  *
- * Every project carries the full structure — Problem / Approach / Architecture
- * / Stack / Outcome — rather than a card blurb, because the whole point of the
- * Projects section is depth a template cannot fake.
+ * Each project carries the full structure (problem, approach, architecture,
+ * stack, outcome) rather than a card blurb.
  *
- * Content rule: every metric here traces back to something that actually
- * happened. Where a number is an estimate it says so; nothing is invented to
- * fill a slot.
+ * Content rule: every metric here traces back to something that happened.
+ * Where a number is an estimate it says so, and nothing is invented to fill
+ * a slot.
  */
 
 export const DOMAINS = ['ML', 'Data Eng', 'IoT', 'Web'] as const
@@ -67,9 +66,9 @@ export const projects: Project[] = [
     vision:
       'The healthcare industry generates enormous amounts of EHR data but processing it at scale remains painfully slow. I built SynMedix to demonstrate that with the right distributed architecture, medical AI teams can iterate 3x faster on realistic, privacy-safe datasets.',
     problem:
-      'Electronic health records are simultaneously abundant and unusable. The volume is enormous, the privacy constraints are absolute, and serial processing is slow enough that iterating on a model means waiting overnight. Any team wanting to train on real clinical data hits all three walls at once — and the third wall is the one that quietly kills projects, because a research loop measured in days is a research loop nobody runs.',
+      'Electronic health records are abundant and hard to use at the same time. The volume is large, the privacy constraints are absolute, and serial processing is slow enough that iterating on a model means waiting overnight. A team that wants to train on real clinical data runs into all three at once, and the slow loop is usually what stalls the project.',
     approach:
-      'Two separate problems, solved in order. First the throughput: restructure ingest around parallel execution with optimised ETL stages so the corpus can be reprocessed in an afternoon rather than overnight. Then the privacy: train a generative model on the cleaned corpus that learns the joint distribution of the records rather than memorising any individual one, so downstream teams get a dataset they can experiment on freely.',
+      'Throughput came first. Ingest was restructured around parallel execution with optimised ETL stages, so the corpus can be reprocessed in an afternoon instead of overnight. Privacy came second. A generative model trained on the cleaned corpus learns the joint distribution of the records instead of memorising individual ones, so downstream teams get a dataset they can experiment on freely.',
     architecture: [
       {
         step: 'Ingest',
@@ -79,7 +78,7 @@ export const projects: Project[] = [
       {
         step: 'Parallel ETL',
         detail:
-          'Optimised transform stages executing concurrently — the change responsible for the 3× throughput improvement over the serial baseline.',
+          'Optimised transform stages executing concurrently. This is the change responsible for the 3× throughput improvement over the serial baseline.',
       },
       {
         step: 'Generative layer',
@@ -93,7 +92,7 @@ export const projects: Project[] = [
       },
     ],
     outcome:
-      'SynMedix emits synthetic patient records that preserve the statistical structure of the source corpus without carrying any individual through it. Downstream teams get a dataset they can train on and share freely — which was the entire point. The 3× throughput gain compounds: every experiment that used to cost a night now costs an afternoon.',
+      'SynMedix emits synthetic patient records that preserve the statistical structure of the source corpus without carrying any individual through it. Downstream teams get a dataset they can train on and share freely. The throughput gain compounds too: experiments that used to cost a night now cost an afternoon.',
     metrics: [
       { value: '3×', label: 'Throughput over serial baseline' },
       { value: '50K+', label: 'Synthetic records generated' },
@@ -118,13 +117,13 @@ export const projects: Project[] = [
     domains: ['ML'],
     featured: true,
     summary:
-      'A Generative Adversarial Network synthesising multimodal patient records — clinical text, medical imaging descriptors, and time-series vitals — with roughly 40% improvement in training data diversity, deployed on GCP Vertex AI.',
+      'A Generative Adversarial Network synthesising multimodal patient records (clinical text, medical imaging descriptors and time-series vitals) with roughly 40% improvement in training data diversity, deployed on GCP Vertex AI.',
     vision:
       'Healthcare AI is bottlenecked by data scarcity and privacy constraints. I wanted to prove that synthetic, privacy-preserving patient data could unlock the next generation of medical ML models, without compromising a single real patient record.',
     problem:
-      'A patient is not one kind of data. They are a narrative, a set of images, and a stream of numbers, and the correlations *between* those modalities are exactly what a clinical model needs to learn. Single-modality synthetic data throws that away: generate the vitals and the notes independently and you get a dataset where nothing agrees with anything else, which is worse than no data at all.',
+      'A patient is several kinds of data at once: a narrative, a set of images and a stream of numbers. The correlations between those modalities are what a clinical model needs to learn, and single-modality synthetic data throws them away. Generate the vitals and the notes independently and you get a dataset where nothing agrees with anything else, which is worse than no data at all.',
     approach:
-      'Train a GAN across all three modalities jointly so the generator has to produce records that are internally consistent — vitals that match the diagnosis that matches the imaging descriptor. PaLM-E was integrated for multimodal reasoning over the combined representation, and the whole pipeline was deployed to GCP Vertex AI so inference could scale past a single machine.',
+      'Train a GAN across all three modalities jointly, so the generator has to produce records that hold together internally: vitals that match the diagnosis that matches the imaging descriptor. PaLM-E was integrated for multimodal reasoning over the combined representation, and the pipeline was deployed to GCP Vertex AI so inference could scale past a single machine.',
     architecture: [
       {
         step: 'Modality encoders',
@@ -146,7 +145,7 @@ export const projects: Project[] = [
       },
     ],
     outcome:
-      'Roughly 40% improvement in training data diversity over the baseline, with generated records that hold together across all three modalities. The work became the foundation for everything I have done since on generative models for healthcare.',
+      'Roughly 40% improvement in training data diversity over the baseline, with generated records that hold together across all three modalities. It set the direction for the generative work I have done since.',
     metrics: [
       { value: '~40%', label: 'Training diversity improvement' },
       { value: '3', label: 'Modalities generated jointly' },
@@ -170,13 +169,13 @@ export const projects: Project[] = [
     domains: ['ML'],
     featured: true,
     summary:
-      'A pixel-space conditional diffusion model — Conditional U-Net with cross-attention, DDPM — synthesising brain tumour MRI slices from BraTS 2023, conditioned on patient metadata including age, gender, diagnosis, and WHO grade.',
+      'A pixel-space conditional diffusion model (Conditional U-Net with cross-attention, DDPM) synthesising brain tumour MRI slices from BraTS 2023, conditioned on patient metadata including age, gender, diagnosis and WHO grade.',
     vision:
       'Medical imaging research is throttled by scarce, privacy-locked scans. I wanted to prove a conditional diffusion model could generate realistic, metadata-controllable MRI slices that expand training sets without exposing a single real patient.',
     problem:
-      'Brain tumour imaging datasets are small, hard to access, and unevenly distributed across the conditions that matter — a rare WHO grade may have a handful of examples. You cannot simply augment your way out of that: rotating an existing scan does not create a new patient. What is needed is generation that is *controllable*, so you can ask for the underrepresented case specifically.',
+      'Brain tumour imaging datasets are small, hard to access and unevenly distributed across the conditions that matter. A rare WHO grade may have only a handful of examples. Augmentation does not solve it, because rotating an existing scan does not create a new patient. What helps is generation you can steer, so you can ask for the underrepresented case directly.',
     approach:
-      'A DDPM operating directly in pixel space, with a Conditional U-Net whose cross-attention layers consume patient metadata. Conditioning on age, gender, diagnosis, and WHO grade means the model is steerable — you request a slice matching a specific clinical profile rather than sampling blindly and hoping.',
+      'A DDPM operating directly in pixel space, with a Conditional U-Net whose cross-attention layers consume patient metadata. Conditioning on age, gender, diagnosis and WHO grade makes the model steerable, so you request a slice matching a specific clinical profile instead of sampling blindly.',
     architecture: [
       {
         step: 'Data pipeline',
@@ -195,11 +194,11 @@ export const projects: Project[] = [
       },
       {
         step: 'Sampling',
-        detail: 'Metadata-conditioned generation — request a clinical profile, get a matching slice.',
+        detail: 'Metadata-conditioned generation. Request a clinical profile, get a matching slice.',
       },
     ],
     outcome:
-      'A working conditional DDPM over BraTS 2023 producing metadata-steerable MRI slices. The interesting result is control rather than raw fidelity: being able to ask for a specific clinical profile is what makes synthetic imaging useful for balancing a training set.',
+      'A working conditional DDPM over BraTS 2023 producing metadata-steerable MRI slices. The useful result is control rather than raw fidelity. Being able to ask for a specific clinical profile is what makes synthetic imaging worth using to balance a training set.',
     metrics: [
       { value: '~9.5K', label: 'Training slices' },
       { value: '4', label: 'Conditioning variables' },
@@ -223,13 +222,13 @@ export const projects: Project[] = [
     domains: ['Data Eng', 'Web'],
     featured: true,
     summary:
-      'A Bloomberg Terminal-inspired analytics platform covering 84 instruments across equities, bonds, forex, metals, energy, and macro — live FRED, ECB and EIA data behind a from-scratch forecasting engine, rendered entirely in native SVG with zero charting libraries.',
+      'A Bloomberg Terminal-inspired analytics platform covering 84 instruments across equities, bonds, forex, metals, energy and macro. Live FRED, ECB and EIA data sits behind a from-scratch forecasting engine, and every chart is native SVG with no charting library.',
     vision:
-      'I wanted to see whether one person could rebuild the parts of a professional trading terminal that actually matter — the live data, the forecasting math, and the dense information design — without leaning on any UI or charting library.',
+      'I wanted to see whether one person could rebuild the parts of a professional trading terminal that matter most: the live data, the forecasting maths and the dense information design, without leaning on any UI or charting library.',
     problem:
-      'Professional terminals are extraordinary and effectively unavailable: the price is institutional and the internals are opaque. The parts that actually matter are not the branding but the live data plumbing, the forecasting mathematics, and an information density that most modern web design has forgotten how to achieve. The question was whether all three could be rebuilt honestly by one person.',
+      'Professional terminals are impressive and effectively unavailable. The price is institutional and the internals are opaque. What makes them useful is the live data plumbing, the forecasting mathematics, and an information density most modern web design has abandoned. I wanted to find out whether one person could rebuild those three things honestly.',
     approach:
-      'Build every layer from scratch and refuse the shortcuts. Real connectors to FRED, ECB and EIA rather than a mock feed. A hand-written maths engine implementing ARIMA, Holt-Winters and GARCH rather than importing a stats package. Native SVG for every chart rather than a charting library — which turns out to be the only way to get the density right.',
+      'Build every layer directly. Real connectors to FRED, ECB and EIA instead of a mock feed. A hand-written maths engine implementing ARIMA, Holt-Winters and GARCH instead of importing a stats package. Native SVG for every chart, which turned out to be the only way to get the density right.',
     architecture: [
       {
         step: 'Live connectors',
@@ -251,7 +250,7 @@ export const projects: Project[] = [
       },
     ],
     outcome:
-      'A dense, genuinely live analytics surface covering 84 instruments with a forecasting ensemble and risk simulation behind it. The zero-library constraint was the most instructive part of the build: it forced an understanding of both the mathematics and the rendering that importing a package would have hidden.',
+      'A dense, live analytics surface covering 84 instruments, with a forecasting ensemble and risk simulation behind it. The zero-library constraint was the most instructive part of the build. It forced an understanding of both the mathematics and the rendering that importing a package would have hidden.',
     metrics: [
       { value: '84', label: 'Instruments covered' },
       { value: '3', label: 'Live data sources' },
@@ -275,13 +274,13 @@ export const projects: Project[] = [
     year: '2026',
     domains: ['ML', 'Data Eng'],
     summary:
-      'An event-driven research platform that ingests physical-world alternative data instead of price charts — live port congestion and global news — then uses an LLM correlation agent and a vector memory of historical analogues to estimate equity impact on the most-exposed public companies.',
+      'An event-driven research platform that ingests physical-world alternative data instead of price charts. Live port congestion and global news feed an LLM correlation agent and a vector memory of historical analogues, which together estimate equity impact on the most-exposed public companies.',
     vision:
       'Markets react to physical-world shocks like port collapses and conflict long before the price charts catch up. I wanted to build the pipeline that watches the physical world directly and turns a disruption into a ranked list of exposed tickers.',
     problem:
-      'By the time a supply-chain disruption is visible in a price chart, the information is already priced in. The signal exists earlier — in port congestion data, in news wire volume, in the physical movement of goods — but it arrives as unstructured, geographically scattered noise that no conventional financial data pipeline is built to consume.',
+      'By the time a supply-chain disruption shows up in a price chart, the information is already priced in. The signal exists earlier, in port congestion data, news wire volume and the physical movement of goods, but it arrives as unstructured, geographically scattered noise that no conventional financial data pipeline is built to consume.',
     approach:
-      'Ingest the physical world directly. Stream port congestion from IMF PortWatch and global news from GDELT, geolocate the disruptions, then hand the correlation problem to an LLM agent with a vector memory of historical analogues — because "what happened last time something like this occurred" is exactly the query a vector store answers well and a regression does not.',
+      'Ingest the physical world directly. Stream port congestion from IMF PortWatch and global news from GDELT, geolocate the disruptions, then hand the correlation problem to an LLM agent with a vector memory of historical analogues. "What happened last time something like this occurred" is the kind of query a vector store answers well and a regression does not.',
     architecture: [
       {
         step: 'Alt-data ingest',
@@ -331,7 +330,7 @@ export const projects: Project[] = [
     vision:
       'Job hunting is a full-time job on top of your job. I wanted an always-on system that does the discovery and tailoring grunt work overnight, while keeping a human firmly in control of every actual submission.',
     problem:
-      'The mechanical part of job hunting — finding the roles, deduplicating the same posting across four boards, rewriting the same resume for the fortieth time — consumes the hours that should go to preparing properly for the three roles that actually matter. It is grunt work, and grunt work is what machines are for. But full automation is the wrong answer: mass auto-applying is how you become spam.',
+      'The mechanical part of job hunting takes the hours that should go to preparing for the roles that matter: finding the postings, deduplicating the same role across four boards, rewriting the same resume for the fortieth time. That is work a machine can do. Full automation is still the wrong answer, because mass auto-applying is how you become spam.',
     approach:
       'Split it. Automate discovery and tailoring completely; automate submission not at all. A worker pipeline continuously discovers and deduplicates postings, then Claude-powered Matcher and Tailor agents score fit and draft the materials. Everything lands in a queue for a human to review, and the apply button stays human-operated.',
     architecture: [
@@ -342,7 +341,7 @@ export const projects: Project[] = [
       {
         step: 'Three-layer dedup',
         detail:
-          'The same role posted across multiple boards collapses to one entry — 4.7K raw postings reduce to 627.',
+          'The same role posted across multiple boards collapses to one entry. 4.7K raw postings reduce to 627.',
       },
       {
         step: 'Matcher & Tailor agents',
@@ -355,7 +354,7 @@ export const projects: Project[] = [
       },
     ],
     outcome:
-      'A live discovery pipeline reducing 4,700 raw postings to 627 genuine roles through three-layer deduplication, with tailored materials waiting for review. The design constraint that matters most is the one it refuses to cross: a human sends every application.',
+      'A live discovery pipeline reducing 4,700 raw postings to 627 real roles through three-layer deduplication, with tailored materials waiting for review. A human sends every application, which was the constraint the whole design was built around.',
     metrics: [
       { value: '4.7K → 627', label: 'After three-layer dedup' },
       { value: '2', label: 'Claude agents (Matcher, Tailor)' },
@@ -382,7 +381,7 @@ export const projects: Project[] = [
     vision:
       'Financial regulators produce vast amounts of structured data that remains trapped in siloed, poorly formatted sources. I wanted to build a pipeline that turns raw AMFI data into a reliable, analysis-ready dataset that financial engineers can actually trust.',
     problem:
-      'Regulatory data from the Association of Mutual Funds in India is public, structured, and almost unusable in practice — inconsistent formatting, siloed sources, and no guarantee that today\'s file looks like yesterday\'s. Analysts were spending their time on manual preparation rather than analysis, and manual preparation is exactly where silent errors enter a dataset nobody later questions.',
+      'Regulatory data from the Association of Mutual Funds in India is public, structured and almost unusable in practice: inconsistent formatting, siloed sources, and no guarantee that today\'s file looks like yesterday\'s. Analysts spent their time on manual preparation instead of analysis, and manual preparation is where silent errors enter a dataset nobody questions later.',
     approach:
       'Automate the whole path and make the pipeline assert its own correctness. Airflow orchestrates ingest, transform and load on a schedule; automated data quality checks sit between the stages so a malformed upstream file fails loudly instead of quietly poisoning the warehouse. Power BI dashboards sit on the clean end for stakeholders.',
     architecture: [
@@ -393,7 +392,7 @@ export const projects: Project[] = [
       {
         step: 'Quality gates',
         detail:
-          'Automated checks between stages — a malformed upstream file fails the DAG rather than reaching the warehouse.',
+          'Automated checks between stages, so a malformed upstream file fails the DAG instead of reaching the warehouse.',
       },
       {
         step: 'Transform & load',
@@ -432,9 +431,9 @@ export const projects: Project[] = [
     vision:
       'Energy waste in homes is invisible. Nobody knows they are leaving devices running until the bill arrives. I wanted to build a low-cost IoT system that makes residential energy use transparent and actionable in real time, not a month later.',
     problem:
-      'Household energy waste is invisible by design. The feedback loop is a bill that arrives a month after the behaviour that caused it, aggregated into a single number that tells you nothing about which device or which hour was responsible. You cannot change what you cannot see, and a monthly total shows you nothing you can act on.',
+      'Household energy waste is hard to see. The feedback loop is a bill that arrives a month after the behaviour that caused it, aggregated into one number that says nothing about which device or which hour was responsible. There is nothing in that to act on.',
     approach:
-      'Close the loop to seconds. Sensors on the circuits, firmware on an Arduino, aggregation on a Raspberry Pi sitting locally in the house, and a dashboard that shows consumption as it happens. Automated alerts fire on anomalous patterns, so the system surfaces the problem rather than waiting to be asked.',
+      'Close the loop to seconds. Sensors on the circuits, firmware on an Arduino, aggregation on a Raspberry Pi in the house, and a dashboard that shows consumption as it happens. Automated alerts fire on anomalous patterns, so the system raises the problem itself.',
     architecture: [
       {
         step: 'Sensing',
@@ -477,13 +476,13 @@ export const projects: Project[] = [
     year: '2022',
     domains: ['Web'],
     summary:
-      'A full-stack investor marketplace built with ASP.NET MVC, C# and SQL Server — RESTful APIs for investor profiles, deal flow and startup onboarding, with role-based access control over a responsive UI. Built during my Web Development internship at Appuno IT Solutions.',
+      'A full-stack investor marketplace built with ASP.NET MVC, C# and SQL Server: RESTful APIs for investor profiles, deal flow and startup onboarding, with role-based access control over a responsive UI. Built during my Web Development internship at Appuno IT Solutions.',
     vision:
       'Early-stage fundraising is unnecessarily opaque. I wanted to build a clean, structured platform where the information asymmetry between founders and angels is reduced, making the matching process feel less like luck and more like informed decision-making.',
     problem:
-      'Early-stage fundraising runs on introductions and asymmetry. Founders cannot see which investors are actually active in their space; investors cannot see deal flow outside their own network. Both sides are making decisions on partial information, and the matching that results has more to do with who you already know than with fit.',
+      'Early-stage fundraising runs on introductions and asymmetry. Founders cannot see which investors are active in their space, and investors cannot see deal flow outside their own network. Both sides decide on partial information, and the matching that results has more to do with who you already know than with fit.',
     approach:
-      'Put both sides in one structured system with role-based views. Startups list opportunities against a consistent schema; investors discover, filter and track deals through the same data rather than through inbox forwarding. The structure is the product — a shared schema is what makes two sides comparable.',
+      'Put both sides in one structured system with role-based views. Startups list opportunities against a consistent schema, and investors discover, filter and track deals through the same data instead of through inbox forwarding. A shared schema is what makes the two sides comparable.',
     architecture: [
       {
         step: 'Data layer',
@@ -503,7 +502,7 @@ export const projects: Project[] = [
       },
     ],
     outcome:
-      'A working two-sided platform where startups list and investors discover, filter and track — the matching process grounded in a shared schema rather than in whose inbox a deck happened to reach. My first production-grade engineering work.',
+      'A working two-sided platform where startups list and investors discover, filter and track deals, with the matching grounded in a shared schema rather than in whose inbox a deck happened to reach. It was my first production engineering work.',
     metrics: [
       { value: '2', label: 'User roles with distinct access' },
       { value: 'REST', label: 'API architecture' },

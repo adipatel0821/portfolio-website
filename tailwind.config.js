@@ -63,7 +63,10 @@ module.exports = {
         'body-lg': ['1.0625rem', { lineHeight: '1.65' }],
       },
       spacing: {
-        chapter: 'clamp(6rem, 14vh, 11rem)', // vertical rhythm between chapters
+        // Vertical rhythm between sections. Tightened from clamp(6rem,14vh,11rem):
+        // at the old value the home page ran to nearly twelve screens, and most
+        // of that was air rather than content.
+        chapter: 'clamp(3.5rem, 8vh, 6.5rem)',
         gutter: 'clamp(1.25rem, 4vw, 3.5rem)',
       },
       maxWidth: {

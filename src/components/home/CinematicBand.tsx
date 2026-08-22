@@ -6,12 +6,12 @@ import Eyebrow from '@/components/ui/Eyebrow'
 import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 
 /**
- * Full-bleed cinematic moment — the reference's lifestyle band, translated to a
+ * Full-bleed cinematic moment, the reference's lifestyle band, translated to a
  * data surface. Bottom-left overlay headline, second line in the accent colour.
  *
  * The backdrop is a generated data-viz field rather than a photograph: there is
  * no real workspace shot in the repo yet, and a stock image would be the one
- * dishonest thing on the page. Swap in a portrait here when one exists — the
+ * dishonest thing on the page. Swap in a portrait here when one exists, the
  * layout is already sized for it.
  *
  * The field parallaxes slowly against the scroll, which is what sells "band"
@@ -50,7 +50,7 @@ export default function CinematicBand() {
             backgroundSize: '64px 64px',
           }}
         />
-        {/* A plotted signal — pure SVG, no asset request. */}
+        {/* A plotted signal, pure SVG, no asset request. */}
         <svg
           className="absolute inset-0 h-full w-full"
           viewBox="0 0 1200 600"
@@ -109,7 +109,7 @@ export default function CinematicBand() {
         </svg>
       </motion.div>
 
-      {/* Legibility scrim — heaviest at the bottom-left where the type sits. */}
+      {/* Legibility scrim, heaviest at the bottom-left where the type sits. */}
       <div
         aria-hidden="true"
         className="absolute inset-0"
@@ -127,9 +127,9 @@ export default function CinematicBand() {
           <span className="block text-signal">to production.</span>
         </h2>
         <p className="mt-6 max-w-[44ch] text-body text-ash">
-          The interesting problems are never in the model file. They are in the data you
-          cannot trust, the pipeline that has to run at 4am, and the deployment nobody
-          wants to be paged about.
+          Most of the hard problems live outside the model file: data you cannot trust,
+          a pipeline that has to run at 4am, and a deployment nobody wants to be paged
+          about.
         </p>
       </div>
     </section>

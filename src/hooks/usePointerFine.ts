@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
  * True only on devices with a precise pointer (mouse/trackpad).
  *
  * Gates the custom cursor and magnetic hover: both are meaningless on touch and
- * actively harmful there — magnetic offsets make tap targets miss.
+ * actively harmful there, magnetic offsets make tap targets miss.
  *
  * Starts false so the server render and the first client render agree; the real
  * value lands in an effect. Anything gated on this must degrade to plain

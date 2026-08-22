@@ -36,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     }))
   } catch {
-    // Contentful unreachable at build time — ship the rest of the sitemap.
+    // Contentful unreachable at build time, ship the rest of the sitemap.
   }
 
   return [...staticRoutes, ...projectRoutes, ...postRoutes]

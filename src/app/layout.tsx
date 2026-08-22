@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 
 /**
  * Person structured data. Rendered once in the root layout so every page
- * carries it — this is the record search engines use to associate the site
+ * carries it, this is the record search engines use to associate the site
  * with a real person rather than an anonymous domain.
  */
 const personJsonLd = {
@@ -97,7 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
 
-        {/* First tab stop — skips the fixed chrome straight to content. */}
+        {/* First tab stop, skips the fixed chrome straight to content. */}
         <a href="#main" className="skip-link">
           Skip to content
         </a>

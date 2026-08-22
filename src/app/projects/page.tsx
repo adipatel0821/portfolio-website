@@ -10,7 +10,7 @@ import { socials } from '@/lib/site'
 export const metadata: Metadata = {
   title: 'Projects',
   description:
-    'Case studies in machine learning, data engineering, IoT and full-stack development — problem, approach, architecture, and measured outcome for each.',
+    'Case studies in machine learning, data engineering, IoT and full-stack development. Problem, approach, architecture and measured outcome for each.',
 }
 
 export default function ProjectsPage() {
@@ -35,8 +35,8 @@ export default function ProjectsPage() {
           <Reveal delay={0.5} priority>
             <p className="max-w-[54ch] text-body text-ash">
               Nine builds across machine learning, data engineering, IoT and the web. Each
-              one written up properly — the problem, the approach, the architecture, and
-              what actually came out the other end.
+              one written up properly: the problem, the approach, the architecture and
+              what came out the other end.
             </p>
           </Reveal>
         </div>

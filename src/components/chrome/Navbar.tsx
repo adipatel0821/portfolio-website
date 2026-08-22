@@ -37,7 +37,7 @@ export default function Navbar() {
     }
   }, [menuOpen])
 
-  // Escape closes the sheet — required for keyboard users.
+  // Escape closes the sheet, required for keyboard users.
   useEffect(() => {
     if (!menuOpen) return
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenuOpen(false)
@@ -62,7 +62,7 @@ export default function Navbar() {
             // Must contain the visible text. Below the sm breakpoint the only
             // visible content is the "AP" mark, so a name of just "Aditya Patel"
             // fails the accessible-name-contains-visible-label rule there.
-            aria-label={`${site.initials} · ${site.name} — home`}
+            aria-label={`${site.initials} ${site.name}, home`}
           >
             <span
               className="type-pixel flex h-7 w-7 items-center justify-center bg-signal text-[11px] text-[#0a0a0a]"
@@ -133,7 +133,7 @@ export default function Navbar() {
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               className="flex h-9 w-9 items-center justify-center md:hidden"
             >
-              {/* Two rules that cross into an X — cheaper and calmer than an icon swap. */}
+              {/* Two rules that cross into an X, cheaper and calmer than an icon swap. */}
               <span className="relative block h-3 w-5">
                 <span
                   className={clsx(

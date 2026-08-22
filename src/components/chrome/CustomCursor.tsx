@@ -29,7 +29,7 @@ export default function CustomCursor() {
 
   const x = useMotionValue(-100)
   const y = useMotionValue(-100)
-  // The dot is 1:1. The ring trails it — that lag is the whole effect.
+  // The dot is 1:1. The ring trails it, that lag is the whole effect.
   const ringX = useSpring(x, { stiffness: 320, damping: 30, mass: 0.35 })
   const ringY = useSpring(y, { stiffness: 320, damping: 30, mass: 0.35 })
 

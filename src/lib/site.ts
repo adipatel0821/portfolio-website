@@ -23,12 +23,12 @@ export const nav = [
 ] as const
 
 /**
- * Outbound profiles. Every entry here must be a link that resolves — the rail
+ * Outbound profiles. Every entry here must be a link that resolves, the rail
  * and the footer render whatever is in this list.
  *
  * X is omitted deliberately: the handle guessed from the GitHub name
- * (x.com/adipatel0821) returns 404, and pointing visitors at a dead URL — or
- * worse, at whoever registers it later — is worse than showing two profiles.
+ * (x.com/adipatel0821) returns 404, and pointing visitors at a dead URL, or
+ * worse, at whoever registers it later, is worse than showing two profiles.
  * Add it back here once the real handle is known.
  */
 export const socials = [
