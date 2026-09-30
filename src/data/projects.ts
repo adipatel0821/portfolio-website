@@ -47,6 +47,21 @@ export interface Project {
   stack: { label: string; value: string }[]
   tech: string[]
 
+  /**
+   * Set ONLY when a public repo actually contains the work described above.
+   * A case study with no `github` is deliberate, not an oversight: linking a
+   * repo that turns out to be a report PDF or unrelated code does more damage
+   * than showing no link at all.
+   *
+   * Currently set: multimodal-gan (Capstone-GANs), amfi-etl (Data_Product-IMF).
+   * Deliberately unset:
+   *   shems                — the public SHEMS repo holds the report, slides and
+   *                          result data, but none of the sensor firmware this
+   *                          writeup describes.
+   *   investor-marketplace — no public repo (SCM-ASP.net is different work).
+   *   synmedix, medfusion-diff, global-market-lab,
+   *   chaos-arbitrageur, jobpilot — private; publish, then link.
+   */
   github?: string
   live?: string
 }
@@ -157,6 +172,9 @@ export const projects: Project[] = [
       { label: 'Cloud', value: 'GCP Vertex AI' },
     ],
     tech: ['Python', 'GANs', 'PaLM-E', 'GCP Vertex AI', 'NumPy', 'Pandas', 'Scikit-learn', 'Matplotlib'],
+    // The capstone repo: CUDA_MULTIMODAL_GANs.ipynb and Train_1.ipynb are the
+    // real training code behind this writeup.
+    github: 'https://github.com/adipatel0821/Capstone-GANs',
   },
 
   // ────────────────────────────────────────────────────────────────────────
@@ -416,6 +434,8 @@ export const projects: Project[] = [
       { label: 'Warehouse', value: 'PostgreSQL · SQL' },
     ],
     tech: ['Python', 'Apache Airflow', 'ETL', 'SQL', 'PostgreSQL', 'Power BI', 'Pandas', 'NumPy'],
+    // Last_5_Years-ETL-1.py, the Airflow/Docker setup and the ERD all live here.
+    github: 'https://github.com/adipatel0821/Data_Product-IMF',
   },
 
   // ────────────────────────────────────────────────────────────────────────

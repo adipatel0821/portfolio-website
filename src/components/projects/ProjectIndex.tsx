@@ -31,10 +31,24 @@ export default function ProjectIndex({ projects }: { projects: Project[] }) {
     return map
   }, [projects])
 
-  const visible = useMemo(
-    () => (filter === 'All' ? projects : projects.filter((p) => p.domains.includes(filter))),
-    [filter, projects],
-  )
+  /**
+   * Order: featured first, then newest.
+   *
+   * `featured` was previously set on four projects and read by nothing at all,
+   * so the index rendered in raw array order and pushed 2022–2024 work above
+   * the current builds. Sorting here is what makes the flag mean something;
+   * within each tier the tie-break is year descending so the list cannot go
+   * stale just because a project was appended to the end of the array.
+   */
+  const visible = useMemo(() => {
+    const matching =
+      filter === 'All' ? projects : projects.filter((p) => p.domains.includes(filter))
+
+    return [...matching].sort((a, b) => {
+      if (Boolean(a.featured) !== Boolean(b.featured)) return a.featured ? -1 : 1
+      return Number(b.year) - Number(a.year)
+    })
+  }, [filter, projects])
 
   const filters: Filter[] = ['All', ...DOMAINS]
 

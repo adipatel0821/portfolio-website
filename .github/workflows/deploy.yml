@@ -42,6 +42,12 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
+      # Runs for the first time here: the repo had no ESLint config and the
+      # script still called the `next lint` command that Next 16 removed.
+      # Warnings do not fail the job; errors do.
+      - name: Lint
+        run: npm run lint
+
       - name: Build
         run: npm run build
         env:

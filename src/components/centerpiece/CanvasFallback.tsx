@@ -83,7 +83,7 @@ export default function CanvasFallback({ chapter }: Props) {
 
     // DPR capped at 1.5: this path exists for weak devices, so the pixel budget
     // matters more than crispness.
-    let dpr = Math.min(window.devicePixelRatio || 1, 1.5)
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
     let width = 0
     let height = 0
 

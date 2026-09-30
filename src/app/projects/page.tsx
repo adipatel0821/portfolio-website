@@ -13,8 +13,19 @@ export const metadata: Metadata = {
     'Case studies in machine learning, data engineering, IoT and full-stack development. Problem, approach, architecture and measured outcome for each.',
 }
 
+/** Spelled-out counts so the copy reads as prose, not as a dashboard. */
+const WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'] as const
+
+function spell(n: number): string {
+  return WORDS[n] ?? String(n)
+}
+
 export default function ProjectsPage() {
   const github = socials.find((s) => s.label === 'GitHub')
+
+  // Derived, not hardcoded: the old copy said "Nine builds" as a literal, which
+  // silently goes stale the first time a project is added or removed.
+  const withRepo = projects.filter((p) => p.github).length
 
   return (
     <>
@@ -34,9 +45,9 @@ export default function ProjectsPage() {
 
           <Reveal delay={0.5} priority>
             <p className="max-w-[54ch] text-body text-ash">
-              Nine builds across machine learning, data engineering, IoT and the web. Each
-              one written up properly: the problem, the approach, the architecture and
-              what came out the other end.
+              {spell(projects.length)} builds across machine learning, data engineering, IoT
+              and the web. Each one written up properly: the problem, the approach, the
+              architecture and what came out the other end.
             </p>
           </Reveal>
         </div>
@@ -58,13 +69,19 @@ export default function ProjectsPage() {
             </Reveal>
             <Reveal delay={0.06}>
               <h2 id="oss-heading" className="type-display mb-5 text-display-sm text-chalk">
-                Most of this is on GitHub.
+                Some of this is public.
               </h2>
             </Reveal>
+            {/* This used to read "Most of this is on GitHub", which was not true:
+                only the writeups carrying a repo badge have public source. Saying
+                so plainly is better than inviting the one click that disproves it. */}
             <Reveal delay={0.12}>
               <p className="mb-8 text-body text-ash">
-                Experiments, half-finished ideas, and the commit history behind the writeups
-                above.
+                {spell(withRepo)} of the writeups above{' '}
+                {withRepo === 1 ? 'links' : 'link'} straight to the source. The rest are
+                private for now — client work, builds that are still moving, and datasets I
+                am not free to redistribute. The profile holds the older projects,
+                coursework and experiments.
               </p>
             </Reveal>
             <Reveal delay={0.18}>

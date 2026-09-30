@@ -1,4 +1,5 @@
 import type { SpecGroup } from '@/components/ui/SpecGrid'
+import { projects } from '@/data/projects'
 
 /**
  * Home page copy. Kept out of the components so the wording can be revised
@@ -66,10 +67,15 @@ export const chapters: Chapter[] = [
   },
 ]
 
-/** Count-up stats. `value` is numeric so CountUp can animate it. */
+/**
+ * Count-up stats. `value` is numeric so CountUp can animate it.
+ *
+ * "Projects shipped" is derived from the case-study data rather than typed as a
+ * literal, so adding or removing a writeup can never leave this number lying.
+ */
 export const stats = [
   { value: 4, suffix: '', label: 'Industry internships', sub: 'AI · Data Eng · Web · IoT' },
-  { value: 9, suffix: '', label: 'Projects shipped', sub: 'ML, ETL, IoT & web' },
+  { value: projects.length, suffix: '', label: 'Projects shipped', sub: 'ML, ETL, IoT & web' },
   { value: 50, suffix: 'K+', label: 'Synthetic records', sub: 'SynMedix on SageMaker' },
   { value: 84, suffix: '', label: 'Instruments modelled', sub: 'Global Market Lab' },
 ]

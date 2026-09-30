@@ -45,5 +45,26 @@ export const RESUME_PATH = '/Aditya-Patel-Resume.pdf'
  *
  * Gated rather than always-on because the file is not in the repo yet, and a
  * prominent nav button that 404s is worse than one that is briefly absent.
+ *
+ * ── Why this is still false (checked 2026-09-29) ──
+ * Two candidate PDFs exist in ~/Downloads and NEITHER is publishable as-is:
+ *
+ *   Aditya_Patel_Resume (2).pdf  — Sep 2026, current (includes Licent), but the
+ *     summary is written for a specific hackathon: "At HackPrinceton I want to
+ *     pair up with people who care about health or fintech problems." That is a
+ *     targeted resume, not the one to hang off a permanent nav button.
+ *
+ *   Aditya_Patel_Resume.pdf      — Mar 2026, correctly general-purpose, but
+ *     predates the Licent Solutions role entirely, so it contradicts both the
+ *     About page and the timeline.
+ *
+ * BOTH also print `github.com/adityapatel0821`, the handle that 404s. The live
+ * handle is `adipatel0821` (see `socials` above) — that link was already fixed
+ * on the site in July, so shipping either PDF would reintroduce the dead link
+ * in the one document a recruiter downloads and keeps.
+ *
+ * Both also carry a personal mobile number. That is a deliberate call to make,
+ * not one to inherit by accident: this file is served publicly and gets
+ * scraped. Consider a version that lists only the email.
  */
 export const RESUME_AVAILABLE = false
