@@ -63,8 +63,17 @@ export const RESUME_PATH = '/Aditya-Patel-Resume.pdf'
  * on the site in July, so shipping either PDF would reintroduce the dead link
  * in the one document a recruiter downloads and keeps.
  *
- * Both also carry a personal mobile number. That is a deliberate call to make,
- * not one to inherit by accident: this file is served publicly and gets
- * scraped. Consider a version that lists only the email.
+ * ── What the replacement PDF needs (agreed 2026-09-29) ──
+ * Aditya is exporting a corrected version. It should carry:
+ *   - a general-purpose summary, NOT the hackathon-specific opening
+ *   - the current Licent Solutions role, so it agrees with the About timeline
+ *   - `github.com/adipatel0821` — the handle that resolves
+ *   - phone number: keep
+ *   - both addresses: apatel100@stevens.edu and adityapatel280104@gmail.com
+ *     (the Stevens address stops working after graduation in 2027, so the
+ *     personal one is what keeps the resume reachable long-term)
+ *
+ * Then: save to `public/Aditya-Patel-Resume.pdf`, flip this to `true`, and check
+ * all three CTAs — navbar (desktop + mobile), hero, and the contact page.
  */
 export const RESUME_AVAILABLE = false
