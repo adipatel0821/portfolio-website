@@ -28,12 +28,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
+      # v4 of both actions targets Node 20, which GitHub deprecated — runners
+      # were already force-running them on 24 and annotating every build. Node
+      # 22 is the current LTS and comfortably above Next 16's 20.9 floor.
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install dependencies
