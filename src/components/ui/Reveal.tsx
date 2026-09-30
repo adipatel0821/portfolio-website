@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, type ReactNode, type ElementType } from 'react'
+import { useRef, type ReactNode } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { useReducedMotionSafe } from '@/hooks/useReducedMotionSafe'
 

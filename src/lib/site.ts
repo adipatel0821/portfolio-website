@@ -45,5 +45,35 @@ export const RESUME_PATH = '/Aditya-Patel-Resume.pdf'
  *
  * Gated rather than always-on because the file is not in the repo yet, and a
  * prominent nav button that 404s is worse than one that is briefly absent.
+ *
+ * ── Why this is still false (checked 2026-09-29) ──
+ * Two candidate PDFs exist in ~/Downloads and NEITHER is publishable as-is:
+ *
+ *   Aditya_Patel_Resume (2).pdf  — Sep 2026, current (includes Licent), but the
+ *     summary is written for a specific hackathon: "At HackPrinceton I want to
+ *     pair up with people who care about health or fintech problems." That is a
+ *     targeted resume, not the one to hang off a permanent nav button.
+ *
+ *   Aditya_Patel_Resume.pdf      — Mar 2026, correctly general-purpose, but
+ *     predates the Licent Solutions role entirely, so it contradicts both the
+ *     About page and the timeline.
+ *
+ * BOTH also print `github.com/adityapatel0821`, the handle that 404s. The live
+ * handle is `adipatel0821` (see `socials` above) — that link was already fixed
+ * on the site in July, so shipping either PDF would reintroduce the dead link
+ * in the one document a recruiter downloads and keeps.
+ *
+ * ── What the replacement PDF needs (agreed 2026-09-29) ──
+ * Aditya is exporting a corrected version. It should carry:
+ *   - a general-purpose summary, NOT the hackathon-specific opening
+ *   - the current Licent Solutions role, so it agrees with the About timeline
+ *   - `github.com/adipatel0821` — the handle that resolves
+ *   - phone number: keep
+ *   - both addresses: apatel100@stevens.edu and adityapatel280104@gmail.com
+ *     (the Stevens address stops working after graduation in 2027, so the
+ *     personal one is what keeps the resume reachable long-term)
+ *
+ * Then: save to `public/Aditya-Patel-Resume.pdf`, flip this to `true`, and check
+ * all three CTAs — navbar (desktop + mobile), hero, and the contact page.
  */
 export const RESUME_AVAILABLE = false

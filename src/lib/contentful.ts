@@ -1,4 +1,5 @@
 import { createClient } from 'contentful'
+import type { Document } from '@contentful/rich-text-types'
 
 function getClient() {
   return createClient({
@@ -12,7 +13,12 @@ export interface BlogPost {
   slug: string
   publishedDate: string
   excerpt: string
-  body: any // Contentful Rich Text document
+  /**
+   * Contentful Rich Text. `Document` is the type `documentToHtmlString` already
+   * expects, so typing it here removes the `any` and makes the blog page's call
+   * checked rather than trusted. Null when the field is empty on the entry.
+   */
+  body: Document | null
   coverImage:
     | {
         url: string

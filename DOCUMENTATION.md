@@ -49,9 +49,30 @@ A personal portfolio website for Aditya Patel, an M.S. Computer Science student 
 | Icons | Lucide React |
 | Fonts | Inter (body), Montserrat (display) via Google Fonts |
 | CMS | Contentful (blog posts) |
+| 3D / WebGL | three.js + @react-three/fiber |
+| Analytics | Vercel Analytics + Speed Insights |
 | Deployment | Vercel |
 | CI/CD | GitHub Actions |
 | Package Manager | npm |
+
+> **Note:** the rows above for Fonts and several component names in sections 6
+> onward describe the pre-rebuild site and are out of date. The current type
+> stack is Departure Mono (self-hosted, `public/fonts/`) plus the families wired
+> up in `src/lib/fonts.ts`.
+
+### Dependency pins — read before upgrading
+
+**`react` and `react-dom` are pinned to `~19.2.0` on purpose. Do not widen this.**
+
+`@react-three/fiber@9.x` declares `react: ">=19 <19.3"`. A plain
+`npm i react@latest` (or widening to `^19`) resolves to 19.3+, which puts the
+homepage WebGL centerpiece on an unsupported React. npm reports it only as an
+`invalid:` line buried in `npm ls` output — the build still succeeds, so the
+breakage surfaces at runtime in the one component that is hardest to notice
+failing, because it silently degrades to the canvas fallback.
+
+To move past 19.2, upgrade `@react-three/fiber` first and confirm its new peer
+range, then widen React to match.
 
 ---
 

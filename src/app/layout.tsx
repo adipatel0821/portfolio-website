@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from 'next'
+import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 import { fontVariables } from '@/lib/fonts'
 import { site, socials } from '@/lib/site'
@@ -117,6 +119,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Film grain sits above content but below the cursor. */}
         <div className="grain" aria-hidden="true" />
+
+        {/* Both are cookieless and inject nothing until the page is interactive.
+            They no-op outside Vercel, so local dev and CI builds stay silent.
+            Analytics still needs enabling once per project in the Vercel
+            dashboard (Project → Analytics) before data appears. */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
